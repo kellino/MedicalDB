@@ -1,0 +1,16 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+currentPatients	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    protected ArrayList<Patient> currentPatients = new ArrayList<Patient>();$/;"	f	language:Java	class:Database
+Database	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    public Database() {$/;"	m	language:Java	class:Database
+Database	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^public class Database {$/;"	c	language:Java
+delim	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    private static char delim = ':';$/;"	f	language:Java	class:Database	file:
+dumpDBtoFile	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    void dumpDBtoFile(String patient) {$/;"	m	language:Java	class:Database
+editPatient	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    void editPatient() {};$/;"	m	language:Java	class:Database
+fileLocation	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    private String fileLocation = "\/home\/david\/Programming\/Java\/medicaldb\/db.txt";$/;"	f	language:Java	class:Database	file:
+getPatientMethods	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    void getPatientMethods() {$/;"	m	language:Java	class:Database
+loadDBfromFile	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    void loadDBfromFile() {$/;"	m	language:Java	class:Database
+log	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    private static final Logger log = Logger.getLogger(Class.class.getName());$/;"	f	language:Java	class:Database	file:
+org.ucl.medicaldb	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^package org.ucl.medicaldb;$/;"	p	language:Java
+reader	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    private static CSVReader reader;$/;"	f	language:Java	class:Database	file:
+removePatient	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    void removePatient() {};$/;"	m	language:Java	class:Database
+setters	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    private List<Method> setters;$/;"	f	language:Java	class:Database	file:
+writer	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    private static BufferedWriter writer;$/;"	f	language:Java	class:Database	file:
