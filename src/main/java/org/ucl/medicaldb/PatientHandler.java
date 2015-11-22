@@ -21,12 +21,9 @@ public final class PatientHandler {
     	}
     	return true;
     }
-	
-	/** uses a simple regex to check for "reasonable" name forms. It excludes
-	 * some symbols which do not appear in any names, such as "?", but makes no
-	 * attempt at more complex verification, nor does it check for capitalization, 
-	 * which can very greatly in usage.
-	 * @param String type
+
+	/** uses a simple regex to ensure that the patient id number is in the correct form
+	 * @param String input
 	 * @return boolean
 	 */
 	boolean isValid(String input) {
@@ -37,13 +34,21 @@ public final class PatientHandler {
 		return false;
 	}
 	
+	/** uses a simple regex to check for "reasonable" name forms. It excludes
+	 * some symbols which do not appear in any names, such as "?", but makes no
+	 * attempt at more complex verification, nor does it check for capitalization, 
+	 * which can very greatly in usage.
+	 * @param String type
+	 * @return boolean
+	 */
 	boolean isValid(String input, String type) {
-        Pattern pattern = Pattern.compile("[0-9<>/!\"£$%^&*\\+=¬|?]");
-        try {
-            if (pattern.matcher(input).matches()) {
-                throw new IllegalArgumentException();
-            }
-        } catch (IllegalArgumentException e) {
+            // this regex is still rather incomplete
+            Pattern pattern = Pattern.compile("[0-9<>!\"$%\\+&{}[]]");
+            try {
+                if (pattern.matcher(input).matches()) {
+                    throw new IllegalArgumentException();
+                }
+            } catch (IllegalArgumentException e) {
         	log.log(Level.INFO, "incorrect name string entered by user");
         	return false;
         }
@@ -51,10 +56,12 @@ public final class PatientHandler {
     }
 
     boolean isValidDate(String DOB) {
+    	// stub
     	return true;
     }
 
     boolean isUniqueID(String id) {
+        // stub
         return true;
     }
 }
