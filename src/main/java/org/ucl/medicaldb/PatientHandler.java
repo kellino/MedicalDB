@@ -43,7 +43,7 @@ public final class PatientHandler {
 	 */
 	boolean isValid(String input, String type) {
             // this regex is still rather incomplete
-            Pattern pattern = Pattern.compile("[0-9<>!\"$%\\+&{}[]]");
+            Pattern pattern = Pattern.compile("[0-9<>!\"$%\\+&][{}]");
             try {
                 if (pattern.matcher(input).matches()) {
                     throw new IllegalArgumentException();
@@ -56,12 +56,13 @@ public final class PatientHandler {
     }
 
     boolean isValidDate(String DOB) {
-    	// stub
     	return true;
     }
 
     boolean isUniqueID(String id) {
-        // stub
-        return true;
+        if (Database.idNumbers.add(id)){
+            return true;
+        }
+        return false;
     }
 }
