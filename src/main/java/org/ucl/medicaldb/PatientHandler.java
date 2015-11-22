@@ -1,36 +1,57 @@
 package org.ucl.medicaldb;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
 public final class PatientHandler {
-
-    boolean isValid(String input, String type) {
-        Pattern pattern;
-
-        if (type == "name") {
-	    pattern = Pattern.compile("^[a-zA-Z]+");
-        } else if (type == "last name") {
-	    pattern = Pattern.compile("^[a-zA-Z]+[ '-]?[a-zA-Z]+$");
-        } else {
-            pattern = Pattern.compile("[a-z][a-z][0-9]+");
-        }
-
+	/* logger */
+	private static final Logger log = Logger.getLogger(Class.class.getName());
+    
+	
+	/**
+	 * checks that a compulsory field contains some text, not just whitespace
+	 * @param String input
+	 * @return boolean
+	 */
+	boolean completedObligatoryField(String input) {
+    	if (StringUtils.isBlank(input)) {
+    		return false;
+    	}
+    	return true;
+    }
+	
+	/** uses a simple regex to check for "reasonable" name forms. It excludes
+	 * some symbols which do not appear in any names, such as "?", but makes no
+	 * attempt at more complex verification, nor does it check for capitalization, 
+	 * which can very greatly in usage.
+	 * @param String type
+	 * @return boolean
+	 */
+	boolean isValid(String input) {
+		Pattern pattern = Pattern.compile("[a-z]{2}[0-9]+");
+		if (pattern.matcher(input).matches()) {
+			return true;
+		}
+		return false;
+	}
+	
+	boolean isValid(String input, String type) {
+        Pattern pattern = Pattern.compile("[0-9<>/!\"£$%^&*\\+=¬|?]");
         try {
-            if (!pattern.matcher(input).matches()) {
+            if (pattern.matcher(input).matches()) {
                 throw new IllegalArgumentException();
             }
         } catch (IllegalArgumentException e) {
-            System.out.println(input + " is not valid input.");
+        	log.log(Level.INFO, "incorrect name string entered by user");
+        	return false;
         }
         return true;
     }
 
-    String normalizeNameCaps(String string) {
-	return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
-    }
-
     boolean isValidDate(String DOB) {
-	return true;
+    	return true;
     }
 
     boolean isUniqueID(String id) {

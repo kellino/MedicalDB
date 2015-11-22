@@ -16,19 +16,16 @@ public class PatientAdder {
         Patient patient = new Patient();
 
         System.out.print("Enter patient first name: ");
-        patient.setFirstName(in.next());
+        patient.setFirstName(in.nextLine());
 
         System.out.print("Enter patient last name: ");
-        patient.setLastName(in.next());
+        patient.setLastName(in.nextLine());
 
         System.out.print("Patient ID: ");
-        patient.setPatientID(in.next());
+        patient.setPatientID(in.nextLine());
 
-        // this to be 3 comboboxes in the GUI
-        System.out.print("Date Of Birth");
+        System.out.print("Date Of Birth: ");
         patient.setDOB(in.nextLine());
-
-        in.nextLine(); // dumps the \n from the previous input
 
         System.out.print("Address: ");
         patient.setAddress(in.nextLine());
@@ -39,7 +36,6 @@ public class PatientAdder {
         System.out.print("Next Appointment: ");
         patient.setNextAppointment(in.nextLine());
 
-        in.nextLine();
         System.out.print("Comments: ");
         patient.setComments(in.nextLine());
 

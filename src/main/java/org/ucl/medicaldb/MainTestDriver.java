@@ -29,11 +29,14 @@ public class MainTestDriver {
         } while (running);
 
 
-        for (Patient patient: medDB.currentPatients) {
-            medDB.dumpDBtoFile(patient.toString());
-        }
+        medDB.dumpDBtoFile();
 
         showPatients(medDB.currentPatients);
+        
+        //medDB.removePatient(1);
+        
+        //showPatients(medDB.currentPatients);
+        medDB.dumpDBtoFile();
 
         System.out.println("Goodbye");
         
