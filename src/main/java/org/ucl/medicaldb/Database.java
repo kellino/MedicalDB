@@ -12,18 +12,20 @@ import java.util.regex.Pattern;
 import org.ucl.medicaldb.Patient;
 
 public class Database {
-    private String fileLocation = "/home/david/Programming/Java/medicaldb/db.txt";
     private static final Logger log = Logger.getLogger(Class.class.getName());
-    protected ArrayList<Patient> currentPatients = new ArrayList<Patient>();
+
+    private static final String FILELOCATION = "/home/david/Programming/Java/medicaldb/db.txt";
+    protected static ArrayList<Patient> currentPatients = new ArrayList<Patient>();
     protected static Set<String> idNumbers = new HashSet<String>();
     private static CSVReader reader;
     private static BufferedWriter writer;
-    private static char delim = ':';
     private static int setterCount;
+
+    private static final char DELIM = ':';
 
     public Database() {
         try {
-            File db = new File(fileLocation);
+            File db = new File(FILELOCATION);
             setterCount = getPatientMethods();
             if (!db.exists()) {
                 log.log(Level.INFO, "creating new database file");
@@ -38,7 +40,7 @@ public class Database {
     void dumpDBtoFile() {
         writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter(fileLocation)); 
+            writer = new BufferedWriter(new FileWriter(FILELOCATION)); 
             for (Patient patient : currentPatients) {
                 writer.write(patient.toString());
             }
@@ -64,7 +66,7 @@ public class Database {
     void loadDBfromFile() {
         reader = null;
         try {
-            reader = new CSVReader(new FileReader(fileLocation), delim);
+            reader = new CSVReader(new FileReader(FILELOCATION), DELIM);
             String[] patient;
             while ((patient = reader.readNext()) != null) {
             	Patient p = arrayToPatient(patient);
@@ -127,14 +129,16 @@ public class Database {
     	return temp;
     }
     
-    private boolean populateIdSet(String id) {
+    /** creates a java set of id numbers as read from the database file
+     * @param String id
+     */
+    private void populateIdSet(String id) {
     	try {
     		idNumbers.add(id);
     	} catch (Exception e) {
     		log.log(Level.WARNING, e.getMessage());
     	}
     	for (String d : idNumbers) { System.out.println(d);}
-    	return false;
     }
     
     void removePatient(int index) {

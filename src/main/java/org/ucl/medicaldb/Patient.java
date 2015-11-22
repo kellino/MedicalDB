@@ -41,8 +41,7 @@ public class Patient {
 
     public void setPatientID(String patientID) { 
         // do this with hashmap
-        if (checker.completedObligatoryField(patientID) && checker.isValid(patientID) && 
-        		checker.isUniqueID(patientID)) {
+        if (checker.completedObligatoryField(patientID) && checker.isValid(patientID) && checker.isUniqueID(patientID)) {
             this.patientID = patientID; 
         } else {
         	System.out.println("Not a valid id");

@@ -22,7 +22,7 @@ public class GUI extends JFrame {
      * @wbp.parser.entryPoint
      */
     void createAndShowGUI() {
-        JFrame frame = new JFrame("Login Screen");
+        JFrame frame = new JFrame("UCL Medical Database @author David Kelly");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(1200, 800));
         
