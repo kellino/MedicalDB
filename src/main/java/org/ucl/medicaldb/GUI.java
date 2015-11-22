@@ -15,34 +15,9 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
-	JPanel cardPanel;
-	CardLayout cards = new CardLayout();
+    JPanel cardPanel;
+    CardLayout cards = new CardLayout();
 	 
-	public void addComponentToPane(Container pane) {
-		JPanel LoginScreen = new JPanel();
-		JLabel Username = new JLabel("Username");
-		LoginScreen.add(Username);
-		
-		JButton button = new JButton("Press me");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cards.next(cardPanel);
-			}
-		});
-		LoginScreen.add(button);
-		
-		JPanel MainScreen = new JPanel();
-		JLabel StuffHere = new JLabel("Stuff");
-		MainScreen.add(StuffHere);
-		
-		cardPanel = new JPanel();
-		cardPanel.setLayout(cards);
-		cardPanel.add(LoginScreen);
-		cardPanel.add(MainScreen);
-		
-		pane.add(cardPanel, BorderLayout.CENTER);
-	}
-	
     /**
      * @wbp.parser.entryPoint
      */
@@ -56,6 +31,42 @@ public class GUI extends JFrame {
 
         frame.pack();
         frame.setVisible(true);
+    }
 
+    public void addComponentToPane(Container pane) {
+        JPanel LoginScreen = loginScreen();
+		
+	JPanel MainScreen = mainScreen();
+		
+	cardPanel = new JPanel();
+	cardPanel.setLayout(cards);
+	cardPanel.add(LoginScreen);
+	cardPanel.add(MainScreen);
+		
+	pane.add(cardPanel, BorderLayout.CENTER);
+    }
+
+    private JPanel loginScreen() {
+        JPanel ls = new JPanel();
+        JLabel userNameLbl = new JLabel("Username");
+        userNameLbl.setBounds(200, 200, 100, 30);
+        ls.add(userNameLbl);
+
+	JButton button = new JButton("Press me");
+	button.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		cards.next(cardPanel);
+	    }
+	});
+	ls.add(button);
+
+        return ls;
+    }
+
+    private JPanel mainScreen() {
+        JPanel ms = new JPanel();
+        JLabel stuff = new JLabel("nothing to see here");
+        ms.add(stuff);
+        return ms;
     }
 }
