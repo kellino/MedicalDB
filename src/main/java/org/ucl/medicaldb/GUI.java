@@ -11,12 +11,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
     JPanel cardPanel;
     CardLayout cards = new CardLayout();
+    //private JTextField usernameField;
+    //private JPasswordField passwordField;
 	 
     /**
      * @wbp.parser.entryPoint
@@ -47,18 +51,40 @@ public class GUI extends JFrame {
     }
 
     private JPanel loginScreen() {
+        final LoginHandler lh = new LoginHandler();
         JPanel ls = new JPanel();
+        ls.setLayout(null);
         JLabel userNameLbl = new JLabel("Username");
-        userNameLbl.setBounds(200, 200, 100, 30);
+        userNameLbl.setBounds(223, 251, 72, 15);
         ls.add(userNameLbl);
 
-	JButton button = new JButton("Press me");
+	final JTextField usernameField = new JTextField();
+	usernameField.setBounds(352, 249, 104, 19);
+	ls.add(usernameField);
+	usernameField.setColumns(10);
+	
+	JLabel lblPassword = new JLabel("Password");
+	lblPassword.setBounds(205, 290, 70, 15);
+	ls.add(lblPassword);
+	
+	final JTextField passwordField = new JPasswordField();
+	passwordField.setBounds(380, 288, 100, 19);
+	ls.add(passwordField);
+
+	JButton button = new JButton("Enter");
+	button.setBounds(352, 381, 99, 25);
 	button.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		cards.next(cardPanel);
+		if (lh.checkLoginDetails()) {
+		    cards.next(cardPanel);
+                } else {
+                    usernameField.setText("");
+                    passwordField.setText("");
+                }
 	    }
 	});
 	ls.add(button);
+	
 
         return ls;
     }
