@@ -1,6 +1,8 @@
-package org.ucl.medicaldb;
+package org.ucl.gui;
 
 public class LoginHandler {
+    private final String root = "root";
+    private final String rootPassword = "medical";
     private String username;
     private String password;
 
@@ -8,23 +10,14 @@ public class LoginHandler {
         this.username = username;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String password() {
-        return password;
-    }
-
-    protected boolean checkLoginDetails() {
-        if (this.username == "root" && this.password == "medical") {
+    boolean checkLoginDetails() {
+        if (username.equals(root) && password.equals(rootPassword)) {
             return true;
         }
         return false;
     }
-
 }

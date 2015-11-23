@@ -1,0 +1,22 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+addComponentToPane	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    public void addComponentToPane(Container pane) {$/;"	m	language:Java	class:GUI
+cardPanel	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    JPanel cardPanel;$/;"	f	language:Java	class:GUI
+cards	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    CardLayout cards = new CardLayout();$/;"	f	language:Java	class:GUI
+checkLoginDetails	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    boolean checkLoginDetails() {$/;"	m	language:Java	class:LoginHandler
+createAndShowGUI	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    public void createAndShowGUI() {$/;"	m	language:Java	class:GUI
+GUI	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^public class GUI extends JFrame {$/;"	c	language:Java
+lh	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    LoginHandler lh;$/;"	f	language:Java	class:GUI
+log	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    private static final Logger log = Logger.getLogger(Class.class.getName());$/;"	f	language:Java	class:GUI	file:
+LoginHandler	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^public class LoginHandler {$/;"	c	language:Java
+loginScreen	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    private JPanel loginScreen() {$/;"	m	language:Java	class:GUI	file:
+mainScreen	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    private JPanel mainScreen() {$/;"	m	language:Java	class:GUI	file:
+org.ucl.gui	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^package org.ucl.gui;$/;"	p	language:Java
+org.ucl.gui	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^package org.ucl.gui;$/;"	p	language:Java
+password	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    private String password;$/;"	f	language:Java	class:LoginHandler	file:
+passwordField	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    static JTextField passwordField;$/;"	f	language:Java	class:GUI
+root	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    private final String root = "root";$/;"	f	language:Java	class:LoginHandler	file:
+rootPassword	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    private final String rootPassword = "medical";$/;"	f	language:Java	class:LoginHandler	file:
+setPassword	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    public void setPassword(String password) {$/;"	m	language:Java	class:LoginHandler
+setUsername	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    public void setUsername(String username) {$/;"	m	language:Java	class:LoginHandler
+username	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    private String username;$/;"	f	language:Java	class:LoginHandler	file:
+usernameField	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    static JTextField usernameField;	 $/;"	f	language:Java	class:GUI

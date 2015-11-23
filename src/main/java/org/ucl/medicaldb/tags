@@ -26,6 +26,7 @@ getDOB	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/uc
 getFirstName	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Patient.java	/^    public String getFirstName() { $/;"	m	language:Java	class:Patient
 getLastName	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Patient.java	/^    public String getLastName() {$/;"	m	language:Java	class:Patient
 getNextAppointment	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Patient.java	/^    public String getNextAppointment() { $/;"	m	language:Java	class:Patient
+getPassword	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/LoginHandler.java	/^    public String getPassword() {$/;"	m	language:Java	class:LoginHandler
 getPatientID	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Patient.java	/^    public String getPatientID() { $/;"	m	language:Java	class:Patient
 getPatientMethods	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    private static int getPatientMethods() {$/;"	m	language:Java	class:Database	file:
 getUsername	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/LoginHandler.java	/^    public String getUsername() {$/;"	m	language:Java	class:LoginHandler
@@ -36,6 +37,7 @@ isValid	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/u
 isValid	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/PatientHandler.java	/^	boolean isValid(String input, String type) {$/;"	m	language:Java	class:PatientHandler
 isValidDate	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/PatientHandler.java	/^    boolean isValidDate(String DOB) {$/;"	m	language:Java	class:PatientHandler
 lastName	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Patient.java	/^    private String lastName;$/;"	f	language:Java	class:Patient	file:
+lh	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/GUI.java	/^    LoginHandler lh;$/;"	f	language:Java	class:GUI
 loadDBfromFile	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    void loadDBfromFile() {$/;"	m	language:Java	class:Database
 loadPatient	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    void loadPatient() {};$/;"	m	language:Java	class:Database
 log	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    private static final Logger log = Logger.getLogger(Class.class.getName());$/;"	f	language:Java	class:Database	file:
@@ -58,7 +60,7 @@ org.ucl.medicaldb	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/
 org.ucl.medicaldb	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Patient.java	/^package org.ucl.medicaldb;$/;"	p	language:Java
 org.ucl.medicaldb	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/PatientHandler.java	/^package org.ucl.medicaldb;$/;"	p	language:Java
 password	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/LoginHandler.java	/^    private String password;$/;"	f	language:Java	class:LoginHandler	file:
-password	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/LoginHandler.java	/^    public String password() {$/;"	m	language:Java	class:LoginHandler
+passwordField	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/GUI.java	/^    static JTextField passwordField;$/;"	f	language:Java	class:GUI
 Patient	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Patient.java	/^public class Patient {$/;"	c	language:Java
 PatientHandler	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/PatientHandler.java	/^public final class PatientHandler {$/;"	c	language:Java
 patientID	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Patient.java	/^    private String patientID;$/;"	f	language:Java	class:Patient	file:
@@ -80,4 +82,5 @@ setUsername	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/o
 showPatients	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/MainTestDriver.java	/^    public static void showPatients(ArrayList<Patient> patientDB) {$/;"	m	language:Java	class:MainTestDriver
 toString	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Patient.java	/^    public String toString() {$/;"	m	language:Java	class:Patient
 username	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/LoginHandler.java	/^    private String username;$/;"	f	language:Java	class:LoginHandler	file:
+usernameField	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/GUI.java	/^    static JTextField usernameField;	 $/;"	f	language:Java	class:GUI
 writer	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    private static BufferedWriter writer;$/;"	f	language:Java	class:Database	file:

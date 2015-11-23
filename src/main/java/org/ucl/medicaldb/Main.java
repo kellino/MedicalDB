@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.UIManager;
 
+import org.ucl.gui.GUI;
+
 public class Main {
 	static Database medDB;
 	
