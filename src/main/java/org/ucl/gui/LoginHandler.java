@@ -18,7 +18,6 @@ public class LoginHandler {
     }
 
     boolean checkLoginDetails() {
-        System.out.println(checkMD5(password));
         if (username.equals(root) && checkMD5(password).equals(passwordHex)) {
             return true;
         }
