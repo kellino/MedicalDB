@@ -80,7 +80,7 @@ public class Database {
         } catch (Exception e) {
             log.log(Level.SEVERE, e.getMessage());
         } finally {
-            try {
+        	try {
                 if (reader != null) {
                     reader.close();
                 }
@@ -138,7 +138,6 @@ public class Database {
     	} catch (Exception e) {
     		log.log(Level.WARNING, e.getMessage());
     	}
-    	for (String d : idNumbers) { System.out.println(d);}
     }
     
     void removePatient(int index) {
