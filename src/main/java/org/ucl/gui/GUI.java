@@ -4,14 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-//import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
-    //private static final Logger log = Logger.getLogger(Class.class.getName());
+    public GUI() {}
 
     static JPanel cardPanel;
     static CardLayout cards = new CardLayout();
@@ -22,6 +20,7 @@ public class GUI extends JFrame {
         JFrame frame = new JFrame("UCL Medical Database @author David Kelly");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        frame.setResizable(false);
         
         GUI gui = new GUI();
         gui.addComponentToPane(frame.getContentPane());
@@ -33,21 +32,13 @@ public class GUI extends JFrame {
     private void addComponentToPane(Container pane) {
         LoginScreen login = new LoginScreen();
 		
-	JPanel MainScreen = mainScreen();
+	MainScreen mainscreen = new MainScreen();
 		
 	cardPanel = new JPanel();
 	cardPanel.setLayout(cards);
 	cardPanel.add(login);
-	cardPanel.add(MainScreen);
+	cardPanel.add(mainscreen);
 		
 	pane.add(cardPanel, BorderLayout.CENTER);
-    }
-
-
-    private JPanel mainScreen() {
-        JPanel ms = new JPanel();
-        JLabel stuff = new JLabel("nothing to see here");
-        ms.add(stuff);
-        return ms;
     }
 }
