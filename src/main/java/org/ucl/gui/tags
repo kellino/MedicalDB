@@ -1,23 +1,33 @@
 !_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+actionPerformed	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^        public void actionPerformed(ActionEvent e) {$/;"	m	language:Java	class:MainScreen.MenuListener
 addComponentToPane	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    private void addComponentToPane(Container pane) {$/;"	m	language:Java	class:GUI	file:
-bgimage	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginScreen.java	/^    ImageIO bgimage;$/;"	f	language:Java	class:LoginScreen
-cardPanel	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    JPanel cardPanel;$/;"	f	language:Java	class:GUI
-cards	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    CardLayout cards = new CardLayout();$/;"	f	language:Java	class:GUI
+bgimage	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginScreen.java	/^    BufferedImage bgimage;$/;"	f	language:Java	class:LoginScreen
+cardPanel	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    static JPanel cardPanel;$/;"	f	language:Java	class:GUI
+cards	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    static CardLayout cards = new CardLayout();$/;"	f	language:Java	class:GUI
 checkLoginDetails	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    boolean checkLoginDetails() {$/;"	m	language:Java	class:LoginHandler
 checkMD5	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    private String checkMD5(String inputPassword) {$/;"	m	language:Java	class:LoginHandler	file:
+confirmationDialog	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private int confirmationDialog() {$/;"	m	language:Java	class:MainScreen	file:
 createAndShowGUI	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    public void createAndShowGUI() {$/;"	m	language:Java	class:GUI
+createMedicalDataPane	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private JTabbedPane createMedicalDataPane() {$/;"	m	language:Java	class:MainScreen	file:
+createMenu	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private JMenuBar createMenu() {$/;"	m	language:Java	class:MainScreen	file:
+createPatientDataArea	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private JPanel createPatientDataArea() {$/;"	m	language:Java	class:MainScreen	file:
+GUI	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    public GUI() {}$/;"	m	language:Java	class:GUI
 GUI	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^public class GUI extends JFrame {$/;"	c	language:Java
 HEIGHT	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    private static final int HEIGHT = 800;$/;"	f	language:Java	class:GUI	file:
 lh	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginScreen.java	/^    LoginHandler lh;$/;"	f	language:Java	class:LoginScreen
+LIGHT_BLUE	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private static final Color LIGHT_BLUE = new Color(102, 178, 255);$/;"	f	language:Java	class:MainScreen	file:
 log	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginScreen.java	/^    private static final Logger log = Logger.getLogger(Class.class.getName());$/;"	f	language:Java	class:LoginScreen	file:
 LoginHandler	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^public class LoginHandler {$/;"	c	language:Java
 LoginScreen	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginScreen.java	/^    public LoginScreen() {$/;"	m	language:Java	class:LoginScreen
 LoginScreen	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginScreen.java	/^public class LoginScreen extends JPanel {$/;"	c	language:Java
-mainScreen	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    private JPanel mainScreen() {$/;"	m	language:Java	class:GUI	file:
+MainScreen	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    public MainScreen() {$/;"	m	language:Java	class:MainScreen
+MainScreen	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^public class MainScreen extends JPanel {$/;"	c	language:Java
+MenuListener	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private class MenuListener implements ActionListener {$/;"	c	language:Java	class:MainScreen
 newButton	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginScreen.java	/^    private JButton newButton() {$/;"	m	language:Java	class:LoginScreen	file:
 org.ucl.gui	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^package org.ucl.gui;$/;"	p	language:Java
 org.ucl.gui	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^package org.ucl.gui;$/;"	p	language:Java
 org.ucl.gui	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginScreen.java	/^package org.ucl.gui;$/;"	p	language:Java
+org.ucl.gui	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^package org.ucl.gui;$/;"	p	language:Java
 paintComponent	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginScreen.java	/^    protected void paintComponent(Graphics g) {$/;"	m	language:Java	class:LoginScreen
 password	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    private String password;$/;"	f	language:Java	class:LoginHandler	file:
 passwordField	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginScreen.java	/^    static JPasswordField passwordField;$/;"	f	language:Java	class:LoginScreen

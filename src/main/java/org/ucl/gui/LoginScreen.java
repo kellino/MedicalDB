@@ -38,18 +38,18 @@ public class LoginScreen extends JPanel {
         lh = new LoginHandler();
 
         /* initialize the loginScreen panel */
-        this.setLayout(null);
-        this.setBackground(Color.BLUE);
+        setLayout(null);
+        setBackground(Color.BLUE);
 
         JLabel userNameLbl = new JLabel("Username");
         userNameLbl.setFont(new Font("Sauce Code Powerline", Font.BOLD, 20));
         userNameLbl.setForeground(Color.WHITE);
         userNameLbl.setBounds(450, 350, 100, 30);
-        this.add(userNameLbl);
+        add(userNameLbl);
 
         usernameField = new JTextField();
         usernameField.setBounds(550, 350, 136, 30);
-        this.add(usernameField);
+        add(usernameField);
         usernameField.setColumns(10);
 	
         JLabel lblPassword = new JLabel("Password");
@@ -57,14 +57,14 @@ public class LoginScreen extends JPanel {
         lblPassword.setForeground(Color.WHITE);
         lblPassword.setBounds(450, 390, 100, 30);
 	
-        this.add(lblPassword);
+        add(lblPassword);
 	
         passwordField = new JPasswordField();
         passwordField.setBounds(550, 390, 136, 30);
-        this.add(passwordField);
+        add(passwordField);
 
         JButton enter = newButton();
-        this.add(enter);
+        add(enter);
     }
 
     @Override
