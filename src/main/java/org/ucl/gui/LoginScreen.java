@@ -42,23 +42,25 @@ public class LoginScreen extends JPanel {
         this.setBackground(Color.BLUE);
 
         JLabel userNameLbl = new JLabel("Username");
-        userNameLbl.setFont(new Font("Sauce Code Powerline", Font.BOLD, 14));
-        userNameLbl.setBounds(375, 240, 72, 25);
+        userNameLbl.setFont(new Font("Sauce Code Powerline", Font.BOLD, 20));
+        userNameLbl.setForeground(Color.WHITE);
+        userNameLbl.setBounds(450, 350, 100, 30);
         this.add(userNameLbl);
 
         usernameField = new JTextField();
-        usernameField.setBounds(465, 240, 136, 25);
+        usernameField.setBounds(550, 350, 136, 30);
         this.add(usernameField);
         usernameField.setColumns(10);
 	
         JLabel lblPassword = new JLabel("Password");
-        lblPassword.setFont(new Font("Sauce Code Powerline", Font.BOLD, 14));
-        lblPassword.setBounds(377, 282, 70, 15);
+        lblPassword.setFont(new Font("Sauce Code Powerline", Font.BOLD, 20));
+        lblPassword.setForeground(Color.WHITE);
+        lblPassword.setBounds(450, 390, 100, 30);
 	
         this.add(lblPassword);
 	
         passwordField = new JPasswordField();
-        passwordField.setBounds(465, 277, 136, 25);
+        passwordField.setBounds(550, 390, 136, 30);
         this.add(passwordField);
 
         JButton enter = newButton();
@@ -73,7 +75,7 @@ public class LoginScreen extends JPanel {
     private JButton newButton() {
         JButton enter = new JButton("Enter"); 
         enter.setFont(new Font("Sauce Code Powerline", Font.BOLD, 14));
-        enter.setBounds(466, 326, 135, 25);
+        enter.setBounds(550, 430, 135, 30);
 
         /* the ActionListener grabs the next from the username and password fields, runs the password
          * checker, and either loads the next card (the main screen) or produces an error message
