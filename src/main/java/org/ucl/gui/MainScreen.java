@@ -33,8 +33,7 @@ public class MainScreen extends JPanel {
         c.anchor = GridBagConstraints.NORTHWEST;
 	c.gridx = 0;
 	c.gridy = 5;
-        c.weightx = 1.0;
-        c.weighty = 5.0;
+        c.weighty = 1.0;
 	JPanel patientData = createPatientDataArea();
 	add(patientData, c);
 
@@ -42,8 +41,7 @@ public class MainScreen extends JPanel {
         c.anchor = GridBagConstraints.NORTHWEST;
         c.gridx = 0;
         c.gridy = 6;
-        c.weightx = 1.0;
-        c.weighty = 6.0;
+        c.weighty = 1.0;
 	JTabbedPane medicalDataPane = createMedicalDataPane();
         add(medicalDataPane, c);
     }
@@ -154,8 +152,10 @@ public class MainScreen extends JPanel {
 
     private JTabbedPane createMedicalDataPane() {
         JTabbedPane medicalDataPane = new JTabbedPane();
-        JLabel medicalHistory = new JLabel();
-        JLabel photos = new JLabel();
+        JPanel medicalHistory = new JPanel();
+        medicalHistory.setBackground(Color.RED);
+        JPanel photos = new JPanel();
+        photos.setBackground(Color.BLUE);
         medicalDataPane.add("Medical History", medicalHistory); 
         medicalDataPane.add("Photographs", photos);
 
