@@ -33,7 +33,6 @@ public class MainScreen extends JPanel {
         c.anchor = GridBagConstraints.NORTHWEST;
 	c.gridx = 0;
 	c.gridy = 5;
-        c.weighty = 1.0;
 	JPanel patientData = createPatientDataArea();
 	add(patientData, c);
 
