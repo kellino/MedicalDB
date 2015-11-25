@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -12,11 +13,13 @@ import javax.swing.*;
  */
 @SuppressWarnings("serial")
 public class MainScreen extends JPanel {
-    private static final Color LIGHT_BLUE = new Color(102, 178, 255);
-    private static final String[] titles = new String[] {"Patient ID", "Title", "Sex", "Last Name", "First Name(s)", "Date of Birth", "Address"};
+    private static final Color LIGHT_BLUE = new Color(102, 178, 255, 240);
+    private static final String[] fields = new String[] {"Patient ID", "Title", "Sex", "Last Name", "First Name(s)", "Date of Birth", "D", "M", "Y", "Address"};
+    //private static final String[] titles = new String[] {"Mr", "Mrs", "Ms", "Dr"};
     private static final int WIDTH = GUI.WIDTH;
-    private static final int HEIGHT = GUI.HEIGHT;
+    //private static final int HEIGHT = GUI.HEIGHT;
 
+    /** contructor for the main screen */
     public MainScreen() {
 	setLayout(new GridBagLayout());
 
@@ -49,11 +52,17 @@ public class MainScreen extends JPanel {
         add(medicalHistoryPanel, c);
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(LoginScreen.bgimage, 0, 0, null);
+    }
+
     private JMenuBar createMenu() {
         JMenuBar mb = new JMenuBar();
         MenuListener l = new MenuListener();
         JMenuItem menuItem;
         mb.setBounds(0, 0, 1200, 30);
+        mb.setBorder(BorderFactory.createEtchedBorder(1));
 
 	JMenu mnFile = new JMenu("File");
 	mnFile.setMnemonic(KeyEvent.VK_F);
@@ -125,47 +134,53 @@ public class MainScreen extends JPanel {
         JPanel area = new JPanel(null);
         area.setPreferredSize(new Dimension(1200, 300));
         area.setBackground(LIGHT_BLUE);
+        area.setBorder(BorderFactory.createEtchedBorder(1));
 
-
-        JLabel[] titleContainers = new JLabel[titles.length];
-        for (int i = 0; i < titles.length; i++) {
+        JLabel[] titleContainers = new JLabel[fields.length];
+        for (int i = 0; i < fields.length; i++) {
             int y_shift = (i - 2) * 40;
             titleContainers[i] = new JLabel();
             switch (i) {
                 case 0: /* patient id */
-                    titleContainers[i].setBounds(40, 40, 150, 30);
-                    titleContainers[i].setText(titles[i]);
+                    titleContainers[i].setBounds(50, 40, 150, 30);
+                    titleContainers[i].setText(fields[i]);
                     break;
                 case 1: /* title */
-                    titleContainers[i].setBounds(260, 40, 150, 30);
-                    titleContainers[i].setText(titles[i]);
+                    titleContainers[i].setBounds(240, 40, 100, 30);
+                    titleContainers[i].setText(fields[i]);
                     break;
                 case 2: /* sex */
-                    titleContainers[i].setBounds(400, 40, 150, 30);
-                    titleContainers[i].setText(titles[i]);
+                    titleContainers[i].setBounds(380, 40, 100, 30);
+                    titleContainers[i].setText(fields[i]);
+                    break;
+                case 6:
+                    titleContainers[i].setBounds(100, 4- + y_shift, 100, 30);
+                    break;
+                case 7:
+                case 8:
                     break;
                 default:
-                    titleContainers[i].setBounds(40, 40 + y_shift, 150, 30);
-                    titleContainers[i].setText(titles[i]);
+                    titleContainers[i].setBounds(50, 40 + y_shift, 150, 30);
+                    titleContainers[i].setText(fields[i]);
                     break;
             }
             area.add(titleContainers[i]);
         }
         
-        JTextField[] inputFields = new JTextField[titles.length];
-        for (int i = 0; i < titles.length; i++) {
+        JTextField[] inputFields = new JTextField[fields.length];
+        for (int i = 0; i < fields.length; i++) {
             int y_shift = (i - 2) * 40;
             inputFields[i] = new JTextField();
             
             switch (i) {
                 case 0: /* patient id */
-                    inputFields[i].setBounds(150, 40, WIDTH / 12, 30);
+                    createComboBoxArray(area, 40);
                     break;
-                case 1: /* title */
-                    //inputFields[i].setBounds(300, 40, WIDTH / 13, 30);
+                case 1: // this positions are filled with the
+                case 2: // createComboBoxArray() function
                     break;
-                case 2: /* sex */
-                    //inputFields[i].setBounds(450, 40, WIDTH / 13, 30);
+                case 5:
+                    createComboBoxArray(area, 160);
                     break;
                 case 6: /* address */
                     inputFields[i].setBounds(150, 40 + y_shift, WIDTH / 2, 30);
@@ -176,14 +191,6 @@ public class MainScreen extends JPanel {
             area.add(inputFields[i]);
         }
 
-        JComboBox<String> title = new JComboBox<String>();
-        title.setBounds(300, 40, WIDTH / 13, 30);
-        area.add(title);
-
-        JComboBox<String> sex = new JComboBox<String>();
-        sex.setBounds(420, 40, WIDTH / 13, 30);
-        area.add(sex);
-
         JLabel picture = new JLabel();
         picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/ab100.png"));
         picture.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.BLUE));
@@ -193,17 +200,26 @@ public class MainScreen extends JPanel {
         return area;
     }
 
+    private void createComboBoxArray(JPanel area, int y) {
+        ArrayList<JComboBox<String>> jBoxArray = new ArrayList<JComboBox<String>>();
+        for (int i = 0; i < 3; i++) {
+            jBoxArray.add(new JComboBox<String>());
+            jBoxArray.get(i).setBounds(150 + (i * 130), y, WIDTH / 14, 30);
+            area.add(jBoxArray.get(i));
+        }
+    }
+
     private JSplitPane medicalHistoryPanel() {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 	JTabbedPane medicalDataPane = tabbedMedicalDataPane();
 	JLabel label = new JLabel();
-	label.setMinimumSize(new Dimension(300, 400));
+	label.setMinimumSize(new Dimension(300, 460));
 
         splitPane.setLeftComponent(label);
         splitPane.setRightComponent(medicalDataPane);
         splitPane.setDividerSize(10);
         splitPane.setOneTouchExpandable(true);
-        splitPane.setPreferredSize(new Dimension(800, 420));
+        splitPane.setPreferredSize(new Dimension(600, 460));
     
         return splitPane;
     }
@@ -213,13 +229,8 @@ public class MainScreen extends JPanel {
         medicalDataPane.setMinimumSize(new Dimension(500, 400));
         medicalDataPane.setPreferredSize(new Dimension(800, 400));
 
-        JPanel medicalHistory = new JPanel();
-        medicalHistory.setBackground(Color.DARK_GRAY);
-        JLabel condition = new JLabel();
-        condition.setText("Medical Condition(s)");
-        condition.setBackground(Color.LIGHT_GRAY);
-        condition.setForeground(Color.WHITE);
-        medicalHistory.add(condition);
+        JPanel medicalHistory = createMedicalHistoryPane();
+
 
         JPanel photos = new JPanel();
         photos.setBackground(Color.BLUE);
@@ -228,5 +239,23 @@ public class MainScreen extends JPanel {
         medicalDataPane.add("Photographs", photos);
 
         return medicalDataPane;
+    }
+
+    private JPanel createMedicalHistoryPane() {
+        JPanel medicalHistory = new JPanel();
+        medicalHistory.setBackground(Color.DARK_GRAY);
+        medicalHistory.setLayout(new FlowLayout());
+        medicalHistory.setBorder(BorderFactory.createBevelBorder(1));
+
+        JLabel condition = new JLabel();
+        condition.setText("Medical Condition(s)");
+        condition.setBackground(Color.LIGHT_GRAY);
+        condition.setForeground(Color.WHITE);
+        medicalHistory.add(condition);
+
+        JTextField conditionField = new JTextField();
+        conditionField.add(condition);
+        
+        return medicalHistory;
     }
 }

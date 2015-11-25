@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,7 +26,7 @@ public class LoginScreen extends JPanel {
     static JTextField usernameField;
     static JPasswordField passwordField;
     LoginHandler lh;
-    BufferedImage bgimage;
+    protected static BufferedImage bgimage;
     
     public LoginScreen() {
         /* initializes the login checker */
@@ -40,6 +41,7 @@ public class LoginScreen extends JPanel {
         /* initialize the loginScreen panel */
         setLayout(null);
         setBackground(Color.BLUE);
+        setBorder(BorderFactory.createEtchedBorder(1));
 
         JLabel userNameLbl = new JLabel("Username");
         userNameLbl.setFont(new Font("Sauce Code Powerline", Font.BOLD, 20));
