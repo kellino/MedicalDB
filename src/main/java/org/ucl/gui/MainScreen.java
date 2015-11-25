@@ -16,27 +16,36 @@ public class MainScreen extends JPanel {
     private static final String[] titles = new String[] {"Patient ID", "Last Name", "First Name(s)", "Date of Birth", "Address"};
 
     public MainScreen() {
-	setLayout(new BorderLayout());
+	setLayout(new GridBagLayout());
 
-	UIManager.getLookAndFeelDefaults()
-	    .put("defaultFont", new Font("Sans Serif", Font.BOLD, 14));
-		
+        GridBagConstraints c = new GridBagConstraints();
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.gridx = 0;
+        c.gridy = 1;
+        c.weightx = 1.0;
 	JMenuBar menuBar = createMenu();
-	add(menuBar);
+	add(menuBar, c);
+	
 
+	c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTHWEST;
+	c.gridx = 0;
+	c.gridy = 5;
+        c.weightx = 1.0;
+        c.weighty = 5.0;
 	JPanel patientData = createPatientDataArea();
-	add(patientData);
+	add(patientData, c);
 
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.gridx = 0;
+        c.gridy = 6;
+        c.weightx = 1.0;
+        c.weighty = 6.0;
 	JTabbedPane medicalDataPane = createMedicalDataPane();
-	JPanel panel = new JPanel();
-	panel.setBackground(Color.CYAN);
-	panel.setMinimumSize(new Dimension(100, 100));
-
-	JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panel, medicalDataPane);
-	splitPane.setLocation(0, 400);
-	splitPane.setOneTouchExpandable(true);
-	splitPane.setDividerLocation(500);
-        add(splitPane);
+        add(medicalDataPane, c);
     }
 
     private JMenuBar createMenu() {
@@ -69,7 +78,6 @@ public class MainScreen extends JPanel {
             }
         });
 	mb.add(mnFile);
-
 
         JMenu mnEdit = new JMenu("Edit");
         mnEdit.setMnemonic(KeyEvent.VK_E);
@@ -112,11 +120,9 @@ public class MainScreen extends JPanel {
         return reply;
     }
 
-
     private JPanel createPatientDataArea() {
-        JPanel area = new JPanel();
-        area.setBounds(0, 30, 1200, 300);
-        area.setLayout(new FlowLayout());
+        JPanel area = new JPanel(null);
+        area.setPreferredSize(new Dimension(1200, 300));
         area.setBackground(LIGHT_BLUE);
 
 
@@ -140,6 +146,7 @@ public class MainScreen extends JPanel {
         JLabel picture = new JLabel();
         picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/ab100.png"));
         picture.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.BLUE));
+        picture.setBounds(900, 40, 200, 200);
         area.add(picture);
 
         return area;
@@ -147,16 +154,10 @@ public class MainScreen extends JPanel {
 
     private JTabbedPane createMedicalDataPane() {
         JTabbedPane medicalDataPane = new JTabbedPane();
-        JPanel condition = new JPanel();
-        JPanel comments = new JPanel();
-        JPanel photos = new JPanel();
-        medicalDataPane.setBounds(500, 400, 750, 300); 
-        medicalDataPane.addTab("Condition", condition);
-        condition.setBounds(500, 400, 750, 300); 
-        medicalDataPane.addTab("Comments", comments);
-        comments.setBounds(500, 400, 750, 300); 
-        medicalDataPane.addTab("Photos", photos);
-        photos.setBounds(500, 400, 750, 300); 
+        JLabel medicalHistory = new JLabel();
+        JLabel photos = new JLabel();
+        medicalDataPane.add("Medical History", medicalHistory); 
+        medicalDataPane.add("Photographs", photos);
 
         return medicalDataPane;
     }
