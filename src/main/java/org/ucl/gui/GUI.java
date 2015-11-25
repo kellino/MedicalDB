@@ -1,6 +1,5 @@
 package org.ucl.gui;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -39,6 +38,6 @@ public class GUI extends JFrame {
 	cardPanel.add(login);
 	cardPanel.add(mainscreen);
 		
-	pane.add(cardPanel, BorderLayout.CENTER);
+	pane.add(cardPanel);
     }
 }
