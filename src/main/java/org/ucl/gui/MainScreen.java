@@ -1,28 +1,10 @@
 package org.ucl.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Event;
-import java.awt.Font;
-import java.awt.HeadlessException;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 /**
  * Creates the main screen gui, initializing the various members, such as the menu bar and tabbed 
@@ -31,6 +13,7 @@ import javax.swing.UIManager;
 @SuppressWarnings("serial")
 public class MainScreen extends JPanel {
     private static final Color LIGHT_BLUE = new Color(102, 178, 255);
+    private static final String[] titles = new String[] {"Patient ID", "Last Name", "First Name(s)", "Date of Birth", "Address"};
 
     public MainScreen() {
 	setLayout(new BorderLayout());
@@ -55,7 +38,6 @@ public class MainScreen extends JPanel {
 	splitPane.setDividerLocation(500);
         add(splitPane);
     }
-
 
     private JMenuBar createMenu() {
         JMenuBar mb = new JMenuBar();
@@ -114,13 +96,11 @@ public class MainScreen extends JPanel {
         return mb;
     }
 
-
     private class MenuListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             System.out.println(e.getActionCommand());
         }
     }
-
 
     private int confirmationDialog() {
         int reply = JOptionPane.NO_OPTION;
@@ -136,68 +116,29 @@ public class MainScreen extends JPanel {
     private JPanel createPatientDataArea() {
         JPanel area = new JPanel();
         area.setBounds(0, 30, 1200, 300);
-        area.setLayout(null);
+        area.setLayout(new FlowLayout());
         area.setBackground(LIGHT_BLUE);
 
-        JLabel patientID = new JLabel();
-        patientID.setBounds(30, 40, 100, 25);
-        patientID.setText("Patient ID");
-        area.add(patientID);
 
-        JLabel lastName = new JLabel();
-        lastName.setBounds(30, 70, 100, 25);
-        lastName.setText("Last Name");
-        area.add(lastName);
-
-        JLabel firstNames = new JLabel();
-        firstNames.setBounds(30, 100, 100, 25);
-        firstNames.setText("First Name(s)");
-        area.add(firstNames);
-
-        JLabel dob = new JLabel();
-        dob.setBounds(30, 130, 100, 25);
-        dob.setText("Date of Birth");
-        area.add(dob);
-
-        JLabel address = new JLabel();
-        address.setBounds(30, 160, 100, 25);
-        address.setText("Address");
-        area.add(address);
-
-        JTextField patientIDField = new JTextField();
-        patientIDField.setBounds(110, 40, 150, 25);
-        area.add(patientIDField);
-
-        JTextField lastNameField = new JTextField();
-        lastNameField.setBounds(110, 70, 150, 25);
-        area.add(lastNameField);
-
-        JTextField firstNamesField = new JTextField();
-        firstNamesField.setBounds(110, 100, 150, 25);
-        area.add(firstNamesField);
-
-        JComboBox<String> date = new JComboBox<String>();
-        date.setBounds(110, 130, 50, 25);
-        date.setEditable(false);
-        area.add(date);
-
-        JComboBox<String> month = new JComboBox<String>();
-        month.setBounds(160, 130, 50, 25);
-        month.setEditable(false);
-        area.add(month);
-
-        JComboBox<String> year = new JComboBox<String>();
-        year.setBounds(220, 130, 50, 25);
-        year.setEditable(false);
-        area.add(year);
-
-        JTextField addressField = new JTextField();
-        addressField.setBounds(110, 160, 150, 25);
-        area.add(addressField);
+        JLabel[] titleContainers = new JLabel[titles.length];
+        for (int i = 0; i < titles.length; i++) {
+            int y_shift = i * 40;
+            titleContainers[i] = new JLabel();
+            titleContainers[i].setBounds(30, 40 + y_shift, 150, 30);
+            titleContainers[i].setText(titles[i]);
+            area.add(titleContainers[i]);
+        }
+        
+        JTextField[] inputFields = new JTextField[titles.length];
+        for (int i = 0; i < titles.length; i++) {
+            int y_shift = i * 40;
+            inputFields[i] = new JTextField();
+            inputFields[i].setBounds(110, 40 + y_shift, 200, 30);
+            area.add(inputFields[i]);
+        }
 
         JLabel picture = new JLabel();
         picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/ab100.png"));
-        picture.setBounds(900, 40, 200, 200);
         picture.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.BLUE));
         area.add(picture);
 
