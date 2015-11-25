@@ -13,13 +13,16 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class MainScreen extends JPanel {
     private static final Color LIGHT_BLUE = new Color(102, 178, 255);
-    private static final String[] titles = new String[] {"Patient ID", "Last Name", "First Name(s)", "Date of Birth", "Address"};
+    private static final String[] titles = new String[] {"Patient ID", "Title", "Sex", "Last Name", "First Name(s)", "Date of Birth", "Address"};
+    private static final int WIDTH = GUI.WIDTH;
+    private static final int HEIGHT = GUI.HEIGHT;
 
     public MainScreen() {
 	setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
         
+        /* main horizontal file menu at the top of the screen */
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.NORTHWEST;
         c.gridx = 0;
@@ -28,7 +31,7 @@ public class MainScreen extends JPanel {
 	JMenuBar menuBar = createMenu();
 	add(menuBar, c);
 	
-
+	/* patient data panel, including patient details and profile photo */
 	c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.NORTHWEST;
 	c.gridx = 0;
@@ -36,13 +39,14 @@ public class MainScreen extends JPanel {
 	JPanel patientData = createPatientDataArea();
 	add(patientData, c);
 
+        /* a split pane with a nested tabbed pane for displaying comments and medical photos */
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.NORTHWEST;
         c.gridx = 0;
         c.gridy = 6;
         c.weighty = 1.0;
-	JTabbedPane medicalDataPane = createMedicalDataPane();
-        add(medicalDataPane, c);
+	JSplitPane medicalHistoryPanel = medicalHistoryPanel();
+        add(medicalHistoryPanel, c);
     }
 
     private JMenuBar createMenu() {
@@ -125,20 +129,60 @@ public class MainScreen extends JPanel {
 
         JLabel[] titleContainers = new JLabel[titles.length];
         for (int i = 0; i < titles.length; i++) {
-            int y_shift = i * 40;
+            int y_shift = (i - 2) * 40;
             titleContainers[i] = new JLabel();
-            titleContainers[i].setBounds(30, 40 + y_shift, 150, 30);
-            titleContainers[i].setText(titles[i]);
+            switch (i) {
+                case 0: /* patient id */
+                    titleContainers[i].setBounds(40, 40, 150, 30);
+                    titleContainers[i].setText(titles[i]);
+                    break;
+                case 1: /* title */
+                    titleContainers[i].setBounds(260, 40, 150, 30);
+                    titleContainers[i].setText(titles[i]);
+                    break;
+                case 2: /* sex */
+                    titleContainers[i].setBounds(400, 40, 150, 30);
+                    titleContainers[i].setText(titles[i]);
+                    break;
+                default:
+                    titleContainers[i].setBounds(40, 40 + y_shift, 150, 30);
+                    titleContainers[i].setText(titles[i]);
+                    break;
+            }
             area.add(titleContainers[i]);
         }
         
         JTextField[] inputFields = new JTextField[titles.length];
         for (int i = 0; i < titles.length; i++) {
-            int y_shift = i * 40;
+            int y_shift = (i - 2) * 40;
             inputFields[i] = new JTextField();
-            inputFields[i].setBounds(110, 40 + y_shift, 200, 30);
+            
+            switch (i) {
+                case 0: /* patient id */
+                    inputFields[i].setBounds(150, 40, WIDTH / 12, 30);
+                    break;
+                case 1: /* title */
+                    //inputFields[i].setBounds(300, 40, WIDTH / 13, 30);
+                    break;
+                case 2: /* sex */
+                    //inputFields[i].setBounds(450, 40, WIDTH / 13, 30);
+                    break;
+                case 6: /* address */
+                    inputFields[i].setBounds(150, 40 + y_shift, WIDTH / 2, 30);
+                    break;
+                default:
+                    inputFields[i].setBounds(150, 40 + y_shift, 300, 30);
+            }
             area.add(inputFields[i]);
         }
+
+        JComboBox<String> title = new JComboBox<String>();
+        title.setBounds(300, 40, WIDTH / 13, 30);
+        area.add(title);
+
+        JComboBox<String> sex = new JComboBox<String>();
+        sex.setBounds(420, 40, WIDTH / 13, 30);
+        area.add(sex);
 
         JLabel picture = new JLabel();
         picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/ab100.png"));
@@ -149,12 +193,37 @@ public class MainScreen extends JPanel {
         return area;
     }
 
-    private JTabbedPane createMedicalDataPane() {
+    private JSplitPane medicalHistoryPanel() {
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+	JTabbedPane medicalDataPane = tabbedMedicalDataPane();
+	JLabel label = new JLabel();
+	label.setMinimumSize(new Dimension(300, 400));
+
+        splitPane.setLeftComponent(label);
+        splitPane.setRightComponent(medicalDataPane);
+        splitPane.setDividerSize(10);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setPreferredSize(new Dimension(800, 420));
+    
+        return splitPane;
+    }
+
+    private JTabbedPane tabbedMedicalDataPane() {
         JTabbedPane medicalDataPane = new JTabbedPane();
+        medicalDataPane.setMinimumSize(new Dimension(500, 400));
+        medicalDataPane.setPreferredSize(new Dimension(800, 400));
+
         JPanel medicalHistory = new JPanel();
-        medicalHistory.setBackground(Color.RED);
+        medicalHistory.setBackground(Color.DARK_GRAY);
+        JLabel condition = new JLabel();
+        condition.setText("Medical Condition(s)");
+        condition.setBackground(Color.LIGHT_GRAY);
+        condition.setForeground(Color.WHITE);
+        medicalHistory.add(condition);
+
         JPanel photos = new JPanel();
         photos.setBackground(Color.BLUE);
+
         medicalDataPane.add("Medical History", medicalHistory); 
         medicalDataPane.add("Photographs", photos);
 
