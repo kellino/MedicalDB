@@ -58,12 +58,11 @@ public class Patient {
     }
 
     public void setPatientID(String patientID) { 
-        this.patientID = patientID;
-        //if (checker.completedObligatoryField(patientID) && checker.isValid(patientID) && checker.isUniqueID(patientID)) {
-            //this.patientID = patientID; 
-        //} else {
-                //System.out.println("Not a valid id");
-        //}
+        if (checker.completedObligatoryField(patientID) && checker.isValid(patientID) && checker.isUniqueID(patientID)) {
+            this.patientID = patientID; 
+        } else {
+            System.out.println("Not a valid id");
+        }
     }
 
     public String getPatientID() { 
@@ -131,8 +130,8 @@ public class Patient {
     public String toString() {
         try {
             return String.format(this.getFirstName() + DELIM + this.getLastName() + DELIM +
-                                 this.getTitle() + DELIM + this.getSex() + DELIM +
-                                 this.getPatientID() + DELIM +  this.getDOB() + DELIM +
+                                 this.getPatientID() + DELIM + this.getTitle() + DELIM + 
+                                 this.getSex() + DELIM + this.getDOB() + DELIM +
                                  this.getAddress() + DELIM + this.getCondition() + DELIM +
                                  this.getNextAppointment() + DELIM + this.getComments() + DELIM + "\n");
         } catch (Exception e) {
