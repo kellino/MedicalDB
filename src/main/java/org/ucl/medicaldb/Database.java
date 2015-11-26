@@ -16,7 +16,7 @@ public class Database {
 
     private static final String FILELOCATION = "/home/david/Programming/Java/medicaldb/db.txt";
     protected static ArrayList<Patient> currentPatients = new ArrayList<Patient>();
-    protected static Set<String> idNumbers = new HashSet<String>();
+    public static Set<String> idNumbers = new HashSet<String>();
     private static CSVReader reader;
     private static BufferedWriter writer;
     private static int setterCount;

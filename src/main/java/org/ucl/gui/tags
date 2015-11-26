@@ -8,10 +8,12 @@ checkLoginDetails	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/
 checkMD5	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    private String checkMD5(String inputPassword) {$/;"	m	language:Java	class:LoginHandler	file:
 confirmationDialog	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private int confirmationDialog() {$/;"	m	language:Java	class:MainScreen	file:
 createAndShowGUI	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    public void createAndShowGUI() {$/;"	m	language:Java	class:GUI
-createComboBoxArray	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private void createComboBoxArray(JPanel area, int y) {$/;"	m	language:Java	class:MainScreen	file:
+createComboBoxArray	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private void createComboBoxArray(JPanel area, String[][] list, int y) {$/;"	m	language:Java	class:MainScreen	file:
 createMedicalHistoryPane	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private JPanel createMedicalHistoryPane() {$/;"	m	language:Java	class:MainScreen	file:
 createMenu	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private JMenuBar createMenu() {$/;"	m	language:Java	class:MainScreen	file:
 createPatientDataArea	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private JPanel createPatientDataArea() {$/;"	m	language:Java	class:MainScreen	file:
+currentIds	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private static String[] currentIds = Database.idNumbers.stream().toArray(String[]::new);$/;"	f	language:Java	class:MainScreen	file:
+dateFormat	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private static final String[][] dateFormat = {{"1", "2"}, {"Jan", "Feb"}, {"2015", "2016"}};$/;"	f	language:Java	class:MainScreen	file:
 fields	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private static final String[] fields = new String[] {"Patient ID", "Title", "Sex", "Last Name", "First Name(s)", "Date of Birth", "D", "M", "Y", "Address"};$/;"	f	language:Java	class:MainScreen	file:
 GUI	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^    public GUI() {}$/;"	m	language:Java	class:GUI
 GUI	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/GUI.java	/^public class GUI extends JFrame {$/;"	c	language:Java
@@ -36,6 +38,7 @@ paintComponent	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/jav
 password	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    private String password;$/;"	f	language:Java	class:LoginHandler	file:
 passwordField	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginScreen.java	/^    static JPasswordField passwordField;$/;"	f	language:Java	class:LoginScreen
 passwordHex	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    private final String passwordHex = "7cbdd4e997c3b8e759f8d579bb30f6f1";$/;"	f	language:Java	class:LoginHandler	file:
+patientData	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/MainScreen.java	/^    private static final String[][] patientData = {currentIds, {"Mr", "Mrs", "Ms", "Dr"}, {"Male", "Female"}};$/;"	f	language:Java	class:MainScreen	file:
 root	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    private final String root = "root";$/;"	f	language:Java	class:LoginHandler	file:
 setPassword	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    public void setPassword(String password) {$/;"	m	language:Java	class:LoginHandler
 setUsername	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/gui/LoginHandler.java	/^    public void setUsername(String username) {$/;"	m	language:Java	class:LoginHandler

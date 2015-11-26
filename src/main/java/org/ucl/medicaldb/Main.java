@@ -19,9 +19,9 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 	        try {
-	        	GUI gui = new GUI();
-	        	gui.createAndShowGUI();
 		    medDB = new Database();
+	            GUI gui = new GUI();
+	            gui.createAndShowGUI();
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}

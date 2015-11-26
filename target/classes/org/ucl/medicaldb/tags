@@ -31,7 +31,7 @@ getPatientID	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/
 getPatientMethods	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    private static int getPatientMethods() {$/;"	m	language:Java	class:Database	file:
 getUsername	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/LoginHandler.java	/^    public String getUsername() {$/;"	m	language:Java	class:LoginHandler
 GUI	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/GUI.java	/^public class GUI extends JFrame {$/;"	c	language:Java
-idNumbers	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    protected static Set<String> idNumbers = new HashSet<String>();$/;"	f	language:Java	class:Database
+idNumbers	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/Database.java	/^    public static Set<String> idNumbers = new HashSet<String>();$/;"	f	language:Java	class:Database
 isUniqueID	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/PatientHandler.java	/^    boolean isUniqueID(String id) {$/;"	m	language:Java	class:PatientHandler
 isValid	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/PatientHandler.java	/^	boolean isValid(String input) {$/;"	m	language:Java	class:PatientHandler
 isValid	/tmp/asd-david/home/david/Programming/Java/medicaldb/src/main/java/org/ucl/medicaldb/PatientHandler.java	/^	boolean isValid(String input, String type) {$/;"	m	language:Java	class:PatientHandler

@@ -7,15 +7,19 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.*;
 
+import org.ucl.medicaldb.Database;
+
 /**
  * Creates the main screen gui, initializing the various members, such as the menu bar and tabbed 
  * screen
  */
 @SuppressWarnings("serial")
 public class MainScreen extends JPanel {
+    private static String[] currentIds = Database.idNumbers.stream().toArray(String[]::new);
     private static final Color LIGHT_BLUE = new Color(102, 178, 255, 240);
     private static final String[] fields = new String[] {"Patient ID", "Title", "Sex", "Last Name", "First Name(s)", "Date of Birth", "D", "M", "Y", "Address"};
-    //private static final String[] titles = new String[] {"Mr", "Mrs", "Ms", "Dr"};
+    private static final String[][] patientData = {currentIds, {"Mr", "Mrs", "Ms", "Dr"}, {"Male", "Female"}};
+    private static final String[][] dateFormat = {{"1", "2"}, {"Jan", "Feb"}, {"2015", "2016"}};
     private static final int WIDTH = GUI.WIDTH;
     //private static final int HEIGHT = GUI.HEIGHT;
 
@@ -174,13 +178,13 @@ public class MainScreen extends JPanel {
             
             switch (i) {
                 case 0: /* patient id */
-                    createComboBoxArray(area, 40);
+                    createComboBoxArray(area, patientData, 40);
                     break;
                 case 1: // this positions are filled with the
                 case 2: // createComboBoxArray() function
                     break;
                 case 5:
-                    createComboBoxArray(area, 160);
+                    createComboBoxArray(area, dateFormat, 160);
                     break;
                 case 6: /* address */
                     inputFields[i].setBounds(150, 40 + y_shift, WIDTH / 2, 30);
@@ -200,10 +204,10 @@ public class MainScreen extends JPanel {
         return area;
     }
 
-    private void createComboBoxArray(JPanel area, int y) {
+    private void createComboBoxArray(JPanel area, String[][] list, int y) {
         ArrayList<JComboBox<String>> jBoxArray = new ArrayList<JComboBox<String>>();
         for (int i = 0; i < 3; i++) {
-            jBoxArray.add(new JComboBox<String>());
+            jBoxArray.add(new JComboBox<String>(list[i]));
             jBoxArray.get(i).setBounds(150 + (i * 130), y, WIDTH / 14, 30);
             area.add(jBoxArray.get(i));
         }
