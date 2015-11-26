@@ -23,6 +23,10 @@ public class Database {
 
     private static final char DELIM = ':';
 
+    public static String[] days;
+    public static String[] months;
+    public static String[] years;
+
     public Database() {
         try {
             File db = new File(FILELOCATION);
@@ -32,9 +36,39 @@ public class Database {
                 db.createNewFile();
             } else loadDBfromFile();
             	   log.log(Level.INFO, "database loaded successfully");
-        } catch (IOException e) {
+        } catch (IOException e) { 
             log.log(Level.SEVERE, "unable to initialize database");
+        } finally {
+            days = initializeDays();
+            months = initializeMonths();
+            years = initializeYears();
         }
+    }
+
+    private String[] initializeDays() {
+        String[] days = new String[31]; 
+        for (int i = 0; i < days.length; i++) {
+            if (i == 0) days[i] = "-";
+            days[i] = String.valueOf(i+2);
+        } 
+        return days;
+    }
+
+    private String[] initializeMonths() {
+        String[] months = new String[12];
+        for (int i = 0; i < months.length; i++) {
+            if (i == 0) months[i] = "-";
+            months[i] = String.valueOf(i+2);
+        }
+        return months;
+    }
+
+    private String[] initializeYears() {
+        String[] years = new String[100];
+        for(int i = years.length-1; i > 0; i--) {
+            years[i] = String.valueOf(2016 - i);
+        }
+        return years;
     }
 
     void dumpDBtoFile() {

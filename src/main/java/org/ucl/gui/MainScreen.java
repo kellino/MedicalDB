@@ -19,7 +19,7 @@ public class MainScreen extends JPanel {
     private static final Color LIGHT_BLUE = new Color(102, 178, 255, 240);
     private static final String[] fields = new String[] {"Patient ID", "Title", "Sex", "Last Name", "First Name(s)", "Date of Birth", "D", "M", "Y", "Address"};
     private static final String[][] patientData = {currentIds, {"Mr", "Mrs", "Ms", "Dr"}, {"Male", "Female"}};
-    private static final String[][] dateFormat = {{"1", "2"}, {"Jan", "Feb"}, {"2015", "2016"}};
+    private static final String[][] dateFormat = {Database.days, Database.months, Database.years};
     private static final int WIDTH = GUI.WIDTH;
     //private static final int HEIGHT = GUI.HEIGHT;
 
@@ -57,8 +57,7 @@ public class MainScreen extends JPanel {
     }
 
     /** overriding the paintComponent(Graphics g) method allows us to set an image as 
-     * the background for our JPanel
-     */
+     * the background for our JPanel */
     @Override
     protected void paintComponent(Graphics g) {
         g.drawImage(LoginScreen.bgimage, 0, 0, null);
@@ -222,10 +221,16 @@ public class MainScreen extends JPanel {
     private JSplitPane medicalHistoryPanel() {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 	JTabbedPane medicalDataPane = tabbedMedicalDataPane();
-	JLabel label = new JLabel();
-	label.setMinimumSize(new Dimension(300, 460));
+	JButton button = new JButton();
+	button.setMinimumSize(new Dimension(300, 460));
+	button.setText("Add patient");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                PatientAdder pa = new PatientAdder();
+                }
+        });
 
-        splitPane.setLeftComponent(label);
+        splitPane.setLeftComponent(button);
         splitPane.setRightComponent(medicalDataPane);
         splitPane.setDividerSize(10);
         splitPane.setOneTouchExpandable(true);
