@@ -19,7 +19,7 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 	        try {
-		    medDB = new Database();
+	        	medDB = new Database();
 	            GUI gui = new GUI();
 	            gui.createAndShowGUI();
 		} catch (Exception e) {

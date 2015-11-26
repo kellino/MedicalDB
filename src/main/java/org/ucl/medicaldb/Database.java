@@ -117,6 +117,8 @@ public class Database {
     	temp.setFirstName(array[i++]);
     	temp.setLastName(array[i++]);
     	temp.setPatientID(array[i++]);
+    	temp.setTitle(array[i++]);
+    	temp.setSex(array[i++]);
     	temp.setDOB(array[i++]);
     	temp.setAddress(array[i++]);
     	temp.setCondition(array[i++]);

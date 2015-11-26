@@ -10,6 +10,8 @@ public class Patient {
     final static PatientHandler checker = new PatientHandler();
     private String firstName;
     private String lastName;
+    private String title;
+    private String sex;
     private String DOB;
     private String address;
     private String condition;
@@ -39,13 +41,29 @@ public class Patient {
 	return lastName;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
     public void setPatientID(String patientID) { 
-        // do this with hashmap
-        if (checker.completedObligatoryField(patientID) && checker.isValid(patientID) && checker.isUniqueID(patientID)) {
-            this.patientID = patientID; 
-        } else {
-        	System.out.println("Not a valid id");
-        }
+        this.patientID = patientID;
+        //if (checker.completedObligatoryField(patientID) && checker.isValid(patientID) && checker.isUniqueID(patientID)) {
+            //this.patientID = patientID; 
+        //} else {
+                //System.out.println("Not a valid id");
+        //}
     }
 
     public String getPatientID() { 
@@ -113,9 +131,10 @@ public class Patient {
     public String toString() {
         try {
             return String.format(this.getFirstName() + DELIM + this.getLastName() + DELIM +
-                             this.getPatientID() + DELIM +  this.getDOB() + DELIM +
-                             this.getAddress() + DELIM + this.getCondition() + DELIM +
-                             this.getNextAppointment() + DELIM + this.getComments() + DELIM + "\n");
+                                 this.getTitle() + DELIM + this.getSex() + DELIM +
+                                 this.getPatientID() + DELIM +  this.getDOB() + DELIM +
+                                 this.getAddress() + DELIM + this.getCondition() + DELIM +
+                                 this.getNextAppointment() + DELIM + this.getComments() + DELIM + "\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
