@@ -15,7 +15,7 @@ import org.ucl.medicaldb.Database;
  */
 @SuppressWarnings("serial")
 public class MainScreen extends JPanel {
-    private static String[] currentIds = Database.idNumbers.stream().toArray(String[]::new);
+    private static String[] currentIds = Database.idNumbers.stream().toArray(String[]::new); // this piece of code was inspired by a comment on a stackoverflow question
     private static final Color LIGHT_BLUE = new Color(102, 178, 255, 240);
     private static final String[] fields = new String[] {"Patient ID", "Title", "Sex", "Last Name", "First Name(s)", "Date of Birth", "D", "M", "Y", "Address"};
     private static final String[][] patientData = {currentIds, {"Mr", "Mrs", "Ms", "Dr"}, {"Male", "Female"}};
@@ -23,7 +23,7 @@ public class MainScreen extends JPanel {
     private static final int WIDTH = GUI.WIDTH;
     //private static final int HEIGHT = GUI.HEIGHT;
 
-    /** contructor for the main screen */
+    /** contructor for the main screen. */
     public MainScreen() {
 	setLayout(new GridBagLayout());
 
@@ -56,11 +56,15 @@ public class MainScreen extends JPanel {
         add(medicalHistoryPanel, c);
     }
 
+    /** overriding the paintComponent(Graphics g) method allows us to set an image as 
+     * the background for our JPanel
+     */
     @Override
     protected void paintComponent(Graphics g) {
         g.drawImage(LoginScreen.bgimage, 0, 0, null);
     }
 
+    /** creates the main menu at the top of the screen */
     private JMenuBar createMenu() {
         JMenuBar mb = new JMenuBar();
         MenuListener l = new MenuListener();
@@ -84,7 +88,7 @@ public class MainScreen extends JPanel {
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 /* save function should be called here */
-                int reply = confirmationDialog();
+                int reply = confirmationDialog("Are you sure you want to quit?", "Exit confirmation");
                 if (reply == JOptionPane.YES_OPTION) {
                     System.out.println("Exiting program");
                     System.exit(0);
@@ -118,16 +122,18 @@ public class MainScreen extends JPanel {
         return mb;
     }
 
+    /** listener method for the dropdown menus from the main menu bar */
     private class MenuListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             System.out.println(e.getActionCommand());
         }
     }
 
-    private int confirmationDialog() {
+    /** popup confirmation dialog for user-driven decisions */
+    private int confirmationDialog(String message, String title) {
         int reply = JOptionPane.NO_OPTION;
         try {
-            reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Exit confirmation", JOptionPane.YES_NO_OPTION);
+            reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
         } catch (HeadlessException he) {
             System.out.println(he.getMessage());            
         }
