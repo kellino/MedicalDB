@@ -8,22 +8,27 @@ import org.apache.commons.lang3.StringUtils;
 public final class PatientHandler {
 	/* logger */
 	private static final Logger log = Logger.getLogger(Class.class.getName());
-    
-	
+
 	/**
 	 * checks that a compulsory field contains some text, not just whitespace
-	 * @param String input
+	 * 
+	 * @param String
+	 *            input
 	 * @return boolean
 	 */
 	boolean completedObligatoryField(String input) {
-    	if (StringUtils.isBlank(input)) {
-    		return false;
-    	}
-    	return true;
-    }
+		if (StringUtils.isBlank(input)) {
+			return false;
+		}
+		return true;
+	}
 
-	/** uses a simple regex to ensure that the patient id number is in the correct form
-	 * @param String input
+	/**
+	 * uses a simple regex to ensure that the patient id number is in the
+	 * correct form
+	 * 
+	 * @param String
+	 *            input
 	 * @return boolean
 	 */
 	boolean isValid(String input) {
@@ -33,36 +38,39 @@ public final class PatientHandler {
 		}
 		return false;
 	}
-	
-	/** uses a simple regex to check for "reasonable" name forms. It excludes
+
+	/**
+	 * uses a simple regex to check for "reasonable" name forms. It excludes
 	 * some symbols which do not appear in any names, such as "?", but makes no
-	 * attempt at more complex verification, nor does it check for capitalization, 
-	 * which can very greatly in usage.
-	 * @param String type
+	 * attempt at more complex verification, nor does it check for
+	 * capitalization, which can very greatly in usage.
+	 * 
+	 * @param String
+	 *            type
 	 * @return boolean
 	 */
 	boolean isValid(String input, String type) {
-            // this regex is still rather incomplete
-            Pattern pattern = Pattern.compile("[0-9<>!\"$%\\+&][{}]");
-            try {
-                if (pattern.matcher(input).matches()) {
-                    throw new IllegalArgumentException();
-                }
-            } catch (IllegalArgumentException e) {
-        	log.log(Level.INFO, "incorrect name string entered by user");
-        	return false;
-        }
-        return true;
-    }
+		// this regex is still rather incomplete
+		Pattern pattern = Pattern.compile("[0-9<>!\"$%\\+&][{}]");
+		try {
+			if (pattern.matcher(input).matches()) {
+				throw new IllegalArgumentException();
+			}
+		} catch (IllegalArgumentException e) {
+			log.log(Level.INFO, "incorrect name string entered by user");
+			return false;
+		}
+		return true;
+	}
 
-    boolean isValidDate(String DOB) {
-    	return true;
-    }
+	boolean isValidDate(String DOB) {
+		return true;
+	}
 
-    boolean isUniqueID(String id) {
-        if (Database.idNumbers.add(id)){
-            return true;
-        }
-        return false;
-    }
+	boolean isUniqueID(String id) {
+		if (Database.idNumbers.add(id)) {
+			return true;
+		}
+		return false;
+	}
 }

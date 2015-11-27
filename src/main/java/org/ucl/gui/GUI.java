@@ -8,36 +8,37 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
-    public GUI() {}
+	public GUI() {
+	}
 
-    static JPanel cardPanel;
-    static CardLayout cards = new CardLayout();
-    protected static final int WIDTH = 1200;
-    protected static final int HEIGHT = 800;
+	static JPanel cardPanel;
+	static CardLayout cards = new CardLayout();
+	protected static final int WIDTH = 1200;
+	protected static final int HEIGHT = 800;
 
-    public void createAndShowGUI() {
-        JFrame frame = new JFrame("UCL Medical Database @author David Kelly");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        frame.setResizable(false);
-        
-        GUI gui = new GUI();
-        gui.addComponentToPane(frame.getContentPane());
+	public void createAndShowGUI() {
+		JFrame frame = new JFrame("UCL Medical Database @author David Kelly");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		frame.setResizable(false);
 
-        frame.pack();
-        frame.setVisible(true);
-    }
+		GUI gui = new GUI();
+		gui.addComponentToPane(frame.getContentPane());
 
-    private void addComponentToPane(Container pane) {
-        LoginScreen login = new LoginScreen();
-		
-	MainScreen mainscreen = new MainScreen();
-		
-	cardPanel = new JPanel();
-	cardPanel.setLayout(cards);
-	cardPanel.add(login);
-	cardPanel.add(mainscreen);
-		
-	pane.add(cardPanel);
-    }
+		frame.pack();
+		frame.setVisible(true);
+	}
+
+	private void addComponentToPane(Container pane) {
+		LoginScreen login = new LoginScreen();
+
+		MainScreen mainscreen = new MainScreen();
+
+		cardPanel = new JPanel();
+		cardPanel.setLayout(cards);
+		cardPanel.add(login);
+		cardPanel.add(mainscreen);
+
+		pane.add(cardPanel);
+	}
 }
