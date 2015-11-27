@@ -7,6 +7,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.jdatepicker.impl.*;
+import java.util.Properties;
 
 /** main dialog for editing and adding patients to the database. It is called in the 
  * form of a JOptionPane from the MainScreen class
@@ -26,6 +28,7 @@ public class DatabaseEditor extends JPanel {
         setBorder(BorderFactory.createEtchedBorder(1));
         createFieldNames();
         createTextFields();
+        drawDatePicker();
     } 
 
     /** constructor for editing an existing patient. Takes an existing id number and
@@ -43,7 +46,6 @@ public class DatabaseEditor extends JPanel {
         JLabel[] titleContainers = new JLabel[MainScreen.fields.length];
 	int i;
 	for (i = 0; i < MainScreen.fields.length; i++) {
-	    int y_shift = (i - 2) * 40;
 	    titleContainers[i] = new JLabel();
 	    switch (i) {
 		case 0: /* patient id */
@@ -55,6 +57,15 @@ public class DatabaseEditor extends JPanel {
 		case 2: /* sex */
 		    titleContainers[i].setBounds(widthUnit * 28, height / 15, 150, boxHeight);
 		    break;
+                case 3: /* last name */
+		    titleContainers[i].setBounds(10, 80, 150, boxHeight);
+                    break;
+                case 4: /* first name */
+		    titleContainers[i].setBounds(10, 120, 150, boxHeight);
+		    break;
+                case 5: /* date of birth */
+		    titleContainers[i].setBounds(10, 160, 150, boxHeight);
+		    break;
 		case 6: /* day */
 		    titleContainers[i].setBounds(widthUnit * 10, 160, 100, boxHeight);
 		    break;
@@ -64,8 +75,20 @@ public class DatabaseEditor extends JPanel {
 		case 8: /* year */
 		    titleContainers[i].setBounds(widthUnit * 27, 160, 100, boxHeight);
 		    break;
+                case 9: /* condition */
+		    titleContainers[i].setBounds(10, 200, 100, boxHeight);
+		    break;
+                case 10: /* address */
+		    titleContainers[i].setBounds(10, 240, 100, boxHeight);
+		    break;
+                case 11: /* next appointment */
+		    titleContainers[i].setBounds(10, 280, 200, boxHeight);
+		    break;
+                case 12:
+		    titleContainers[i].setBounds(10, 320, 100, boxHeight);
+		    break;
 		default:
-		    titleContainers[i].setBounds(10, 40 + y_shift, 150, boxHeight);
+		    /* we should not reach this point */
 		    break;
 		}
 	titleContainers[i].setText(MainScreen.fields[i]);
@@ -76,7 +99,6 @@ public class DatabaseEditor extends JPanel {
     private void createTextFields() {
 	JTextField[] inputFields = new JTextField[MainScreen.fields.length];
 	    for (int i = 0; i < MainScreen.fields.length; i++) {
-		int y_shift = (i - 2) * 40;
 		inputFields[i] = new JTextField();
 		switch (i) {
 		    case 0: /* patient id, title, gender */
@@ -88,11 +110,11 @@ public class DatabaseEditor extends JPanel {
 			add(titleMenu);
 			add(genderMenu);
 			break;
-		    case 1: // these positions are filled with the
-		    case 2: // createComboBoxArray() function
+		    case 3:
+			inputFields[i].setBounds(widthUnit * 10, 80, 250, boxHeight);
 			break;
-		    case 5:
-			//createComboBoxArray(MainScreen.dateFormat, width / 60, 160);
+		    case 4:
+			inputFields[i].setBounds(widthUnit * 10, 120, 250, boxHeight);
 			break;
 		    case 6: 			
 			JComboBox<String> day = createComboBox(MainScreen.dateFormat[0], 120, widthUnit * 16, 50, boxHeight);
@@ -102,25 +124,42 @@ public class DatabaseEditor extends JPanel {
 			add(month);
 			add(year);
 		        break;
+                    case 9:
+			inputFields[i].setBounds(widthUnit * 10, 200, 350, boxHeight);
+			break;
+                    case 10:
+			inputFields[i].setBounds(widthUnit * 10, 240, 450, boxHeight);
+			break;
+                    case 12:
+			JComboBox<String> nday = createComboBox(MainScreen.dateFormat[0], 120, 240, 50, boxHeight);
+			JComboBox<String> nmonth = createComboBox(MainScreen.dateFormat[1], 210, 240, 50, boxHeight);
+			JComboBox<String> nyear = createComboBox(MainScreen.dateFormat[2], 290, 240, 80, boxHeight);
+			add(nday);
+			add(nmonth);
+			add(nyear);
+		        break;
 		    default:
-			inputFields[i].setBounds(150, 40 + y_shift, 300, boxHeight);
+			break;
 		}
 	    add(inputFields[i]);
 	}
     }
 
-    //private void createComboBoxArray(String[][] list, int x, int y) {
-        //ArrayList<JComboBox<String>> jBoxArray = new ArrayList<JComboBox<String>>();
-	//for (int i = 0; i < 3; i++) {
-            //jBoxArray.add(new JComboBox<String>(list[i]));
-	    //jBoxArray.get(i).setBounds(x + (i * 150), y, 50, boxHeight);
-	    //add(jBoxArray.get(i));
-	//}
-    //}
-
     private JComboBox<String> createComboBox(String[] text, int x, int y, int width, int height) {
         JComboBox<String> newBox = new JComboBox<String>(text);
         newBox.setBounds(x, y, width, height);
         return newBox;
+    }
+
+    private void drawDatePicker() {
+        UtilDateModel model = new UtilDateModel();
+        Properties p = new Properties();
+        p.put("text.today", "Today");
+        p.put("text.month", "Month");
+        p.put("text.year", "Year");
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+        datePanel.setBounds(10, 400, 100, 100);
+        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, null);
+        add(datePicker);
     }
 }

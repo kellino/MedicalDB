@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import javax.swing.*;
 import org.ucl.medicaldb.Database;
 
@@ -17,14 +16,14 @@ public class MainScreen extends JPanel {
     protected static String[] currentIds = Database.idNumbers.stream().toArray(String[]::new); /* this code snippet was inspired by a 
 	                                                                                      * stackoverflow question */
     protected static final String[][] dateFormat = { Database.days, Database.months, Database.years };
-    protected static final String[][] patientData = { currentIds, {"-", "Mr", "Mrs", "Ms", "Dr" }, { "Male", "Female" } };
+    protected static final String[][] patientData = { currentIds, {"-", "Mr", "Mrs", "Ms", "Dr" }, {"-", "Male", "Female" } };
     protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
 			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appointment", "Comments" };
     private static final Color LIGHT_BLUE = new Color(102, 178, 255, 240);
-    private static final int WIDTH = GUI.WIDTH;
-	// private static final int HEIGHT = GUI.HEIGHT;
+    //private static final int WIDTH = GUI.WIDTH;
+    // private static final int HEIGHT = GUI.HEIGHT;
 
-	/** contructor for the main screen. */
+	/** constructor for the main screen. */
 	public MainScreen() {
 		setLayout(new GridBagLayout());
 
@@ -153,57 +152,72 @@ public class MainScreen extends JPanel {
 
 		JLabel[] titleContainers = new JLabel[fields.length];
 		for (int i = 0; i < fields.length; i++) {
-			int y_shift = (i - 2) * 40;
+			//int y_shift = (i - 2) * 40;
 			titleContainers[i] = new JLabel();
 			switch (i) {
 			case 0: /* patient id */
-				titleContainers[i].setBounds(50, 40, 150, 30);
-				titleContainers[i].setText(fields[i]);
-				break;
+			    titleContainers[i].setBounds(50, 40, 150, 30);
+			    titleContainers[i].setText(fields[i]);
+			    break;
 			case 1: /* title */
-				titleContainers[i].setBounds(240, 40, 100, 30);
-				titleContainers[i].setText(fields[i]);
-				break;
+			    titleContainers[i].setBounds(250, 40, 100, 30);
+			    titleContainers[i].setText(fields[i]);
+			    break;
 			case 2: /* sex */
-				titleContainers[i].setBounds(380, 40, 100, 30);
-				titleContainers[i].setText(fields[i]);
-				break;
-			case 6:
-				titleContainers[i].setBounds(100, 4 - +y_shift, 100, 30);
-				break;
-			case 7:
-			case 8:
-				break;
+			    titleContainers[i].setBounds(340, 40, 100, 30);
+			    titleContainers[i].setText(fields[i]);
+			    break;
+                        case 3: /* last name */ 
+			    titleContainers[i].setBounds(50, 80, 100, 30);
+			    titleContainers[i].setText(fields[i]);
+			    break;
+                        case 4: /* first name */
+			    titleContainers[i].setBounds(50, 120, 100, 30);
+			    titleContainers[i].setText(fields[i]);
+			    break;
+                        case 5: /* first name */
+			    titleContainers[i].setBounds(50, 160, 100, 30);
+			    titleContainers[i].setText(fields[i]);
+			    break;
+                        case 10: /* address */
+			    titleContainers[i].setBounds(50, 200, 100, 30);
+			    titleContainers[i].setText(fields[i]);
+			    break;
 			default:
-				titleContainers[i].setBounds(50, 40 + y_shift, 150, 30);
-				titleContainers[i].setText(fields[i]);
-				break;
+			    break;
 			}
 			area.add(titleContainers[i]);
 		}
 
 		JTextField[] inputFields = new JTextField[fields.length];
 		for (int i = 0; i < fields.length; i++) {
-			int y_shift = (i - 2) * 40;
-			inputFields[i] = new JTextField();
-
-			switch (i) {
-			case 0: /* patient id */
-				createComboBoxArray(area, patientData, 40);
-				break;
-			case 1: // this positions are filled with the
-			case 2: // createComboBoxArray() function
-				break;
-			case 5:
-				createComboBoxArray(area, dateFormat, 160);
-				break;
-			case 6: /* address */
-				inputFields[i].setBounds(150, 40 + y_shift, WIDTH / 2, 30);
-				break;
-			default:
-				inputFields[i].setBounds(150, 40 + y_shift, 300, 30);
-			}
-			area.add(inputFields[i]);
+		    inputFields[i] = new JTextField();
+		    switch (i) {
+                        case 0: /* patient id */
+			    inputFields[i].setBounds(150, 40, 80, 30);
+			    break;
+                        case 1: /* title */
+			    inputFields[i].setBounds(280, 40, 50, 30);
+			    break;
+                        case 2: /* sex */
+			    inputFields[i].setBounds(370, 40, 80, 30);
+			    break;
+                        case 3: /* last name */
+			    inputFields[i].setBounds(150, 80, 150, 30);
+			    break;
+                        case 4: /* first name */
+			    inputFields[i].setBounds(150, 120, 250, 30);
+			    break;
+                        case 5: /* date of birth */
+			    inputFields[i].setBounds(150, 160, 150, 30);
+			    break;
+                        case 10: /* address */
+			    inputFields[i].setBounds(150, 200, 450, 30);
+			    break;
+                        default:
+                            break;
+                    }
+		    area.add(inputFields[i]);
 		}
 
 		JLabel picture = new JLabel();
@@ -215,21 +229,14 @@ public class MainScreen extends JPanel {
 		return area;
 	}
 
-	private void createComboBoxArray(JPanel area, String[][] list, int y) {
-		ArrayList<JComboBox<String>> jBoxArray = new ArrayList<JComboBox<String>>();
-		for (int i = 0; i < 3; i++) {
-			jBoxArray.add(new JComboBox<String>(list[i]));
-			jBoxArray.get(i).setBounds(150 + (i * 130), y, WIDTH / 14, 30);
-			area.add(jBoxArray.get(i));
-		}
-	}
-
 	private JSplitPane medicalHistoryPanel() {
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		JTabbedPane medicalDataPane = tabbedMedicalDataPane();
 		JPanel databaseChanger = new JPanel();
-                //databaseChanger.setLayout(null);
                 databaseChanger.setPreferredSize(new Dimension(300, 400));
+                databaseChanger.setBackground(new Color(100, 100, 100, 100));
+                databaseChanger.setLayout(new BoxLayout(databaseChanger, BoxLayout.X_AXIS));
+
 
 		JButton adder = new JButton();
 		adder.setText("Add patient");
@@ -262,6 +269,16 @@ public class MainScreen extends JPanel {
 			}
 		});
 		databaseChanger.add(editor);
+
+		JButton search = new JButton();
+		search.setText("Search");
+		search.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			    // to be implemented
+			    System.out.println("Patient search");
+			}
+		});
+		databaseChanger.add(search);
 
 		splitPane.setLeftComponent(databaseChanger);
 		splitPane.setRightComponent(medicalDataPane);
