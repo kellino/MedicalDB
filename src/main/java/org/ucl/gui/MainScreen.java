@@ -14,12 +14,12 @@ import org.ucl.medicaldb.Database;
  */
 @SuppressWarnings("serial")
 public class MainScreen extends JPanel {
-    protected static String[] currentIds = Database.idNumbers.stream().toArray(String[]::new); /* this code snipped was inspired by a 
+    protected static String[] currentIds = Database.idNumbers.stream().toArray(String[]::new); /* this code snippet was inspired by a 
 	                                                                                      * stackoverflow question */
     protected static final String[][] dateFormat = { Database.days, Database.months, Database.years };
-    protected static final String[][] patientData = { currentIds, { "Mr", "Mrs", "Ms", "Dr" }, { "Male", "Female" } };
+    protected static final String[][] patientData = { currentIds, {"-", "Mr", "Mrs", "Ms", "Dr" }, { "Male", "Female" } };
     protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
-			"Date of Birth", "D", "M", "Y", "Condition(s)", "Address", "Next Appointment", "Comments" };
+			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appointment", "Comments" };
     private static final Color LIGHT_BLUE = new Color(102, 178, 255, 240);
     private static final int WIDTH = GUI.WIDTH;
 	// private static final int HEIGHT = GUI.HEIGHT;

@@ -49,9 +49,7 @@ public class Database {
 	private String[] initializeDays() {
 		String[] days = new String[31];
 		for (int i = 0; i < days.length; i++) {
-			if (i == 0)
-				days[i] = "-";
-			days[i] = String.valueOf(i + 2);
+			days[i] = String.valueOf(i + 1);
 		}
 		return days;
 	}
@@ -59,9 +57,7 @@ public class Database {
 	private String[] initializeMonths() {
 		String[] months = new String[12];
 		for (int i = 0; i < months.length; i++) {
-			if (i == 0)
-				months[i] = "-";
-			months[i] = String.valueOf(i + 2);
+			months[i] = String.valueOf(i + 1);
 		}
 		return months;
 	}
