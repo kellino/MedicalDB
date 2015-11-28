@@ -272,7 +272,6 @@ public class MainScreen extends JPanel {
 
 		databaseChanger.setPreferredSize(new Dimension(300, 400));
 		databaseChanger.setBackground(new Color(100, 100, 100, 100));
-		databaseChanger.setLayout(new BorderLayout());
 
 		JButton adder = new JButton();
 
@@ -347,20 +346,19 @@ public class MainScreen extends JPanel {
                 GridBagConstraints c = new GridBagConstraints();
 
                 c.fill = GridBagConstraints.HORIZONTAL;
-                c.gridx = 0;
+                c.anchor = GridBagConstraints.NORTHWEST;
+                //c.gridx = 0;
                 c.gridy = 0;
 		JLabel condition = new JLabel();
-		condition.setText("Medical Condition(s)");
+		condition.setText("Medical Condition(s):" + " Flatulence");
 		condition.setForeground(Color.WHITE);
-		condition.setPreferredSize(new Dimension(100, 30));
+		condition.setPreferredSize(new Dimension(300, 30));
 		medicalHistory.add(condition, c);
 
-		c.weightx = 0.5;
-		JTextField conditionField = new JTextField();
-		conditionField.setPreferredSize(new Dimension(400, 30));
-                medicalHistory.add(conditionField);
 
-                //c.fill = GridBagConstraints.HORIZONTAL;
+                c.fill = GridBagConstraints.HORIZONTAL;
+                c.anchor = GridBagConstraints.NORTHWEST;
+                //c.gridx = 0;
                 c.gridy = 1;
                 JLabel link = new JLabel();
                 link.setText("<html>Click <font color=red>here</font> for more information on " + "condition" + "</html>");
@@ -386,21 +384,32 @@ public class MainScreen extends JPanel {
                 });
 		medicalHistory.add(link, c);
 
-                //c.fill = GridBagConstraints.HORIZONTAL;
-                c.gridx = 0;
-                c.gridy= 2;
+                c.gridy = 2;
+                JLabel nextAppointment = new JLabel();
+                nextAppointment.setForeground(Color.WHITE);
+                nextAppointment.setText("Next Appointment: " + "30/11/2015");
+                nextAppointment.setPreferredSize(new Dimension(200, 30));
+                medicalHistory.add(nextAppointment, c);
+
+
+                c.fill = GridBagConstraints.HORIZONTAL;
+                c.anchor = GridBagConstraints.NORTHWEST;
+                //c.gridx = 0;
+                c.gridy = 3;
                 JLabel comments = new JLabel();
                 comments.setText("Comments");
                 comments.setForeground(Color.WHITE);
                 comments.setPreferredSize(new Dimension(100, 30));
-                medicalHistory.add(comments);
+                medicalHistory.add(comments, c);
 
-                //c.fill = GridBagConstraints.HORIZONTAL;
-                c.gridx = 0;
-                c.gridy = 3;
+                c.fill = GridBagConstraints.HORIZONTAL;
+                c.anchor = GridBagConstraints.NORTHWEST;
+                //c.gridx = 0;
+                c.gridy = 4;
                 c.weighty = 1;
                 JTextArea commentField = new JTextArea();
-                medicalHistory.add(commentField);
+                commentField.setPreferredSize(new Dimension(600, 200));
+                medicalHistory.add(commentField, c);
 
 		return medicalHistory;
 
@@ -408,7 +417,14 @@ public class MainScreen extends JPanel {
 
 	private JPanel createPhotoPane() {
 		JPanel photos = new JPanel();
-		photos.setBackground(Color.BLUE);
+		photos.setLayout(new GridLayout(4, 4));
+		photos.setBackground(Color.LIGHT_GRAY);
+
+		for (int i = 0; i < 8; i++) {
+		    JButton placeHolder = new JButton();
+		    placeHolder.setText("<html><font color=red>Place for Photo</font></html>");
+		    photos.add(placeHolder);
+		}
 
 		return photos;
 	}
