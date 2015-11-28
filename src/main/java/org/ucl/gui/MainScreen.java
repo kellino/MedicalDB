@@ -8,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.*;
-import javax.print.URIException;
 import javax.swing.*;
 import org.ucl.medicaldb.Database;
 
@@ -342,7 +341,7 @@ public class MainScreen extends JPanel {
 	private JPanel createMedicalHistoryPane() {
 		JPanel medicalHistory = new JPanel();
 
-		medicalHistory.setBackground(Color.DARK_GRAY);
+		medicalHistory.setBackground(new Color(100, 100, 100, 250));
 		medicalHistory.setBorder(BorderFactory.createBevelBorder(1));
 		medicalHistory.setLayout(new GridBagLayout());
                 GridBagConstraints c = new GridBagConstraints();
@@ -361,10 +360,10 @@ public class MainScreen extends JPanel {
 		conditionField.setPreferredSize(new Dimension(400, 30));
                 medicalHistory.add(conditionField);
 
-                c.fill = GridBagConstraints.HORIZONTAL;
+                //c.fill = GridBagConstraints.HORIZONTAL;
                 c.gridy = 1;
                 JLabel link = new JLabel();
-                link.setText("Click for more information on " + "condition");
+                link.setText("<html>Click <font color=red>here</font> for more information on " + "condition" + "</html>");
                 link.setForeground(Color.WHITE);
                 link.setPreferredSize(new Dimension(150, 30));
                 link.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -386,6 +385,23 @@ public class MainScreen extends JPanel {
                     }
                 });
 		medicalHistory.add(link, c);
+
+                //c.fill = GridBagConstraints.HORIZONTAL;
+                c.gridx = 0;
+                c.gridy= 2;
+                JLabel comments = new JLabel();
+                comments.setText("Comments");
+                comments.setForeground(Color.WHITE);
+                comments.setPreferredSize(new Dimension(100, 30));
+                medicalHistory.add(comments);
+
+                //c.fill = GridBagConstraints.HORIZONTAL;
+                c.gridx = 0;
+                c.gridy = 3;
+                c.weighty = 1;
+                JTextArea commentField = new JTextArea();
+                medicalHistory.add(commentField);
+
 		return medicalHistory;
 
 	}
