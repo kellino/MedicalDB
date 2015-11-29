@@ -29,6 +29,7 @@ public class MainScreen extends JPanel {
 	protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
 			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments" };
 	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
+	private JTextField[] inputFields;
 
 	/** constructor for the main screen. */
 	public MainScreen() {
@@ -209,9 +210,10 @@ public class MainScreen extends JPanel {
 			}
 			area.add(titleContainers[i]);
 		}
-		JTextField[] inputFields = new JTextField[fields.length];
+		inputFields = new JTextField[fields.length];
 		for (int i = 0; i < fields.length; i++) {
 			inputFields[i] = new JTextField();
+			inputFields[i].setEditable(false);
 			switch (i) {
 			case 0: /* patient id */
 				inputFields[i].setBounds(150, 40, 80, 30);
@@ -330,6 +332,7 @@ public class MainScreen extends JPanel {
 				if (results.size() != 0) {
 					Patient chosenResult = (Patient) JOptionPane.showInputDialog(null, "Search Results", "Results",
 							JOptionPane.QUESTION_MESSAGE, null, results.toArray(), results.get(0));
+					fillInputFields(chosenResult);
 					System.out.println(chosenResult.toString());
 				} else {
 					System.out.println("No matches found");
@@ -451,5 +454,15 @@ public class MainScreen extends JPanel {
 			images.add(placeHolder);
 		}
 		return images;
+	}
+
+	private void fillInputFields(Patient p) {
+		inputFields[0].setText(p.getPatientID());
+		inputFields[1].setText(p.getTitle());
+		inputFields[2].setText(p.getSex());
+		inputFields[3].setText(p.getLastName());
+		inputFields[4].setText(p.getFirstName());
+		inputFields[5].setText(p.getDOB());
+		inputFields[10].setText(p.getAddress());
 	}
 }
