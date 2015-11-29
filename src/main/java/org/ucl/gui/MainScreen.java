@@ -9,10 +9,11 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import org.ucl.medicaldb.Database;
 
 /**
- * Creates the main screen gui, initializing the various members, such as the
+ * Creates the main screen GUI, initializing the various members, such as the
  * menu bar and tabbed screen. The screen is split horizontally into two main areas:
  * the top area contains the main personal data of the loaded patient. This area is not
  * editable. The lower half of the screen features the editing functions (on the left) and
@@ -28,7 +29,7 @@ public class MainScreen extends JPanel {
 	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Mrs", "Ms", "Dr" }, { "-", "Male", "Female" } };
 	protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
 			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appointment", "Comments" };
-	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 220);
+	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
 
 	/** constructor for the main screen. */
 	public MainScreen() {
@@ -181,7 +182,7 @@ public class MainScreen extends JPanel {
 				titleContainers[i].setText(fields[i]);
 				break;
 			case 1: /* title */
-				titleContainers[i].setBounds(250, 40, 100, 30);
+				titleContainers[i].setBounds(240, 40, 100, 30);
 				titleContainers[i].setText(fields[i]);
 				break;
 			case 2: /* sex */
@@ -260,7 +261,7 @@ public class MainScreen extends JPanel {
 		splitPane.setRightComponent(medicalDataPane);
 		splitPane.setDividerSize(10);
 		splitPane.setOneTouchExpandable(true);
-		splitPane.setPreferredSize(new Dimension(600, 460));
+		splitPane.setPreferredSize(new Dimension(600, 470));
 
 		return splitPane;
 	}
@@ -268,14 +269,17 @@ public class MainScreen extends JPanel {
         /** a JPanel with three buttons, one for editing a patient, one for adding a patient,
          * and one for launching the search function */
         private JPanel createDatabaseChanger() {
-		JPanel databaseChanger = new JPanel();
+		JPanel databaseChanger = new JPanel(new FlowLayout());
 
 		databaseChanger.setPreferredSize(new Dimension(300, 400));
 		databaseChanger.setBackground(new Color(100, 100, 100, 100));
+                databaseChanger.setBorder(new EmptyBorder(100, 0, 0, 0));
 
+                
 		JButton adder = new JButton();
-
 		adder.setText("Add patient");
+		adder.setMinimumSize(new Dimension(100, 30));
+		adder.setPreferredSize(new Dimension(200, 30));
 		adder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DatabaseEditor pa = new DatabaseEditor();
@@ -290,8 +294,9 @@ public class MainScreen extends JPanel {
 		databaseChanger.add(adder);
 
 		JButton editor = new JButton();
-
 		editor.setText("Edit patient");
+		editor.setMinimumSize(new Dimension(100, 30));
+		editor.setPreferredSize(new Dimension(200, 30));
 		editor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DatabaseEditor pa = new DatabaseEditor("ab100");
@@ -306,7 +311,8 @@ public class MainScreen extends JPanel {
 		databaseChanger.add(editor);
 
 		JButton search = new JButton();
-
+		search.setMinimumSize(new Dimension(100, 30));
+		search.setPreferredSize(new Dimension(200, 30));
 		search.setText("Search");
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -323,12 +329,10 @@ public class MainScreen extends JPanel {
 	 * photo pane (GridLayout) */
 	private JTabbedPane tabbedMedicalDataPane() {
 		JTabbedPane medicalDataPane = new JTabbedPane();
-
 		medicalDataPane.setMinimumSize(new Dimension(500, 400));
 		medicalDataPane.setPreferredSize(new Dimension(800, 400));
 
 		JPanel medicalHistory = createMedicalHistoryPane();
-		
 		JPanel photos = createPhotoPane();
 
 		medicalDataPane.add("Medical History", medicalHistory);
@@ -337,22 +341,23 @@ public class MainScreen extends JPanel {
 		return medicalDataPane;
 	}
 
+	/** pane which houses the comments, the clickable uri and medical info */
 	private JPanel createMedicalHistoryPane() {
 		JPanel medicalHistory = new JPanel();
 
-		medicalHistory.setBackground(new Color(100, 100, 100, 250));
+		medicalHistory.setBackground(new Color(100, 100, 100, 240));
 		medicalHistory.setBorder(BorderFactory.createBevelBorder(1));
 		medicalHistory.setLayout(new GridBagLayout());
                 GridBagConstraints c = new GridBagConstraints();
 
                 c.fill = GridBagConstraints.HORIZONTAL;
                 c.anchor = GridBagConstraints.NORTHWEST;
-                //c.gridx = 0;
                 c.gridy = 0;
 		JLabel condition = new JLabel();
 		condition.setText("Medical Condition(s):" + " Flatulence");
 		condition.setForeground(Color.WHITE);
 		condition.setPreferredSize(new Dimension(300, 30));
+		condition.setMinimumSize(new Dimension(200, 30));
 		medicalHistory.add(condition, c);
 
 
@@ -363,7 +368,8 @@ public class MainScreen extends JPanel {
                 JLabel link = new JLabel();
                 link.setText("<html>Click <font color=red>here</font> for more information on " + "condition" + "</html>");
                 link.setForeground(Color.WHITE);
-                link.setPreferredSize(new Dimension(150, 30));
+                link.setPreferredSize(new Dimension(250, 30));
+                link.setMinimumSize(new Dimension(200, 30));
                 link.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 link.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
@@ -388,33 +394,35 @@ public class MainScreen extends JPanel {
                 JLabel nextAppointment = new JLabel();
                 nextAppointment.setForeground(Color.WHITE);
                 nextAppointment.setText("Next Appointment: " + "30/11/2015");
-                nextAppointment.setPreferredSize(new Dimension(200, 30));
+                nextAppointment.setPreferredSize(new Dimension(250, 30));
+                nextAppointment.setMinimumSize(new Dimension(200, 30));
                 medicalHistory.add(nextAppointment, c);
 
 
                 c.fill = GridBagConstraints.HORIZONTAL;
                 c.anchor = GridBagConstraints.NORTHWEST;
-                //c.gridx = 0;
                 c.gridy = 3;
                 JLabel comments = new JLabel();
                 comments.setText("Comments");
                 comments.setForeground(Color.WHITE);
                 comments.setPreferredSize(new Dimension(100, 30));
+                comments.setMinimumSize(new Dimension(50, 30));
                 medicalHistory.add(comments, c);
 
                 c.fill = GridBagConstraints.HORIZONTAL;
                 c.anchor = GridBagConstraints.NORTHWEST;
-                //c.gridx = 0;
                 c.gridy = 4;
                 c.weighty = 1;
                 JTextArea commentField = new JTextArea();
                 commentField.setPreferredSize(new Dimension(600, 200));
+                commentField.setMinimumSize(new Dimension(200, 200));
                 medicalHistory.add(commentField, c);
 
 		return medicalHistory;
 
 	}
 
+	/** GridLayout of buttons which hold relevant medical photos */
 	private JPanel createPhotoPane() {
 		JPanel photos = new JPanel();
 		photos.setLayout(new GridLayout(4, 4));

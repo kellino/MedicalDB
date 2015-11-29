@@ -8,9 +8,7 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
-	public GUI() {
-	}
-
+	public static JFrame frame;
 	static JPanel cardPanel;
 	static CardLayout cards = new CardLayout();
 	protected static final int WIDTH = 1200;
@@ -31,7 +29,6 @@ public class GUI extends JFrame {
 
 	private void addComponentToPane(Container pane) {
 		LoginScreen login = new LoginScreen();
-
 		MainScreen mainscreen = new MainScreen();
 
 		cardPanel = new JPanel();

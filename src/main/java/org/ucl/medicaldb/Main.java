@@ -1,9 +1,8 @@
 package org.ucl.medicaldb;
 
 import java.awt.EventQueue;
-
+import java.awt.Font;
 import javax.swing.UIManager;
-
 import org.ucl.gui.GUI;
 
 /**
@@ -15,6 +14,8 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+			UIManager.getLookAndFeelDefaults()
+			    .put("defaultFont", new Font("Sans Serif", Font.PLAIN, 14));
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
