@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultEditorKit;
+
 import org.ucl.medicaldb.Database;
 import org.ucl.medicaldb.Main;
 import org.ucl.medicaldb.Patient;
@@ -100,7 +102,7 @@ public class MainScreen extends JPanel {
 		mnFile.setMnemonic(KeyEvent.VK_F);
 		/* save */
 		menuItem = mnFile.add(new JMenuItem("Save", 's'));
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
 		menuItem.addActionListener(l);
 		/* import database from file */
 		menuItem = mnFile.add(new JMenuItem("Import", 'i'));
@@ -125,15 +127,22 @@ public class MainScreen extends JPanel {
 
 		mnEdit.setMnemonic(KeyEvent.VK_E);
 
-		/* menu items for the Edit menu */
-		menuItem = mnEdit.add(new JMenuItem("Cut", 't'));
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, Event.CTRL_MASK));
-		menuItem.addActionListener(l);
-		menuItem = mnEdit.add(new JMenuItem("Copy", 'c'));
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK));
-		menuItem.addActionListener(l);
-		menuItem = mnEdit.add(new JMenuItem("Paste", 'p'));
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK));
+		/* cut */
+		menuItem = mnEdit.add(new JMenuItem(new DefaultEditorKit.CutAction()));
+		menuItem.setText("Cut");
+		menuItem.setMnemonic(KeyEvent.VK_T);
+		mnEdit.add(menuItem);
+		/* copy */
+		menuItem = mnEdit.add(new JMenuItem(new DefaultEditorKit.CopyAction()));
+		menuItem.setText("Copy");
+		menuItem.setMnemonic(KeyEvent.VK_C);
+		mnEdit.add(menuItem);
+		/* paste */
+		menuItem = mnEdit.add(new JMenuItem(new DefaultEditorKit.PasteAction()));
+		menuItem.setText("Paste");
+		menuItem.setMnemonic(KeyEvent.VK_P);
+		mnEdit.add(menuItem);
+
 		mb.add(mnEdit);
 
 		JMenu mnAbout = new JMenu("About");
