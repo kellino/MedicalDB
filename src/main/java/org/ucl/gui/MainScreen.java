@@ -1,11 +1,7 @@
 package org.ucl.gui;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.net.*;
 import javax.swing.*;
@@ -174,7 +170,6 @@ public class MainScreen extends JPanel {
 
 		JLabel[] titleContainers = new JLabel[fields.length];
 		for (int i = 0; i < fields.length; i++) {
-			// int y_shift = (i - 2) * 40;
 			titleContainers[i] = new JLabel();
 			switch (i) {
 			case 0: /* patient id */
@@ -315,10 +310,23 @@ public class MainScreen extends JPanel {
 		search.setPreferredSize(new Dimension(200, 30));
 		search.setText("<html><b>Search</b></html>");
 		search.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// to be implemented
+		    public void actionPerformed(ActionEvent e) {
+			JPanel searchDialog = createSearchDialog();
+			int result = JOptionPane.showConfirmDialog(null, searchDialog,
+				        "Search the Database", 
+				        JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE);
+			    if (result == JOptionPane.OK_OPTION) {
+				CardLayout cardLayout = (CardLayout) searchDialog.getLayout();
+				JOptionPane.showConfirmDialog(null, searchDialog,
+				        "Results",
+				        JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE);
 				System.out.println("Patient search");
-			}
+                            } else {
+				System.out.println("Patient search cancelled");
+                            }
+		    }
 		});
 		databaseChanger.add(search);
 
@@ -419,7 +427,6 @@ public class MainScreen extends JPanel {
                 medicalHistory.add(commentField, c);
 
 		return medicalHistory;
-
 	}
 
 	/** GridLayout of buttons which hold relevant medical images */
@@ -435,5 +442,20 @@ public class MainScreen extends JPanel {
 		}
 
 		return images;
+	}
+
+	/** search dialog */
+	private JPanel createSearchDialog() {
+	    JPanel cards = new JPanel(new CardLayout());
+	    cards.setPreferredSize(new Dimension(400, 200));
+
+	    JPanel searchString = new JPanel();
+	    searchString.setBackground(Color.BLUE);
+	    JPanel results = new JPanel();
+	    results.setBackground(Color.GREEN);
+
+	    cards.add(searchString);
+	    cards.add(results);
+	    return cards;
 	}
 }
