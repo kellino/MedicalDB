@@ -5,11 +5,9 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultEditorKit;
-
 import org.ucl.medicaldb.Database;
 import org.ucl.medicaldb.Main;
 import org.ucl.medicaldb.Patient;
@@ -25,17 +23,13 @@ import org.ucl.medicaldb.Patient;
 @SuppressWarnings("serial")
 public class MainScreen extends JPanel {
 	protected static String[] currentIds = Database.idNumbers.stream()
-			.toArray(String[]::new); /*
-										 * this code snippet was inspired by a
-										 * stackoverflow question
-										 */
+			.toArray(String[]::new); 
 	protected static final String[][] dateFormat = { Database.days, Database.months, Database.years };
 	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Mrs", "Ms", "Dr" },
 			{ "-", "Male", "Female" } };
 	protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
 			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments" };
 	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
-	private JTextArea searchTxtArea;
 
 	/** constructor for the main screen. */
 	public MainScreen() {
@@ -91,7 +85,6 @@ public class MainScreen extends JPanel {
 	/** creates the main menu at the top of the screen */
 	private JMenuBar createMenu() {
 		JMenuBar mb = new JMenuBar();
-		MenuListener l = new MenuListener();
 		JMenuItem menuItem;
 
 		mb.setBounds(0, 0, 1200, 30);
@@ -102,12 +95,11 @@ public class MainScreen extends JPanel {
 		mnFile.setMnemonic(KeyEvent.VK_F);
 		/* save */
 		menuItem = mnFile.add(new JMenuItem("Save", 's'));
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
-		menuItem.addActionListener(l);
+		// action listener needed
 		/* import database from file */
 		menuItem = mnFile.add(new JMenuItem("Import", 'i'));
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, Event.CTRL_MASK));
-		menuItem.addActionListener(l);
+		// action listener needed
 		/* exit the program */
 		menuItem = mnFile.add(new JMenuItem("Exit", 'x'));
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
@@ -124,7 +116,6 @@ public class MainScreen extends JPanel {
 		mb.add(mnFile);
 
 		JMenu mnEdit = new JMenu("Edit");
-
 		mnEdit.setMnemonic(KeyEvent.VK_E);
 
 		/* cut */
@@ -156,13 +147,6 @@ public class MainScreen extends JPanel {
 		mb.add(mnHelp);
 
 		return mb;
-	}
-
-	/** listener method for the dropdown menus from the main menu bar */
-	private class MenuListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			System.out.println(e.getActionCommand());
-		}
 	}
 
 	/** popup confirmation dialog for user-driven decisions */
@@ -327,30 +311,30 @@ public class MainScreen extends JPanel {
 		});
 		databaseChanger.add(editor);
 
+
+                /* search text box */
+                JLabel searchBox = new JLabel("<html><b>Enter search here</b></html>", SwingConstants.CENTER);
+                searchBox.setBackground(new Color(200, 100, 100, 200));
+                searchBox.setPreferredSize(new Dimension(200, 30));
+                JTextField searchTxtArea = new JTextField();
+                searchTxtArea.setPreferredSize(new Dimension(250, 30));
+                databaseChanger.add(searchBox);
+                databaseChanger.add(searchTxtArea);
+
 		/* the search function launcher */
 		JButton search = new JButton();
 		search.setMinimumSize(new Dimension(100, 30));
 		search.setPreferredSize(new Dimension(200, 30));
-		search.setText("<html><b>Search</b></html>");
+		search.setText("<html><b><font color=red>Search</font></b></html>");
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JPanel searchDialog = createSearchDialog();
-				int result = JOptionPane.showConfirmDialog(null, searchDialog, "Search the Database",
-						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-				if (result == JOptionPane.OK_OPTION) {
-					ArrayList<Patient> results = Main.medDB.searchPatients(searchTxtArea.getText());
-					if (results.size() != 0) {
-					    // stub here
-					    for (Patient p : results) { System.out.println(p.toString()); }
-					} else {
-					    System.out.println("No results found");
-					}
-				} else {
-					System.out.println("Patient search cancelled");
-				}
+                            ArrayList<Patient> results = Main.medDB.searchPatients(searchTxtArea.getText());
+                            if (results.size() != 0) {
+                                for (Patient p : results) { System.out.println(p.toString()); }
+                            } else { System.out.println("No matches found"); searchTxtArea.setText(""); }
 			}
+		    });
 
-		});
 		databaseChanger.add(search);
 
 		return databaseChanger;
@@ -395,7 +379,6 @@ public class MainScreen extends JPanel {
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.NORTHWEST;
-		// c.gridx = 0;
 		c.gridy = 1;
 		JLabel link = new JLabel();
 		link.setText(
@@ -468,24 +451,24 @@ public class MainScreen extends JPanel {
 	}
 
 	/** search dialog */
-	private JPanel createSearchDialog() {
-		JPanel cards = new JPanel(new CardLayout());
-		cards.setPreferredSize(new Dimension(400, 200));
+	//private JPanel createSearchDialog() {
+		//JPanel cards = new JPanel(new CardLayout());
+		//cards.setPreferredSize(new Dimension(400, 50));
 
-		JPanel searchString = new JPanel(new BorderLayout());
-		searchString.setBackground(LIGHT_BLUE);
-		JLabel label = new JLabel();
-		label.setText("Enter search here");
-		searchString.add(label, BorderLayout.NORTH);
-		searchTxtArea = new JTextArea();
-		searchTxtArea.setPreferredSize(new Dimension(300, 30));
-		searchString.add(searchTxtArea, BorderLayout.CENTER);
+		//JPanel searchString = new JPanel(new BorderLayout());
+		//searchString.setBackground(LIGHT_BLUE);
+		//JLabel label = new JLabel();
+		//label.setText("Enter search here");
+		//searchString.add(label, BorderLayout.NORTH);
+		//searchTxtArea = new JTextArea();
+		//searchTxtArea.setPreferredSize(new Dimension(300, 30));
+		//searchString.add(searchTxtArea, BorderLayout.CENTER);
 
-		JPanel results = new JPanel();
-		results.setBackground(Color.GREEN);
+		//JPanel results = new JPanel();
+		//results.setBackground(Color.GREEN);
 
-		cards.add(searchString);
-		cards.add(results);
-		return cards;
-	}
+		//cards.add(searchString);
+		//cards.add(results);
+		//return cards;
+	//}
 }
