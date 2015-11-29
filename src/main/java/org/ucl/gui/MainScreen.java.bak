@@ -28,7 +28,7 @@ public class MainScreen extends JPanel {
 	protected static final String[][] dateFormat = { Database.days, Database.months, Database.years };
 	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Mrs", "Ms", "Dr" }, { "-", "Male", "Female" } };
 	protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
-			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments" };
+			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Comments" };
 	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
 
 	/** constructor for the main screen. */

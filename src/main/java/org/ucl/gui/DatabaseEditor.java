@@ -2,13 +2,19 @@ package org.ucl.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Properties;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import org.jdatepicker.impl.*;
-import java.util.Properties;
 
 /** main dialog for editing and adding patients to the database. It is called in the 
  * form of a JOptionPane from the MainScreen class
@@ -18,7 +24,7 @@ public class DatabaseEditor extends JPanel {
     private static final int width = 600, height = 600;
     private static final Dimension screen = new Dimension(width, height);
     private static final int boxHeight = height / 20;
-    private static final int widthUnit = width / 60;
+    private static final int unit = width / 60;
 
     /** constructor for adding a new patient to the database */
     public DatabaseEditor() {
@@ -38,7 +44,9 @@ public class DatabaseEditor extends JPanel {
         /** the DatabaseEditor window is not resizeable, so it's possible to safely
          * use the null layout here */
         setLayout(null); 
-        setPreferredSize(new Dimension(600, 600));
+        setPreferredSize(screen);
+        setBackground(new Color(200, 200, 100, 200));
+        setBorder(BorderFactory.createEtchedBorder(1));
         createFieldNames();
         createTextFields();
     }
@@ -51,46 +59,49 @@ public class DatabaseEditor extends JPanel {
 	    titleContainers[i] = new JLabel();
 	    switch (i) {
 		case 0: /* patient id */
-		    titleContainers[i].setBounds(widthUnit, height / 15, 150, boxHeight);
+		    titleContainers[i].setBounds(unit, unit * 4, 150, boxHeight);
 		    break;
 		case 1: /* title */
-		    titleContainers[i].setBounds(widthUnit * 20, height / 15, 150, boxHeight);
+		    titleContainers[i].setBounds(unit * 20, unit * 4, 150, boxHeight);
 		    break;
 		case 2: /* sex */
-		    titleContainers[i].setBounds(widthUnit * 31, height / 15, 150, boxHeight);
+		    titleContainers[i].setBounds(unit * 31, unit * 4, 150, boxHeight);
 		    break;
                 case 3: /* last name */
-		    titleContainers[i].setBounds(10, 80, 150, boxHeight);
+		    titleContainers[i].setBounds(unit, unit * 8, 150, boxHeight);
                     break;
                 case 4: /* first name */
-		    titleContainers[i].setBounds(10, 120, 150, boxHeight);
+		    titleContainers[i].setBounds(unit, unit * 12, 150, boxHeight);
 		    break;
                 case 5: /* date of birth */
-		    titleContainers[i].setBounds(10, 160, 150, boxHeight);
+		    titleContainers[i].setBounds(unit, unit * 16, 150, boxHeight);
 		    break;
 		case 6: /* day */
-		    titleContainers[i].setBounds(widthUnit * 11, 160, 100, boxHeight);
+		    titleContainers[i].setBounds(unit * 11, unit * 16, 100, boxHeight);
 		    break;
 		case 7: /* month */
-		    titleContainers[i].setBounds(widthUnit * 19, 160, 100, boxHeight);
+		    titleContainers[i].setBounds(unit * 19, unit * 16, 100, boxHeight);
 		    break;
 		case 8: /* year */
-		    titleContainers[i].setBounds(widthUnit * 28, 160, 100, boxHeight);
+		    titleContainers[i].setBounds(unit * 28, unit * 16, 100, boxHeight);
 		    break;
                 case 9: /* condition */
-		    titleContainers[i].setBounds(10, 200, 100, boxHeight);
+		    titleContainers[i].setBounds(unit, unit * 20, unit * 10, boxHeight);
 		    break;
-                case 10: /* address */
-		    titleContainers[i].setBounds(10, 240, 100, boxHeight);
+                case unit: /* address */
+		    titleContainers[i].setBounds(unit, unit * 24, unit * 10, boxHeight);
 		    break;
                 case 11: /* next appointment */
-		    titleContainers[i].setBounds(10, 280, 200, boxHeight);
+		    titleContainers[i].setBounds(unit, unit * 28, unit * 20, boxHeight);
 		    break;
                 case 12: /* url */
-		    titleContainers[i].setBounds(10, 320, 100, boxHeight);
+		    titleContainers[i].setBounds(unit, unit * 32, unit * 10, boxHeight);
 		    break;
-                case 13: /* comments */
-		    titleContainers[i].setBounds(10, 360, 100, boxHeight);
+                case 13: /* photo adder */
+                    titleContainers[i].setBounds(unit, unit * 36, unit * 10, boxHeight);
+                    break;
+                case 14: /* comments */
+		    titleContainers[i].setBounds(unit, unit * 40, unit * 10, boxHeight);
 		    break;
 		default:
 		    /* we should not reach this point */
@@ -101,51 +112,66 @@ public class DatabaseEditor extends JPanel {
 	}
     }
 
-    /** draw editable text fields, JComboBoxes, and JDatePicker */
+    /** draw editable text fields, JComboBoxes, JDatePicker, and JFileChooser */
     private void createTextFields() {
 	JTextField[] inputFields = new JTextField[MainScreen.fields.length];
 	    for (int i = 0; i < MainScreen.fields.length; i++) {
 		inputFields[i] = new JTextField();
 		switch (i) {
 		    case 0: /* patient id, title, gender */
-			//createComboBoxArray(MainScreen.patientData, 80, 40);
-			JComboBox<String> patientID = createComboBox(MainScreen.patientData[0], widthUnit * 11, 40, 80, boxHeight);
-			JComboBox<String> titleMenu = createComboBox(MainScreen.patientData[1], widthUnit * 23, 40, 70, boxHeight);
-			JComboBox<String> genderMenu = createComboBox(MainScreen.patientData[2], widthUnit * 34, 40, 80, boxHeight);
+			JComboBox<String> patientID = createComboBox(MainScreen.patientData[0], unit * 11, unit * 4, unit * 8, boxHeight);
+			JComboBox<String> titleMenu = createComboBox(MainScreen.patientData[1], unit * 23, unit * 4, unit * 7, boxHeight);
+			JComboBox<String> genderMenu = createComboBox(MainScreen.patientData[2], unit * 34, unit * 4, unit * 8, boxHeight);
 			add(patientID);
 			add(titleMenu);
 			add(genderMenu);
 			break;
 		    case 3: /* last name */
-			inputFields[i].setBounds(widthUnit * 11, 80, 250, boxHeight);
+			inputFields[i].setBounds(unit * 11, unit * 8, unit * 25, boxHeight);
 			break;
 		    case 4: /* first name(s) */
-			inputFields[i].setBounds(widthUnit * 11, 120, 250, boxHeight);
+			inputFields[i].setBounds(unit * 11, unit * 12, unit * 25, boxHeight);
 			break;
-		    case 6: 			
-			JComboBox<String> day = createComboBox(MainScreen.dateFormat[0], widthUnit * 13, widthUnit * 16, 50, boxHeight);
-			JComboBox<String> month = createComboBox(MainScreen.dateFormat[1], widthUnit * 22, 160, 50, boxHeight);
-			JComboBox<String> year = createComboBox(MainScreen.dateFormat[2], widthUnit * 30, 160, 80, boxHeight);
+		    case 6: /* dd, mm, YY */			
+			JComboBox<String> day = createComboBox(MainScreen.dateFormat[0], unit * 13, unit * 16, unit * 5, boxHeight);
+			JComboBox<String> month = createComboBox(MainScreen.dateFormat[1], unit * 22, unit * 16, unit * 5, boxHeight);
+			JComboBox<String> year = createComboBox(MainScreen.dateFormat[2], unit * 30, unit * 16, unit * 8, boxHeight);
 			add(day);
 			add(month);
 			add(year);
 		        break;
                     case 9: /* condition(s) */
-			inputFields[i].setBounds(widthUnit * 11, 200, 350, boxHeight);
+			inputFields[i].setBounds(unit * 11, unit * 20, unit * 35, boxHeight);
 			break;
                     case 10: /* address */
-			inputFields[i].setBounds(widthUnit * 11, 240, 450, boxHeight);
+			inputFields[i].setBounds(unit * 11, unit * 24, unit * 45, boxHeight);
 			break;
-                    case 11:
+                    case 11: /* next appointment */
                         JDatePickerImpl datePicker = drawDatePicker();
-                        datePicker.setBounds(widthUnit * 11, widthUnit * 28, 200, boxHeight);
+                        datePicker.setBounds(unit * 11, unit * 28, unit * 20, boxHeight);
                         add(datePicker);
                         break;
-                    case 12:
-			inputFields[i].setBounds(widthUnit * 11, widthUnit * 32, 350, boxHeight);
+                    case 12: /* url */
+			inputFields[i].setBounds(unit * 11, unit * 32, unit * 35, boxHeight);
 			break;
-                    case 13:
-			inputFields[i].setBounds(widthUnit * 11, widthUnit * 36, 350, boxHeight);
+                    case 13: /* photo */
+			JButton addPhoto = new JButton();
+			addPhoto.setBounds(unit * 11, unit * 36, unit * 10, boxHeight);
+			addPhoto.setText("<html><b>Choose</b></html>");
+                        addPhoto.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+			    createPhotoChooser();
+                            }
+                        });
+			add(addPhoto);
+			/* read the file location as a string into this text area"
+			inputFields[i].setBounds(unit * 25, unit * 36, unit * 25, boxHeight);
+			break;
+                    case 14: /* comments */
+			JTextArea commentArea = new JTextArea();
+			commentArea.setBounds(unit * 11, unit * 40, unit * 35, boxHeight * 5);
+			add(commentArea);
 			break;
 		    default:
 		        /* case 5: date of birth */
@@ -153,6 +179,13 @@ public class DatabaseEditor extends JPanel {
 		}
 	    add(inputFields[i]);
 	}
+    }
+
+    private void createPhotoChooser() {
+        JFileChooser photoChooser = new JFileChooser();
+        photoChooser.showOpenDialog(this);
+        File file = photoChooser.getSelectedFile();
+        //return photoChooser;
     }
 
     /** helper method to set up JComboBoxes */
@@ -170,7 +203,7 @@ public class DatabaseEditor extends JPanel {
         p.put("text.month", "Month");
         p.put("text.year", "Year");
         JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-        datePanel.setBounds(10, 400, 100, 100);
+        datePanel.setBounds(unit, unit * 40, unit * 10, unit * 10);
         JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, null);
         return datePicker;
     }
