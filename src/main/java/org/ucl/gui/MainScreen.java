@@ -28,7 +28,7 @@ public class MainScreen extends JPanel {
 	protected static final String[][] dateFormat = { Database.days, Database.months, Database.years };
 	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Mrs", "Ms", "Dr" }, { "-", "Male", "Female" } };
 	protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
-			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appointment", "Comments" };
+			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Comments" };
 	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
 
 	/** constructor for the main screen. */
@@ -277,7 +277,7 @@ public class MainScreen extends JPanel {
 
                 
 		JButton adder = new JButton();
-		adder.setText("Add patient");
+		adder.setText("<html><b>Add patient</b></html>");
 		adder.setMinimumSize(new Dimension(100, 30));
 		adder.setPreferredSize(new Dimension(200, 30));
 		adder.addActionListener(new ActionListener() {
@@ -294,7 +294,7 @@ public class MainScreen extends JPanel {
 		databaseChanger.add(adder);
 
 		JButton editor = new JButton();
-		editor.setText("Edit patient");
+		editor.setText("<html><b>Edit patient</></html>");
 		editor.setMinimumSize(new Dimension(100, 30));
 		editor.setPreferredSize(new Dimension(200, 30));
 		editor.addActionListener(new ActionListener() {
@@ -313,7 +313,7 @@ public class MainScreen extends JPanel {
 		JButton search = new JButton();
 		search.setMinimumSize(new Dimension(100, 30));
 		search.setPreferredSize(new Dimension(200, 30));
-		search.setText("Search");
+		search.setText("<html><b>Search</b></html>");
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// to be implemented
@@ -366,7 +366,7 @@ public class MainScreen extends JPanel {
                 //c.gridx = 0;
                 c.gridy = 1;
                 JLabel link = new JLabel();
-                link.setText("<html>Click <font color=red>here</font> for more information on " + "condition" + "</html>");
+                link.setText("<html>Click <b><font color=red>here</font></b> for more information on " + "condition" + "</html>");
                 link.setForeground(Color.WHITE);
                 link.setPreferredSize(new Dimension(250, 30));
                 link.setMinimumSize(new Dimension(200, 30));
