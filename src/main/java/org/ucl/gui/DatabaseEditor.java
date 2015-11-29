@@ -206,8 +206,12 @@ public class DatabaseEditor extends JPanel {
         return datePicker;
     }
 
-    /** the following code is from a stackoverflow <i>tutorial</i> on JDatePicker. Thanks
-     * @theMadProgrammer */
+	/**
+	 * the following code is from a stackoverflow <i>tutorial</i> on
+	 * JDatePicker. Thanks
+	 * 
+	 * @theMadProgrammer
+	 */
     public class DateLabelFormatter extends AbstractFormatter {
         private String datePattern = "dd/MM/yyyy";
         private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);

@@ -8,12 +8,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import org.ucl.medicaldb.Patient;
 
 public class Database {
 	private static final Logger log = Logger.getLogger(Class.class.getName());
-
 	private static final String FILELOCATION = "/home/david/Programming/Java/medicaldb/db.txt";
 	protected static ArrayList<Patient> currentPatients = new ArrayList<Patient>();
 	public static Set<String> idNumbers = new HashSet<String>();
@@ -191,6 +189,13 @@ public class Database {
 	void loadPatient() {
 	};
 
-	void searchPatient(Pattern pattern) {
-	};
+	public ArrayList<Patient> searchPatients(String searchTxt) {
+		ArrayList<Patient> resultList = new ArrayList<Patient>();
+		for (int i = 0; i < currentPatients.size(); i++) {
+			if (currentPatients.get(i).toString().contains(searchTxt)) {
+				resultList.add(currentPatients.get(i));
+			}
+		}
+		return resultList;
+	}
 }

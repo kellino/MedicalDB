@@ -9,13 +9,12 @@ import org.ucl.gui.GUI;
  * the main class for the entire program.
  */
 public class Main {
-	static Database medDB;
+	public static Database medDB;
 
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-			UIManager.getLookAndFeelDefaults()
-			    .put("defaultFont", new Font("Sans Serif", Font.PLAIN, 14));
+			UIManager.getLookAndFeelDefaults().put("defaultFont", new Font("Sans Serif", Font.PLAIN, 14));
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
