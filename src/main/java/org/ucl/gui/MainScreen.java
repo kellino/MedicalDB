@@ -329,10 +329,12 @@ public class MainScreen extends JPanel {
 				int result = JOptionPane.showConfirmDialog(null, searchDialog, "Search the Database",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
-					ArrayList<Patient> results;
-					results = Main.medDB.searchPatients(searchTxtArea.getText());
-					for (Patient p : results) {
-						System.out.println(p.toString());
+					ArrayList<Patient> results = Main.medDB.searchPatients(searchTxtArea.getText());
+					if (results.size() != 0) {
+					    // stub here
+					    for (Patient p : results) { System.out.println(p.toString()); }
+					} else {
+					    System.out.println("No results found");
 					}
 				} else {
 					System.out.println("Patient search cancelled");

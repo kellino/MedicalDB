@@ -192,7 +192,7 @@ public class Database {
 	public ArrayList<Patient> searchPatients(String searchTxt) {
 		ArrayList<Patient> resultList = new ArrayList<Patient>();
 		for (int i = 0; i < currentPatients.size(); i++) {
-			if (currentPatients.get(i).toString().contains(searchTxt)) {
+			if (currentPatients.get(i).toString().toLowerCase().contains(searchTxt.toLowerCase())) {
 				resultList.add(currentPatients.get(i));
 			}
 		}
