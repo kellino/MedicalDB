@@ -22,8 +22,7 @@ import org.ucl.medicaldb.Patient;
  */
 @SuppressWarnings("serial")
 public class MainScreen extends JPanel {
-	protected static String[] currentIds = Database.idNumbers.stream()
-			.toArray(String[]::new); 
+	protected static String[] currentIds = Database.idNumbers.stream().toArray(String[]::new);
 	protected static final String[][] dateFormat = { Database.days, Database.months, Database.years };
 	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Mrs", "Ms", "Dr" },
 			{ "-", "Male", "Female" } };
@@ -311,15 +310,14 @@ public class MainScreen extends JPanel {
 		});
 		databaseChanger.add(editor);
 
-
-                /* search text box */
-                JLabel searchBox = new JLabel("<html><b>Enter search here</b></html>", SwingConstants.CENTER);
-                searchBox.setBackground(new Color(200, 100, 100, 200));
-                searchBox.setPreferredSize(new Dimension(200, 30));
-                JTextField searchTxtArea = new JTextField();
-                searchTxtArea.setPreferredSize(new Dimension(250, 30));
-                databaseChanger.add(searchBox);
-                databaseChanger.add(searchTxtArea);
+		/* search text box */
+		JLabel searchBox = new JLabel("<html><b>Enter search here</b></html>", SwingConstants.CENTER);
+		searchBox.setBackground(new Color(200, 100, 100, 200));
+		searchBox.setPreferredSize(new Dimension(200, 30));
+		JTextField searchTxtArea = new JTextField();
+		searchTxtArea.setPreferredSize(new Dimension(250, 30));
+		databaseChanger.add(searchBox);
+		databaseChanger.add(searchTxtArea);
 
 		/* the search function launcher */
 		JButton search = new JButton();
@@ -328,12 +326,17 @@ public class MainScreen extends JPanel {
 		search.setText("<html><b><font color=red>Search</font></b></html>");
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                            ArrayList<Patient> results = Main.medDB.searchPatients(searchTxtArea.getText());
-                            if (results.size() != 0) {
-                                for (Patient p : results) { System.out.println(p.toString()); }
-                            } else { System.out.println("No matches found"); searchTxtArea.setText(""); }
+				ArrayList<Patient> results = Main.medDB.searchPatients(searchTxtArea.getText());
+				if (results.size() != 0) {
+					Patient chosenResult = (Patient) JOptionPane.showInputDialog(null, "Search Results", "Results",
+							JOptionPane.QUESTION_MESSAGE, null, results.toArray(), results.get(0));
+					System.out.println(chosenResult.toString());
+				} else {
+					System.out.println("No matches found");
+				}
+				searchTxtArea.setText("");
 			}
-		    });
+		});
 
 		databaseChanger.add(search);
 
@@ -449,26 +452,4 @@ public class MainScreen extends JPanel {
 		}
 		return images;
 	}
-
-	/** search dialog */
-	//private JPanel createSearchDialog() {
-		//JPanel cards = new JPanel(new CardLayout());
-		//cards.setPreferredSize(new Dimension(400, 50));
-
-		//JPanel searchString = new JPanel(new BorderLayout());
-		//searchString.setBackground(LIGHT_BLUE);
-		//JLabel label = new JLabel();
-		//label.setText("Enter search here");
-		//searchString.add(label, BorderLayout.NORTH);
-		//searchTxtArea = new JTextArea();
-		//searchTxtArea.setPreferredSize(new Dimension(300, 30));
-		//searchString.add(searchTxtArea, BorderLayout.CENTER);
-
-		//JPanel results = new JPanel();
-		//results.setBackground(Color.GREEN);
-
-		//cards.add(searchString);
-		//cards.add(results);
-		//return cards;
-	//}
 }
