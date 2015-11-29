@@ -48,7 +48,7 @@ public class MainScreen extends JPanel {
 
 		add(menuBar, c);
 
-		/* patient data panel, including patient details and profile photo */
+		/* patient data panel, including patient details and profile image */
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridx = 0;
@@ -60,7 +60,7 @@ public class MainScreen extends JPanel {
 
 		/*
 		 * a split pane with a nested tabbed pane for displaying comments and
-		 * medical photos
+		 * medical images
 		 */
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -326,17 +326,17 @@ public class MainScreen extends JPanel {
         }
 
 	/** a JTabbedPane which houses the medical history pane (GridBagLayout) and the 
-	 * photo pane (GridLayout) */
+	 * image pane (GridLayout) */
 	private JTabbedPane tabbedMedicalDataPane() {
 		JTabbedPane medicalDataPane = new JTabbedPane();
 		medicalDataPane.setMinimumSize(new Dimension(500, 400));
 		medicalDataPane.setPreferredSize(new Dimension(800, 400));
 
 		JPanel medicalHistory = createMedicalHistoryPane();
-		JPanel photos = createPhotoPane();
+		JPanel images = createPhotoPane();
 
 		medicalDataPane.add("Medical History", medicalHistory);
-		medicalDataPane.add("Photographs", photos);
+		medicalDataPane.add("Photographs", images);
 
 		return medicalDataPane;
 	}
@@ -422,18 +422,18 @@ public class MainScreen extends JPanel {
 
 	}
 
-	/** GridLayout of buttons which hold relevant medical photos */
+	/** GridLayout of buttons which hold relevant medical images */
 	private JPanel createPhotoPane() {
-		JPanel photos = new JPanel();
-		photos.setLayout(new GridLayout(4, 4));
-		photos.setBackground(Color.LIGHT_GRAY);
+		JPanel images = new JPanel();
+		images.setLayout(new GridLayout(4, 4));
+		images.setBackground(Color.LIGHT_GRAY);
 
 		for (int i = 0; i < 8; i++) {
 		    JButton placeHolder = new JButton();
 		    placeHolder.setText("<html><font color=red>Place for Photo</font></html>");
-		    photos.add(placeHolder);
+		    images.add(placeHolder);
 		}
 
-		return photos;
+		return images;
 	}
 }

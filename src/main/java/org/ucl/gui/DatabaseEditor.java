@@ -108,8 +108,9 @@ public class DatabaseEditor extends JPanel {
 
     /** draw editable text fields, JComboBoxes, JDatePicker, and JFileChooser */
     private void createTextFields() {
+	int i;
 	JTextField[] inputFields = new JTextField[MainScreen.fields.length];
-	    for (int i = 0; i < MainScreen.fields.length; i++) {
+	    for (i = 0; i < MainScreen.fields.length; i++) {
 		inputFields[i] = new JTextField();
 		switch (i) {
 		    case 0: /* patient id, title, gender */
@@ -149,18 +150,20 @@ public class DatabaseEditor extends JPanel {
 			inputFields[i].setBounds(unit * 11, unit * 32, unit * 35, boxHeight);
 			break;
                     case 13: /* image */
+			/* read the file location as a string into this text area */
+			inputFields[i].setBounds(unit * 25, unit * 36, unit * 31, boxHeight);
+
 			JButton addPhoto = new JButton();
 			addPhoto.setBounds(unit * 11, unit * 36, unit * 10, boxHeight);
 			addPhoto.setText("<html><b>Choose</b></html>");
                         addPhoto.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-			    createPhotoChooser();
+			        String fileString = createPhotoChooser();
+			        inputFields[13].setText(fileString);
                             }
                         });
 			add(addPhoto);
-			/* read the file location as a string into this text area"
-			inputFields[i].setBounds(unit * 25, unit * 36, unit * 25, boxHeight);
 			break;
                     case 14: /* comments */
 			JTextArea commentArea = new JTextArea();
@@ -176,10 +179,11 @@ public class DatabaseEditor extends JPanel {
     }
 
     /** launches a JFileChooser component for loading an image file to the database */
-    private void createPhotoChooser() {
+    private String createPhotoChooser() {
         JFileChooser imageChooser = new JFileChooser();
         imageChooser.showOpenDialog(this);
         File file = imageChooser.getSelectedFile();
+        return file.toString();
     }
 
     /** helper method to set up JComboBoxes */
@@ -222,6 +226,4 @@ public class DatabaseEditor extends JPanel {
             return "";
         }
     }
-
-
 }
