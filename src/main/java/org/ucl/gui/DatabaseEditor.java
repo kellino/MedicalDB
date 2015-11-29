@@ -1,19 +1,13 @@
 package org.ucl.gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Properties;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import java.text.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.JFormattedTextField.AbstractFormatter;
 import org.jdatepicker.impl.*;
 
 /** main dialog for editing and adding patients to the database. It is called in the 
@@ -97,7 +91,7 @@ public class DatabaseEditor extends JPanel {
                 case 12: /* url */
 		    titleContainers[i].setBounds(unit, unit * 32, unit * 10, boxHeight);
 		    break;
-                case 13: /* photo adder */
+                case 13: /* image adder */
                     titleContainers[i].setBounds(unit, unit * 36, unit * 10, boxHeight);
                     break;
                 case 14: /* comments */
@@ -154,7 +148,7 @@ public class DatabaseEditor extends JPanel {
                     case 12: /* url */
 			inputFields[i].setBounds(unit * 11, unit * 32, unit * 35, boxHeight);
 			break;
-                    case 13: /* photo */
+                    case 13: /* image */
 			JButton addPhoto = new JButton();
 			addPhoto.setBounds(unit * 11, unit * 36, unit * 10, boxHeight);
 			addPhoto.setText("<html><b>Choose</b></html>");
@@ -181,11 +175,11 @@ public class DatabaseEditor extends JPanel {
 	}
     }
 
+    /** launches a JFileChooser component for loading an image file to the database */
     private void createPhotoChooser() {
-        JFileChooser photoChooser = new JFileChooser();
-        photoChooser.showOpenDialog(this);
-        File file = photoChooser.getSelectedFile();
-        //return photoChooser;
+        JFileChooser imageChooser = new JFileChooser();
+        imageChooser.showOpenDialog(this);
+        File file = imageChooser.getSelectedFile();
     }
 
     /** helper method to set up JComboBoxes */
@@ -204,7 +198,30 @@ public class DatabaseEditor extends JPanel {
         p.put("text.year", "Year");
         JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
         datePanel.setBounds(unit, unit * 40, unit * 10, unit * 10);
-        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, null);
+        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
         return datePicker;
     }
+
+    /** the following code is from a stackoverflow <i>tutorial</i> on JDatePicker. Thanks
+     * @theMadProgrammer */
+    public class DateLabelFormatter extends AbstractFormatter {
+        private String datePattern = "dd/MM/yyyy";
+        private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+
+        @Override
+        public Object stringToValue(String text) throws ParseException {
+            return dateFormatter.parseObject(text);
+        }
+
+        @Override
+        public String valueToString(Object value) throws ParseException {
+            if (value != null) {
+                Calendar cal = (Calendar) value;
+                return dateFormatter.format(cal.getTime());
+            }
+            return "";
+        }
+    }
+
+
 }
