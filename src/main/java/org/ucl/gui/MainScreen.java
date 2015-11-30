@@ -30,7 +30,7 @@ public class MainScreen extends JPanel {
 			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments" };
 	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
 	private JTextField[] inputFields;
-	protected Patient chosenResult = null;
+	protected Patient chosenResult;
 
 	/** constructor for the main screen. */
 	public MainScreen() {
@@ -285,7 +285,8 @@ public class MainScreen extends JPanel {
 		adder.setPreferredSize(new Dimension(200, 30));
 		adder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DatabaseEditor pa = new DatabaseEditor();
+				chosenResult = new Patient();
+				DatabaseEditor pa = new DatabaseEditor(chosenResult);
 				int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION)
@@ -302,17 +303,17 @@ public class MainScreen extends JPanel {
 		editor.setPreferredSize(new Dimension(200, 30));
 		editor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    if (chosenResult == null) {
-			        JOptionPane.showMessageDialog(null, "You must choose a patient before editing");
-			    } else {
-				DatabaseEditor pa = new DatabaseEditor(chosenResult);
-				int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.PLAIN_MESSAGE);
-				if (result == JOptionPane.OK_OPTION)
-					System.out.println("Patient edited");
-				else
-					System.out.println("Patient editing cancelled");
-                            }
+				if (chosenResult == null) {
+					JOptionPane.showMessageDialog(null, "You must choose a patient before editing");
+				} else {
+					DatabaseEditor pa = new DatabaseEditor(chosenResult);
+					int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION,
+							JOptionPane.PLAIN_MESSAGE);
+					if (result == JOptionPane.OK_OPTION)
+						System.out.println("Patient edited");
+					else
+						System.out.println("Patient editing cancelled");
+				}
 			}
 		});
 		databaseChanger.add(editor);

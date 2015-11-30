@@ -19,7 +19,7 @@ public class Database {
 	private static BufferedWriter writer;
 	private static int setterCount;
 
-	private static final char DELIM = ':';
+	static final char DELIM = '|';
 
 	public static String[] days;
 	public static String[] months;
@@ -161,6 +161,9 @@ public class Database {
 		temp.setCondition(array[i++]);
 		temp.setNextAppointment(array[i++]);
 		temp.setComments(array[i++]);
+		temp.setURI(array[i++]);
+		temp.setProfilePhoto(array[i++]);
+		// temp.setMedPhotos(array[i++]);
 
 		if (i != setterCount) {
 			log.log(Level.SEVERE, "mismatch between setter methods and arrayToPatient()");

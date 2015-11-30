@@ -1,5 +1,7 @@
 package org.ucl.medicaldb;
 
+import java.util.ArrayList;
+
 /**
  * getters and setters for creating a new Patient creates and object of type
  * Patient
@@ -7,18 +9,22 @@ package org.ucl.medicaldb;
 
 public class Patient {
 	final static PatientHandler checker = new PatientHandler();
-	private String firstName;
-	private String lastName;
-	private String title;
-	private String sex;
-	private String DOB;
-	private String address;
-	private String condition;
-	private String nextAppointment;
-	private String comments;
-	private String patientID;
+	private String firstName = "";
+	private String lastName = "";
+	private String title = "";
+	private String sex = "";
+	private String DOB = "";
+	private String address = "";
+	private String condition = "";
+	private String nextAppointment = "";
+	private String comments = "";
+	private String patientID = "";
+        private String uri = "";
+        private String profilePhoto = "";
+        private ArrayList<String> medPhotos = new ArrayList<String>();
 
-	private static final String DELIM = ":";
+	/* can't cast from char to String, so this is a workaround */
+	private static final String DELIM =  Database.DELIM + "";
 
 	public void setFirstName(String firstName) {
 		if (checker.completedObligatoryField(firstName) && checker.isValid(firstName, "name")) {
@@ -32,7 +38,6 @@ public class Patient {
 	}
 
 	public void setLastName(String lastName) {
-		// last names can be very complex, so we won't normalize these
 		if (checker.completedObligatoryField(lastName) && checker.isValid(lastName.trim(), "name"))
 			this.lastName = lastName;
 	}
@@ -124,6 +129,30 @@ public class Patient {
 		return comments;
 	}
 
+        public void setURI(String uri) {
+            this.uri = uri;
+        }
+
+        public String getURI() {
+            return uri;
+        }
+
+        public void setProfilePhoto(String profilePhoto) {
+            this.profilePhoto = profilePhoto;
+        }
+
+        public String getProfilePhoto() {
+            return profilePhoto;
+        }
+
+        public void setMedPhotos(String medPhoto) {
+            medPhotos.add(medPhoto);            
+        }
+
+        public ArrayList<String> getMedPhotos() {
+            return medPhotos;
+        }
+
 	/**
 	 * returns a CSV string of the patient object. Used for writing to the
 	 * db.txt file.
@@ -136,7 +165,7 @@ public class Patient {
 			return String.format(this.getFirstName() + DELIM + this.getLastName() + DELIM + this.getPatientID() + DELIM
 					+ this.getTitle() + DELIM + this.getSex() + DELIM + this.getDOB() + DELIM + this.getAddress()
 					+ DELIM + this.getCondition() + DELIM + this.getNextAppointment() + DELIM + this.getComments()
-					+ DELIM + "\n");
+					+ DELIM + this.getURI() + DELIM + this.getProfilePhoto() + DELIM + "\n");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
