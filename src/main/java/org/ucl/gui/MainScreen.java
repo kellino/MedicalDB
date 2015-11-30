@@ -30,6 +30,7 @@ public class MainScreen extends JPanel {
 			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments" };
 	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
 	private JTextField[] inputFields;
+	protected Patient chosenResult = null;
 
 	/** constructor for the main screen. */
 	public MainScreen() {
@@ -301,13 +302,17 @@ public class MainScreen extends JPanel {
 		editor.setPreferredSize(new Dimension(200, 30));
 		editor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DatabaseEditor pa = new DatabaseEditor("ab100");
+			    if (chosenResult == null) {
+			        JOptionPane.showMessageDialog(null, "You must choose a patient before editing");
+			    } else {
+				DatabaseEditor pa = new DatabaseEditor(chosenResult);
 				int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION)
 					System.out.println("Patient edited");
 				else
 					System.out.println("Patient editing cancelled");
+                            }
 			}
 		});
 		databaseChanger.add(editor);
@@ -329,13 +334,17 @@ public class MainScreen extends JPanel {
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Patient> results = Main.medDB.searchPatients(searchTxtArea.getText());
+				String title = "Search Results";
 				if (results.size() != 0) {
-					Patient chosenResult = (Patient) JOptionPane.showInputDialog(null, "Search Results", "Results",
-							JOptionPane.QUESTION_MESSAGE, null, results.toArray(), results.get(0));
-					fillInputFields(chosenResult);
-					System.out.println(chosenResult.toString());
+					try {
+						chosenResult = (Patient) JOptionPane.showInputDialog(null, "Search Results", title,
+								JOptionPane.QUESTION_MESSAGE, null, results.toArray(), results.get(0));
+						fillInputFields(chosenResult);
+					} catch (Exception ex) {
+						System.out.println("Results cancelled");
+					}
 				} else {
-					System.out.println("No matches found");
+					JOptionPane.showMessageDialog(null, "No matches found");
 				}
 				searchTxtArea.setText("");
 			}
@@ -377,7 +386,7 @@ public class MainScreen extends JPanel {
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridy = 0;
 		JLabel condition = new JLabel();
-		condition.setText("Medical Condition(s):" + " Flatulence");
+		condition.setText("Medical Condition(s)");
 		condition.setForeground(Color.WHITE);
 		condition.setPreferredSize(new Dimension(300, 30));
 		condition.setMinimumSize(new Dimension(200, 30));
@@ -437,6 +446,7 @@ public class MainScreen extends JPanel {
 		JTextArea commentField = new JTextArea();
 		commentField.setPreferredSize(new Dimension(600, 200));
 		commentField.setMinimumSize(new Dimension(200, 200));
+		commentField.setEditable(false);
 		medicalHistory.add(commentField, c);
 
 		return medicalHistory;
