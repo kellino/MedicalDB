@@ -92,7 +92,6 @@ public class Database {
 
 	/**
 	 * loads a database file into an ArrayList<Patient> of current patients.
-	 * 
 	 * @throws IOException,
 	 *             IndexOutOfBounds, Exception
 	 * @return ArrayList<Patient>
@@ -126,7 +125,6 @@ public class Database {
 
 	/**
 	 * Uses java reflection to count the number of Patient setter methods
-	 * 
 	 * @return int
 	 */
 	private static int getPatientMethods() {
@@ -187,10 +185,26 @@ public class Database {
 
 	void removePatient(int index) {
 		currentPatients.remove(index);
-	};
+	}
 
-	void loadPatient() {
-	};
+	public void appendPatientToDB(Patient newPatient) {
+	        currentPatients.add(newPatient);
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new FileWriter("db.txt", true));
+			bw.write(newPatient.toString());
+			bw.flush();
+		} catch (IOException ioe) {
+			log.log(Level.SEVERE, "unable to append patient to file", ioe.getMessage());
+		} finally {
+			try {
+				if (bw != null) {
+					bw.close();
+				}
+			} catch (IOException ioe) {
+			}
+		}
+	}
 
 	public ArrayList<Patient> searchPatients(String searchTxt) {
 		ArrayList<Patient> resultList = new ArrayList<Patient>();

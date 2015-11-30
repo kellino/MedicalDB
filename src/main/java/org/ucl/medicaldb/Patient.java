@@ -13,18 +13,22 @@ public class Patient {
 	private String lastName = "";
 	private String title = "";
 	private String sex = "";
-	private String DOB = "";
+	/*
+	 * this seems strange, but it's the easiest way to load a blank patient in
+	 * DatabaseEditor as it is expecting to split() a DOB[] on the symbol "/"
+	 */
+	private String DOB = " / / ";
 	private String address = "";
 	private String condition = "";
 	private String nextAppointment = "";
 	private String comments = "";
 	private String patientID = "";
-        private String uri = "";
-        private String profilePhoto = "";
-        private ArrayList<String> medPhotos = new ArrayList<String>();
+	private String uri = "";
+	private String profilePhoto = "";
+	private ArrayList<String> medPhotos = new ArrayList<String>();
 
 	/* can't cast from char to String, so this is a workaround */
-	private static final String DELIM =  Database.DELIM + "";
+	private static final String DELIM = Database.DELIM + "";
 
 	public void setFirstName(String firstName) {
 		if (checker.completedObligatoryField(firstName) && checker.isValid(firstName, "name")) {
@@ -129,29 +133,29 @@ public class Patient {
 		return comments;
 	}
 
-        public void setURI(String uri) {
-            this.uri = uri;
-        }
+	public void setURI(String uri) {
+		this.uri = uri;
+	}
 
-        public String getURI() {
-            return uri;
-        }
+	public String getURI() {
+		return uri;
+	}
 
-        public void setProfilePhoto(String profilePhoto) {
-            this.profilePhoto = profilePhoto;
-        }
+	public void setProfilePhoto(String profilePhoto) {
+		this.profilePhoto = profilePhoto;
+	}
 
-        public String getProfilePhoto() {
-            return profilePhoto;
-        }
+	public String getProfilePhoto() {
+		return profilePhoto;
+	}
 
-        public void setMedPhotos(String medPhoto) {
-            medPhotos.add(medPhoto);            
-        }
+	public void setMedPhotos(String medPhoto) {
+		medPhotos.add(medPhoto);
+	}
 
-        public ArrayList<String> getMedPhotos() {
-            return medPhotos;
-        }
+	public ArrayList<String> getMedPhotos() {
+		return medPhotos;
+	}
 
 	/**
 	 * returns a CSV string of the patient object. Used for writing to the

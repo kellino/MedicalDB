@@ -9,7 +9,8 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import org.jdatepicker.impl.*;
-import org.ucl.medicaldb.Patient;
+import org.ucl.medicaldb.*;
+import org.ucl.medicaldb.Main;
 
 /**
  * main dialog for editing and adding patients to the database. It is called in
@@ -22,6 +23,13 @@ public class DatabaseEditor extends JPanel {
 	private static final int boxHeight = height / 20;
 	private static final int unit = width / 60;
 	private Patient patient;
+	private JTextField[] inputFields;
+	private JComboBox<String> titleMenu;
+	private JComboBox<String> genderMenu;
+        private JComboBox<String> day;
+        private JComboBox<String> month;
+        private JComboBox<String> year;
+        private JTextArea commentArea;
 
 	/**
 	 * if this constructor is called by the MainScreen adder button, it loads
@@ -107,7 +115,7 @@ public class DatabaseEditor extends JPanel {
 	/** draw editable text fields, JComboBoxes, JDatePicker, and JFileChooser */
 	private void createAndPopulateFields() {
 		int i;
-		JTextField[] inputFields = new JTextField[MainScreen.fields.length];
+		inputFields = new JTextField[MainScreen.fields.length];
 		for (i = 0; i < MainScreen.fields.length; i++) {
 			inputFields[i] = new JTextField();
 			switch (i) {
@@ -115,11 +123,11 @@ public class DatabaseEditor extends JPanel {
 				inputFields[i].setBounds(unit * 11, unit * 4, unit * 8, boxHeight);
 				inputFields[i].setText(patient.getPatientID());
 				break;
-			case 1:
-				JComboBox<String> titleMenu = createComboBox(MainScreen.patientData[1], unit * 23, unit * 4, unit * 7,
+			case 1: /* title and gender */
+				titleMenu = createComboBox(MainScreen.patientData[1], unit * 23, unit * 4, unit * 7,
 						boxHeight);
 				titleMenu.setSelectedItem(patient.getTitle());
-				JComboBox<String> genderMenu = createComboBox(MainScreen.patientData[2], unit * 34, unit * 4, unit * 8,
+				genderMenu = createComboBox(MainScreen.patientData[2], unit * 34, unit * 4, unit * 8,
 						boxHeight);
 				genderMenu.setSelectedItem(patient.getSex());
 				add(titleMenu);
@@ -135,13 +143,13 @@ public class DatabaseEditor extends JPanel {
 				break;
 			case 6: /* dd, mm, YY */
 				String[] dob = patient.getDOB().split("/");
-				JComboBox<String> day = createComboBox(MainScreen.dateFormat[0], unit * 13, unit * 16, unit * 6,
+				day = createComboBox(MainScreen.dateFormat[0], unit * 13, unit * 16, unit * 6,
 						boxHeight);
 				day.setSelectedItem(dob[0]);
-				JComboBox<String> month = createComboBox(MainScreen.dateFormat[1], unit * 23, unit * 16, unit * 6,
+				month = createComboBox(MainScreen.dateFormat[1], unit * 23, unit * 16, unit * 6,
 						boxHeight);
 				month.setSelectedItem(dob[1]);
-				JComboBox<String> year = createComboBox(MainScreen.dateFormat[2], unit * 32, unit * 16, unit * 8,
+				year = createComboBox(MainScreen.dateFormat[2], unit * 32, unit * 16, unit * 8,
 						boxHeight);
 				year.setSelectedItem(dob[2]);
 				add(day);
@@ -182,7 +190,7 @@ public class DatabaseEditor extends JPanel {
 				add(addPhoto);
 				break;
 			case 14: /* comments */
-				JTextArea commentArea = new JTextArea();
+				commentArea = new JTextArea();
 				commentArea.setBounds(unit * 11, unit * 40, unit * 35, boxHeight * 5);
 				commentArea.setLineWrap(true);
 				commentArea.setWrapStyleWord(true);
@@ -196,11 +204,28 @@ public class DatabaseEditor extends JPanel {
 			add(inputFields[i]);
 		}
 	}
+        
+        private Patient textFieldsToPatient(Patient newPatient) {
+            Patient p = new Patient();
+            p.setPatientID(inputFields[0].getText());
+            System.out.println(inputFields[0].getText());
+            p.setTitle(titleMenu.getSelectedItem().toString());
+            System.out.println(titleMenu.getSelectedItem().toString());
+            p.setSex(genderMenu.getSelectedItem().toString());
+            System.out.println(genderMenu.getSelectedItem().toString());
+            p.setLastName(inputFields[3].getText());
+            System.out.println(inputFields[3].getText());
+            p.setFirstName(inputFields[4].getText());
+            System.out.println(inputFields[4].getText());
+            String dob;
+            dob = (day.getSelectedItem() + "/" + month.getSelectedItem() + "/" + year.getSelectedItem());
+            p.setDOB(dob);
+            return p;
+        }
 
 	/**
 	 * launches a JFileChooser component for loading an image file to the
-	 * database
-	 */
+	 * database */
 	private String createPhotoChooser() {
 		JFileChooser imageChooser = new JFileChooser();
 		imageChooser.showOpenDialog(this);
@@ -227,6 +252,10 @@ public class DatabaseEditor extends JPanel {
 		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		return datePicker;
 	}
+
+        protected void appendPatient(Patient p) {
+            Main.medDB.appendPatientToDB(textFieldsToPatient(p));
+        }
 
 	/**
 	 * the following code is from a stackoverflow <i>tutorial</i> on

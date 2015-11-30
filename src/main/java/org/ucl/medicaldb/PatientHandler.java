@@ -11,11 +11,10 @@ public final class PatientHandler {
 
 	/**
 	 * checks that a compulsory field contains some text, not just whitespace
-	 * 
-	 * @param String
-	 *            input
+	 * @param String input
 	 * @return boolean
 	 */
+
 	boolean completedObligatoryField(String input) {
 		if (StringUtils.isBlank(input)) {
 			return false;
@@ -28,7 +27,6 @@ public final class PatientHandler {
 	 * correct form
 	 * 
 	 * @param String
-	 *            input
 	 * @return boolean
 	 */
 	boolean isValid(String input) {
@@ -46,7 +44,6 @@ public final class PatientHandler {
 	 * capitalization, which can very greatly in usage.
 	 * 
 	 * @param String
-	 *            type
 	 * @return boolean
 	 */
 	boolean isValid(String input, String type) {

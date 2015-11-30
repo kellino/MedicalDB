@@ -167,7 +167,6 @@ public class MainScreen extends JPanel {
 	 * containing a switch statement
 	 */
 	private JPanel createPatientDataArea() {
-		// we should not use null as a layout
 		JPanel area = new JPanel(null);
 
 		area.setPreferredSize(new Dimension(1200, 300));
@@ -289,9 +288,9 @@ public class MainScreen extends JPanel {
 				DatabaseEditor pa = new DatabaseEditor(chosenResult);
 				int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
-				if (result == JOptionPane.OK_OPTION)
-					System.out.println("Patient added");
-				else
+				if (result == JOptionPane.OK_OPTION) {
+					pa.appendPatient(chosenResult);
+				} else
 					System.out.println("Patient adding cancelled");
 			}
 		});
@@ -467,6 +466,7 @@ public class MainScreen extends JPanel {
 		return images;
 	}
 
+	/** populates the main patient data area */
 	private void fillInputFields(Patient p) {
 		inputFields[0].setText(p.getPatientID());
 		inputFields[1].setText(p.getTitle());
