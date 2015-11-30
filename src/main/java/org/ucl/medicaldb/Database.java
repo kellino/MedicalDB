@@ -215,4 +215,13 @@ public class Database {
 		}
 		return resultList;
 	}
+
+	/** populates an ArrayList of error messages from the patient setter methods
+	 * which is feeds to a JOptionPane in the DatabaseEditor class
+	 */
+	public ArrayList<String> errorMessages(String error) {
+	    ArrayList<String> errors = new ArrayList<String>();
+	    errors.add(error);
+	    return errors;
+	}
 }

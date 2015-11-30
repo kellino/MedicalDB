@@ -289,6 +289,7 @@ public class MainScreen extends JPanel {
 				int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
+				        pa.textFieldsToPatient();
 					pa.appendPatient(chosenResult);
 				} else
 					System.out.println("Patient adding cancelled");

@@ -33,8 +33,9 @@ public class Patient {
 	public void setFirstName(String firstName) {
 		if (checker.completedObligatoryField(firstName) && checker.isValid(firstName, "name")) {
 			this.firstName = firstName.trim();
-		} else
-			System.out.println("not a name");
+		} else {
+		        Main.medDB.errorMessages("Incorrect name format");
+                }
 	}
 
 	public String getFirstName() {
@@ -42,8 +43,11 @@ public class Patient {
 	}
 
 	public void setLastName(String lastName) {
-		if (checker.completedObligatoryField(lastName) && checker.isValid(lastName.trim(), "name"))
+		if (checker.completedObligatoryField(lastName) && checker.isValid(lastName.trim(), "name")) {
 			this.lastName = lastName;
+                } else {
+                    Main.medDB.errorMessages("Incorrect last name form");
+                }
 	}
 
 	public String getLastName() {
@@ -51,6 +55,9 @@ public class Patient {
 	}
 
 	public void setTitle(String title) {
+	    if (title.equals("-")) {
+                    Main.medDB.errorMessages("Please choose title");
+	    } else 
 		this.title = title;
 	}
 

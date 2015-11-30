@@ -176,7 +176,7 @@ public class DatabaseEditor extends JPanel {
 			case 13: /* image */
 				/* read the file location as a string into this text area */
 				inputFields[i].setBounds(unit * 25, unit * 36, unit * 31, boxHeight);
-				// inputFields[i].setText(patient.getProfilePhoto()); }
+				inputFields[i].setText(patient.getProfilePhoto());
 				JButton addPhoto = new JButton();
 				addPhoto.setBounds(unit * 11, unit * 36, unit * 10, boxHeight);
 				addPhoto.setText("<html><b>Choose</b></html>");
@@ -205,22 +205,24 @@ public class DatabaseEditor extends JPanel {
 		}
 	}
         
-        private Patient textFieldsToPatient(Patient newPatient) {
-            Patient p = new Patient();
-            p.setPatientID(inputFields[0].getText());
-            System.out.println(inputFields[0].getText());
-            p.setTitle(titleMenu.getSelectedItem().toString());
-            System.out.println(titleMenu.getSelectedItem().toString());
-            p.setSex(genderMenu.getSelectedItem().toString());
-            System.out.println(genderMenu.getSelectedItem().toString());
-            p.setLastName(inputFields[3].getText());
-            System.out.println(inputFields[3].getText());
-            p.setFirstName(inputFields[4].getText());
-            System.out.println(inputFields[4].getText());
+        /** scrape the various textfields and other boxes for their data and use this to edit the
+         * patient object that has been sent to the DatabaseEditor
+         */
+        protected void textFieldsToPatient() {
+            patient.setPatientID(inputFields[0].getText());
+            patient.setTitle(titleMenu.getSelectedItem().toString());
+            patient.setSex(genderMenu.getSelectedItem().toString());
+            patient.setLastName(inputFields[3].getText());
+            patient.setFirstName(inputFields[4].getText());
             String dob;
             dob = (day.getSelectedItem() + "/" + month.getSelectedItem() + "/" + year.getSelectedItem());
-            p.setDOB(dob);
-            return p;
+            patient.setDOB(dob);
+            patient.setCondition(inputFields[9].getText());
+            patient.setAddress(inputFields[10].getText());
+            // case 11 needs to be the datepicker
+            patient.setURI(inputFields[12].getText());
+            patient.setProfilePhoto(inputFields[13].getText());
+            patient.setComments(commentArea.getText());
         }
 
 	/**
@@ -254,7 +256,7 @@ public class DatabaseEditor extends JPanel {
 	}
 
         protected void appendPatient(Patient p) {
-            Main.medDB.appendPatientToDB(textFieldsToPatient(p));
+            Main.medDB.appendPatientToDB(p);
         }
 
 	/**
