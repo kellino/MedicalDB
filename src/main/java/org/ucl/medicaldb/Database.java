@@ -159,7 +159,7 @@ public class Database {
 		temp.setComments(array[i++]);
 		temp.setURI(array[i++]);
 		temp.setProfilePhoto(array[i++]);
-		// temp.setMedPhotos(array[i++]);
+		temp.setMedPhotos(array[i++]);
 
 		if (i != setterCount) {
 			log.log(Level.SEVERE, "mismatch between setter methods and arrayToPatient()");
@@ -211,7 +211,7 @@ public class Database {
 		ArrayList<Patient> resultList = new ArrayList<Patient>();
 		for (int i = 0; i < currentPatients.size(); i++) {
 			if (currentPatients.get(i).toString().toLowerCase().contains(searchTxt.toLowerCase())) {
-				resultList.add(currentPatients.get(i));
+			    resultList.add(currentPatients.get(i));
 			}
 		}
 		return resultList;

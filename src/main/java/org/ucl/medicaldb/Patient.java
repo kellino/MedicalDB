@@ -25,7 +25,7 @@ public class Patient {
 	private String patientID = "";
 	private String uri = "";
 	private String profilePhoto = "";
-	private ArrayList<String> medPhotos = new ArrayList<String>();
+	private String medPhotos = "";
 
 	/* can't cast from char to String, so this is a workaround */
 	private static final String DELIM = Database.DELIM + "";
@@ -155,11 +155,11 @@ public void setSex(String sex) {
 		return profilePhoto;
 	}
 
-	public void setMedPhotos(String medPhoto) {
-		medPhotos.add(medPhoto);
+	public void setMedPhotos(String medPhotos) {
+	    this.medPhotos = medPhotos;
 	}
 
-	public ArrayList<String> getMedPhotos() {
+	public String getMedPhotos() {
 		return medPhotos;
 	}
 
@@ -175,7 +175,7 @@ public void setSex(String sex) {
 			return String.format(this.getFirstName() + DELIM + this.getLastName() + DELIM + this.getPatientID() + DELIM
 					+ this.getTitle() + DELIM + this.getSex() + DELIM + this.getDOB() + DELIM + this.getAddress()
 					+ DELIM + this.getCondition() + DELIM + this.getNextAppointment() + DELIM + this.getComments()
-					+ DELIM + this.getURI() + DELIM + this.getProfilePhoto() + DELIM + "\n");
+					+ DELIM + this.getURI() + DELIM + this.getProfilePhoto() + DELIM + this.getMedPhotos() + "\n");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

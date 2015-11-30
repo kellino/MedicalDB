@@ -205,7 +205,7 @@ public class DatabaseEditor extends JPanel {
 		}
 	}
         
-        /** scrape the various textfields and other boxes for their data and use this to edit the
+        /** scrapes the various textfields and other boxes for their data and use this to edit the
          * patient object that has been sent to the DatabaseEditor
          */
         protected void textFieldsToPatient() {

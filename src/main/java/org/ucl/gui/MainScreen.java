@@ -2,6 +2,7 @@ package org.ucl.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class MainScreen extends JPanel {
 	private JTextArea commentField;
 	private String uriStr = "";
 	private JLabel picture;
+	private static JPanel images;
 
 	/** constructor for the main screen. */
 	public MainScreen() {
@@ -327,7 +329,7 @@ public class MainScreen extends JPanel {
 		databaseChanger.add(editor);
 
 		/* search text box */
-		JLabel searchBox = new JLabel("<html><b>Enter search here</b></html>", SwingConstants.CENTER);
+		JLabel searchBox = new JLabel("<html><b><font color=white>Enter search here</font></b></html>", SwingConstants.CENTER);
 		searchBox.setBackground(new Color(200, 100, 100, 200));
 		searchBox.setPreferredSize(new Dimension(200, 30));
 		JTextField searchTxtArea = new JTextField();
@@ -374,7 +376,7 @@ public class MainScreen extends JPanel {
 		medicalDataPane.setPreferredSize(new Dimension(800, 400));
 
 		JPanel medicalHistory = createMedicalHistoryPane();
-		JPanel images = createPhotoPane();
+		createPhotoPane();
 
 		medicalDataPane.add("Medical History", medicalHistory);
 		medicalDataPane.add("Photographs", images);
@@ -464,18 +466,31 @@ public class MainScreen extends JPanel {
 	}
 
 	/** GridLayout of buttons which hold relevant medical images */
-	private JPanel createPhotoPane() {
-		JPanel images = new JPanel();
-		images.setLayout(new GridLayout(4, 4));
+	private void createPhotoPane() {
+		images = new JPanel();
 		images.setBackground(Color.LIGHT_GRAY);
-
-		for (int i = 0; i < 8; i++) {
-			JButton placeHolder = new JButton();
-			placeHolder.setText("<html><font color=red>Place for Photo</font></html>");
-			images.add(placeHolder);
-		}
-		return images;
 	}
+
+        private void addPhotosToPhotoPane(String medPhotos) {
+                    File photoDir = new File(medPhotos);
+                    File[] directoryListing = photoDir.listFiles(); 
+                    if (directoryListing != null) {
+                        for (File photo : directoryListing) {
+			    JButton placeHolder = new JButton();
+			    placeHolder.setIcon(new ImageIcon(photo.toString()));
+			    placeHolder.setPreferredSize(new Dimension(100, 100));
+			    placeHolder.setBorder(BorderFactory.createBevelBorder(1));
+			    placeHolder.addActionListener(new ActionListener() {
+			        @Override
+			        public void actionPerformed(ActionEvent e) {
+			        JLabel popup = new JLabel(new ImageIcon(photo.toString())); 
+			        JOptionPane.showMessageDialog(null, popup, "Popup", JOptionPane.PLAIN_MESSAGE, null);
+			        }
+			    });
+			    images.add(placeHolder, BorderLayout.CENTER);
+                        }
+                    }
+        }
 
 	/** populates the patient data area */
 	private void fillInputFields(Patient p) {
@@ -492,5 +507,6 @@ public class MainScreen extends JPanel {
 		uriStr = p.getURI();
 		nextAppointment.setText(p.getNextAppointment());
 		picture.setIcon(new ImageIcon(p.getProfilePhoto()));
+	        addPhotosToPhotoPane("/home/david/Programming/Java/medicaldb/res/med photos/cd100");
 	}
 }
