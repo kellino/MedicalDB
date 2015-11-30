@@ -309,9 +309,10 @@ public class MainScreen extends JPanel {
 					DatabaseEditor pa = new DatabaseEditor(chosenResult);
 					int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION,
 							JOptionPane.PLAIN_MESSAGE);
-					if (result == JOptionPane.OK_OPTION)
-						System.out.println("Patient edited");
-					else
+					if (result == JOptionPane.OK_OPTION) {
+					    pa.textFieldsToPatient();
+					    pa.editPatient();
+                                        } else
 						System.out.println("Patient editing cancelled");
 				}
 			}

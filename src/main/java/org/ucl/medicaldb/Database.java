@@ -18,9 +18,7 @@ public class Database {
 	private static CSVReader reader;
 	private static BufferedWriter writer;
 	private static int setterCount;
-
 	static final char DELIM = '|';
-
 	public static String[] days;
 	public static String[] months;
 	public static String[] years;
@@ -68,7 +66,7 @@ public class Database {
 		return years;
 	}
 
-	void dumpDBtoFile() {
+	public void dumpDBtoFile() {
 		writer = null;
 		try {
 			writer = new BufferedWriter(new FileWriter(FILELOCATION));
@@ -187,6 +185,9 @@ public class Database {
 		currentPatients.remove(index);
 	}
 
+	/** method to add a new patient to the ArrayList of current patients, and
+	 * appends this to the db.txt
+	 */
 	public void appendPatientToDB(Patient newPatient) {
 	        currentPatients.add(newPatient);
 		BufferedWriter bw = null;

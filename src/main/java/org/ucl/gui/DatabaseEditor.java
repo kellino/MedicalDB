@@ -259,6 +259,9 @@ public class DatabaseEditor extends JPanel {
             Main.medDB.appendPatientToDB(p);
         }
 
+        protected void editPatient() {
+            Main.medDB.dumpDBtoFile();
+        }
 	/**
 	 * the following code is from a stackoverflow <i>tutorial</i> on
 	 * JDatePicker. Thanks to theMadProgrammer
