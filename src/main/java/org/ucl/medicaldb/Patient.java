@@ -64,8 +64,7 @@ public class Patient {
 	public String getTitle() {
 		return title;
 	}
-
-	public void setSex(String sex) {
+public void setSex(String sex) {
 		this.sex = sex;
 	}
 

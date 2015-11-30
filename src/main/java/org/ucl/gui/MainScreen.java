@@ -31,6 +31,12 @@ public class MainScreen extends JPanel {
 	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
 	private JTextField[] inputFields;
 	protected Patient chosenResult;
+	private JLabel condition;
+	private JLabel link;
+	private JLabel nextAppointment;
+	private JTextArea commentField;
+	private String uriStr = "";
+	private JLabel picture;
 
 	/** constructor for the main screen. */
 	public MainScreen() {
@@ -242,9 +248,9 @@ public class MainScreen extends JPanel {
 			area.add(inputFields[i]);
 		}
 
-		JLabel picture = new JLabel();
+		picture = new JLabel();
 
-		picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/ab100.png"));
+		picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/placeholder.png"));
 		picture.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.BLUE));
 		picture.setBounds(900, 40, 200, 200);
 		area.add(picture);
@@ -312,6 +318,7 @@ public class MainScreen extends JPanel {
 					if (result == JOptionPane.OK_OPTION) {
 					    pa.textFieldsToPatient();
 					    pa.editPatient();
+                                            fillInputFields(chosenResult);
                                         } else
 						System.out.println("Patient editing cancelled");
 				}
@@ -387,8 +394,8 @@ public class MainScreen extends JPanel {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridy = 0;
-		JLabel condition = new JLabel();
-		condition.setText("Medical Condition(s)");
+		condition = new JLabel();
+		condition.setText("<html><b>Condition</b></html>");
 		condition.setForeground(Color.WHITE);
 		condition.setPreferredSize(new Dimension(300, 30));
 		condition.setMinimumSize(new Dimension(200, 30));
@@ -397,7 +404,7 @@ public class MainScreen extends JPanel {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridy = 1;
-		JLabel link = new JLabel();
+		link = new JLabel();
 		link.setText(
 				"<html>Click <b><font color=red>here</font></b> for more information on " + "condition" + "</html>");
 		link.setForeground(Color.WHITE);
@@ -410,7 +417,7 @@ public class MainScreen extends JPanel {
 					if (Desktop.isDesktopSupported()) {
 						Desktop desktop = Desktop.getDesktop();
 						try {
-							URI uri = new URI("http://www.bbc.co.uk");
+							URI uri = new URI(uriStr);
 							desktop.browse(uri);
 						} catch (IOException ioe) {
 							ioe.printStackTrace();
@@ -424,9 +431,9 @@ public class MainScreen extends JPanel {
 		medicalHistory.add(link, c);
 
 		c.gridy = 2;
-		JLabel nextAppointment = new JLabel();
+		nextAppointment = new JLabel();
 		nextAppointment.setForeground(Color.WHITE);
-		nextAppointment.setText("Next Appointment: " + "30/11/2015");
+		nextAppointment.setText("<html><b>Next Appointment:</b></html>");
 		nextAppointment.setPreferredSize(new Dimension(250, 30));
 		nextAppointment.setMinimumSize(new Dimension(200, 30));
 		medicalHistory.add(nextAppointment, c);
@@ -435,7 +442,7 @@ public class MainScreen extends JPanel {
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridy = 3;
 		JLabel comments = new JLabel();
-		comments.setText("Comments");
+		comments.setText("<html><b>Comments</b></html>");
 		comments.setForeground(Color.WHITE);
 		comments.setPreferredSize(new Dimension(100, 30));
 		comments.setMinimumSize(new Dimension(50, 30));
@@ -445,10 +452,12 @@ public class MainScreen extends JPanel {
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridy = 4;
 		c.weighty = 1;
-		JTextArea commentField = new JTextArea();
+		commentField = new JTextArea();
 		commentField.setPreferredSize(new Dimension(600, 200));
 		commentField.setMinimumSize(new Dimension(200, 200));
 		commentField.setEditable(false);
+		commentField.setLineWrap(true);
+		commentField.setWrapStyleWord(true);
 		medicalHistory.add(commentField, c);
 
 		return medicalHistory;
@@ -468,7 +477,7 @@ public class MainScreen extends JPanel {
 		return images;
 	}
 
-	/** populates the main patient data area */
+	/** populates the patient data area */
 	private void fillInputFields(Patient p) {
 		inputFields[0].setText(p.getPatientID());
 		inputFields[1].setText(p.getTitle());
@@ -477,5 +486,11 @@ public class MainScreen extends JPanel {
 		inputFields[4].setText(p.getFirstName());
 		inputFields[5].setText(p.getDOB());
 		inputFields[10].setText(p.getAddress());
+		condition.setText("<html><b>Condition </b>" + p.getCondition() + "</html>");
+		link.setText("<html>Click <b><font color=red>here</font></b> for more information on " + p.getCondition() + "</html>");
+		commentField.setText(p.getComments());
+		uriStr = p.getURI();
+		nextAppointment.setText(p.getNextAppointment());
+		picture.setIcon(new ImageIcon(p.getProfilePhoto()));
 	}
 }
