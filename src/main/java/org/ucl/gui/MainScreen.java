@@ -112,6 +112,7 @@ public class MainScreen extends JPanel {
 		menuItem.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        String result = createPhotoChooser();
+		        Main.medDB.loadDBfromFile(result);
 		        System.out.println(result);
 		    }
 		});

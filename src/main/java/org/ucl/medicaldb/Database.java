@@ -31,7 +31,7 @@ public class Database {
 				log.log(Level.INFO, "creating new database file");
 				db.createNewFile();
 			} else
-				loadDBfromFile();
+				loadDBfromFile(FILELOCATION);
 			log.log(Level.INFO, "database loaded successfully");
 		} catch (IOException e) {
 			log.log(Level.SEVERE, "unable to initialize database");
@@ -89,17 +89,15 @@ public class Database {
 	}
 
 	/**
-	 * loads a database file into an ArrayList<Patient> of current patients.
-	 * 
-	 * @throws IOException,
-	 *             IndexOutOfBounds, Exception
+	 * loads default database file into an ArrayList<Patient> of current patients.
+	 * @throws IOException, IndexOutOfBounds, Exception
 	 * @return ArrayList<Patient>
 	 */
-	void loadDBfromFile() {
+	public void loadDBfromFile(String fileLocation) {
 		reader = null;
 		try {
-			reader = new CSVReader(new FileReader(FILELOCATION), DELIM);
-			String[] patient;
+			reader = new CSVReader(new FileReader(fileLocation), DELIM);
+			String[] patient;			
 			while ((patient = reader.readNext()) != null) {
 				Patient p = arrayToPatient(patient);
 				populateIdSet(p.getPatientID());
@@ -124,7 +122,6 @@ public class Database {
 
 	/**
 	 * Uses java reflection to count the number of Patient setter methods
-	 * 
 	 * @return int
 	 */
 	private static int getPatientMethods() {
@@ -141,7 +138,6 @@ public class Database {
 
 	/**
 	 * converts the CSV string[] to a Patient object
-	 * 
 	 * @throws IndexOutOfBoundsException
 	 * @param String[]
 	 * @return Patient
@@ -171,9 +167,7 @@ public class Database {
 
 	/**
 	 * creates a java set of id numbers as read from the database file
-	 * 
 	 * @param String
-	 *            id
 	 */
 	private void populateIdSet(String id) {
 		try {
@@ -210,6 +204,10 @@ public class Database {
 		}
 	}
 
+	/** search method for the database. It searches the ArrayList, rather than the db.txt file
+	 * itself
+	 * @return ArrayList<Patient>
+	 */
 	public ArrayList<Patient> searchPatients(String searchTxt) {
 		ArrayList<Patient> resultList = new ArrayList<Patient>();
 		for (int i = 0; i < currentPatients.size(); i++) {
