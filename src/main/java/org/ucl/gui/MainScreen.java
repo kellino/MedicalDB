@@ -116,7 +116,8 @@ public class MainScreen extends JPanel {
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				/* save function should be called here */
-				int reply = confirmationDialog("Are you sure you want to quit?", "Exit confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+				int reply = confirmationDialog("Are you sure you want to quit?", "Exit confirmation",
+						JOptionPane.YES_NO_CANCEL_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
 					System.out.println("Exiting program");
 					System.exit(0);
@@ -287,8 +288,8 @@ public class MainScreen extends JPanel {
 	}
 
 	/**
-	 * a JPanel with the database manipulation buttons, for editing a patient, adding a
-	 * patient, for launching the search function and other elements.
+	 * a JPanel with the database manipulation buttons, for editing a patient,
+	 * adding a patient, for launching the search function and other elements.
 	 */
 	private JPanel createDatabaseChanger() {
 		JPanel databaseChanger = new JPanel(new FlowLayout());
@@ -302,17 +303,20 @@ public class MainScreen extends JPanel {
 		remover.setMinimumSize(new Dimension(150, boxHeight));
 		remover.setPreferredSize(new Dimension(200, boxHeight));
 		remover.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-			if (chosenResult != null) {
-			    DatabaseEditor pa = new DatabaseEditor(chosenResult);
-		            int reply = confirmationDialog("<html>Are you  <i><b>sure</b></i> you want to delete the patient? This cannot be undone!", "Remove patient", JOptionPane.OK_CANCEL_OPTION);
-		            if (reply == JOptionPane.YES_OPTION) {
-		                pa.deletePatient(chosenResult);
-		            }
-		        } else {
-		            confirmationDialog("Please choose a patient", "Error deleting", JOptionPane.OK_OPTION);
-		        }
-                    }
+			public void actionPerformed(ActionEvent e) {
+				if (chosenResult != null) {
+					DatabaseEditor pa = new DatabaseEditor(chosenResult);
+					int reply = confirmationDialog(
+							"<html>Are you  <i><b>sure</b></i> you want to delete the patient? This cannot be undone!",
+							"Remove patient", JOptionPane.OK_CANCEL_OPTION);
+					if (reply == JOptionPane.YES_OPTION) {
+						pa.deletePatient(chosenResult);
+						fillInputFields();
+					}
+				} else {
+					confirmationDialog("Please choose a patient", "Error deleting", JOptionPane.OK_OPTION);
+				}
+			}
 		});
 		databaseChanger.add(remover);
 
@@ -327,8 +331,9 @@ public class MainScreen extends JPanel {
 				int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
-				        pa.textFieldsToPatient();
+					pa.textFieldsToPatient();
 					pa.appendPatient(chosenResult);
+					fillInputFields(chosenResult);
 				} else
 					System.out.println("Patient adding cancelled");
 			}
@@ -342,16 +347,15 @@ public class MainScreen extends JPanel {
 		editor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (chosenResult == null) {
-				        confirmationDialog("You must choose a patient first", "Editor error", JOptionPane.WARNING_MESSAGE);
-					//JOptionPane.showMessageDialog(null, "You must choose a patient before editing");
+					confirmationDialog("You must choose a patient first", "Editor error", JOptionPane.WARNING_MESSAGE);
 				} else {
 					DatabaseEditor pa = new DatabaseEditor(chosenResult);
 					int result = confirmationDialog(pa, "Edit Patient", JOptionPane.PLAIN_MESSAGE);
 					if (result == JOptionPane.OK_OPTION) {
-					    pa.textFieldsToPatient();
-					    pa.editPatient();
-                                            fillInputFields(chosenResult);
-                                        } else
+						pa.textFieldsToPatient();
+						pa.editPatient();
+						fillInputFields(chosenResult);
+					} else
 						System.out.println("Patient editing cancelled");
 				}
 			}
@@ -359,7 +363,8 @@ public class MainScreen extends JPanel {
 		databaseChanger.add(editor);
 
 		/* search text box */
-		JLabel searchBox = new JLabel("<html><b><font color=white>Enter search here</font></b></html>", SwingConstants.CENTER);
+		JLabel searchBox = new JLabel("<html><b><font color=white>Enter search here</font></b></html>",
+				SwingConstants.CENTER);
 		searchBox.setBackground(new Color(200, 100, 100, 200));
 		searchBox.setPreferredSize(new Dimension(200, boxHeight));
 		JTextField searchTxtArea = new JTextField();
@@ -501,26 +506,44 @@ public class MainScreen extends JPanel {
 		images.setBackground(Color.LIGHT_GRAY);
 	}
 
-        private void addPhotosToPhotoPane(String medPhotos) {
-                    File photoDir = new File(medPhotos);
-                    File[] directoryListing = photoDir.listFiles(); 
-                    if (directoryListing != null) {
-                        for (File photo : directoryListing) {
-			    JButton placeHolder = new JButton();
-			    placeHolder.setIcon(new ImageIcon(photo.toString()));
-			    placeHolder.setPreferredSize(new Dimension(100, 100));
-			    placeHolder.setBorder(BorderFactory.createBevelBorder(1));
-			    placeHolder.addActionListener(new ActionListener() {
-			        @Override
-			        public void actionPerformed(ActionEvent e) {
-			        JLabel popup = new JLabel(new ImageIcon(photo.toString())); 
-			        JOptionPane.showMessageDialog(null, popup, "Popup", JOptionPane.PLAIN_MESSAGE, null);
-			        }
-			    });
-			    images.add(placeHolder, BorderLayout.CENTER);
-                        }
-                    }
-        }
+	private void addPhotosToPhotoPane(String medPhotos) {
+		File photoDir = new File(medPhotos);
+		File[] directoryListing = photoDir.listFiles();
+		if (directoryListing != null) {
+			for (File photo : directoryListing) {
+				JButton placeHolder = new JButton();
+				placeHolder.setIcon(new ImageIcon(photo.toString()));
+				placeHolder.setPreferredSize(new Dimension(100, 100));
+				placeHolder.setBorder(BorderFactory.createBevelBorder(1));
+				placeHolder.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JLabel popup = new JLabel(new ImageIcon(photo.toString()));
+						JOptionPane.showMessageDialog(null, popup, "Popup", JOptionPane.PLAIN_MESSAGE, null);
+					}
+				});
+				images.add(placeHolder, BorderLayout.CENTER);
+			}
+		}
+	}
+
+	private void fillInputFields() {
+		inputFields[0].setText("");
+		inputFields[1].setText("");
+		inputFields[2].setText("");
+		inputFields[3].setText("");
+		inputFields[4].setText("");
+		inputFields[5].setText("");
+		inputFields[10].setText("");
+		condition.setText("<html><b>Condition </b></html>");
+		link.setText("<html>Click <b><font color=red>here</font></b> for more information on " + " " + "</html>");
+		commentField.setText("");
+		uriStr = "";
+		nextAppointment.setText("Next Appointment:");
+		picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/placeholder.png"));
+		addPhotosToPhotoPane("");
+
+	}
 
 	/** populates the patient data areas */
 	private void fillInputFields(Patient p) {
@@ -532,11 +555,13 @@ public class MainScreen extends JPanel {
 		inputFields[5].setText(p.getDOB());
 		inputFields[10].setText(p.getAddress());
 		condition.setText("<html><b>Condition </b>" + p.getCondition() + "</html>");
-		link.setText("<html>Click <b><font color=red>here</font></b> for more information on " + p.getCondition() + "</html>");
+		link.setText("<html>Click <b><font color=red>here</font></b> for more information on " + p.getCondition()
+				+ "</html>");
 		commentField.setText(p.getComments());
 		uriStr = p.getURI();
 		nextAppointment.setText(p.getNextAppointment());
 		picture.setIcon(new ImageIcon(p.getProfilePhoto()));
-	        addPhotosToPhotoPane("/home/david/Programming/Java/medicaldb/res/med photos/cd100");
+		System.out.println(p.getMedPhotos());
+		addPhotosToPhotoPane(p.getMedPhotos());
 	}
 }

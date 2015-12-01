@@ -1,7 +1,5 @@
 package org.ucl.medicaldb;
 
-import java.util.ArrayList;
-
 /**
  * getters and setters for creating a new Patient creates and object of type
  * Patient
@@ -34,8 +32,8 @@ public class Patient {
 		if (checker.completedObligatoryField(firstName) && checker.isValid(firstName, "name")) {
 			this.firstName = firstName.trim();
 		} else {
-		        Main.medDB.errorMessages("Incorrect name format");
-                }
+			Main.medDB.errorMessages("Incorrect name format");
+		}
 	}
 
 	public String getFirstName() {
@@ -45,9 +43,9 @@ public class Patient {
 	public void setLastName(String lastName) {
 		if (checker.completedObligatoryField(lastName) && checker.isValid(lastName.trim(), "name")) {
 			this.lastName = lastName;
-                } else {
-                    Main.medDB.errorMessages("Incorrect last name form");
-                }
+		} else {
+			Main.medDB.errorMessages("Incorrect last name form");
+		}
 	}
 
 	public String getLastName() {
@@ -55,16 +53,17 @@ public class Patient {
 	}
 
 	public void setTitle(String title) {
-	    if (title.equals("-")) {
-                    Main.medDB.errorMessages("Please choose title");
-	    } else 
-		this.title = title;
+		if (title.equals("-")) {
+			Main.medDB.errorMessages("Please choose title");
+		} else
+			this.title = title;
 	}
 
 	public String getTitle() {
 		return title;
 	}
-public void setSex(String sex) {
+
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
@@ -156,7 +155,7 @@ public void setSex(String sex) {
 	}
 
 	public void setMedPhotos(String medPhotos) {
-	    this.medPhotos = medPhotos;
+		this.medPhotos = medPhotos;
 	}
 
 	public String getMedPhotos() {

@@ -90,6 +90,7 @@ public class Database {
 
 	/**
 	 * loads a database file into an ArrayList<Patient> of current patients.
+	 * 
 	 * @throws IOException,
 	 *             IndexOutOfBounds, Exception
 	 * @return ArrayList<Patient>
@@ -123,6 +124,7 @@ public class Database {
 
 	/**
 	 * Uses java reflection to count the number of Patient setter methods
+	 * 
 	 * @return int
 	 */
 	private static int getPatientMethods() {
@@ -185,11 +187,12 @@ public class Database {
 		currentPatients.remove(toRemove);
 	}
 
-	/** method to add a new patient to the ArrayList of current patients, and
+	/**
+	 * method to add a new patient to the ArrayList of current patients, and
 	 * appends this to the db.txt
 	 */
 	public void appendPatientToDB(Patient newPatient) {
-	        currentPatients.add(newPatient);
+		currentPatients.add(newPatient);
 		BufferedWriter bw = null;
 		try {
 			bw = new BufferedWriter(new FileWriter("db.txt", true));
@@ -211,18 +214,19 @@ public class Database {
 		ArrayList<Patient> resultList = new ArrayList<Patient>();
 		for (int i = 0; i < currentPatients.size(); i++) {
 			if (currentPatients.get(i).toString().toLowerCase().contains(searchTxt.toLowerCase())) {
-			    resultList.add(currentPatients.get(i));
+				resultList.add(currentPatients.get(i));
 			}
 		}
 		return resultList;
 	}
 
-	/** populates an ArrayList of error messages from the patient setter methods
+	/**
+	 * populates an ArrayList of error messages from the patient setter methods
 	 * which is feeds to a JOptionPane in the DatabaseEditor class
 	 */
 	public ArrayList<String> errorMessages(String error) {
-	    ArrayList<String> errors = new ArrayList<String>();
-	    errors.add(error);
-	    return errors;
+		ArrayList<String> errors = new ArrayList<String>();
+		errors.add(error);
+		return errors;
 	}
 }
