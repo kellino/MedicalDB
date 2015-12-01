@@ -47,7 +47,9 @@ public final class PatientHandler {
 	 * @return boolean
 	 */
 	boolean isValid(String input, String type) {
-		// this regex is still rather incomplete
+	        /* very simple regex, but names are extremely variable, so anything more
+	         * sophisticated might exclude a legitimate, but unusual, name
+	         */
 		Pattern pattern = Pattern.compile("[0-9<>!\"$%\\+&][{}]");
 		try {
 			if (pattern.matcher(input).matches()) {
@@ -70,4 +72,18 @@ public final class PatientHandler {
 		}
 		return false;
 	}
+
+	boolean isValidURI(String uri) {
+	    Pattern pattern = Pattern.compile("http[s]?://");
+	    try {
+			if (pattern.matcher(uri).matches()) {
+				throw new IllegalArgumentException();
+			}
+		} catch (IllegalArgumentException e) {
+			log.log(Level.INFO, "incorrect uri string entered by user");
+			return false;
+		}
+		return true;
+	    }
+	
 }

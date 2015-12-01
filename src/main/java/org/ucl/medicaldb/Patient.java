@@ -64,7 +64,11 @@ public class Patient {
 	}
 
 	public void setSex(String sex) {
+	    if (sex.equals("-")) {
+	        Main.medDB.errorMessages("Please choose title");
+	    } else {
 		this.sex = sex;
+            }
 	}
 
 	public String getSex() {
@@ -76,7 +80,7 @@ public class Patient {
 				&& checker.isUniqueID(patientID)) {
 			this.patientID = patientID;
 		} else {
-			System.out.println("Not a valid id");
+		    Main.medDB.errorMessages("Incorrect Patient ID");
 		}
 	}
 
@@ -87,6 +91,8 @@ public class Patient {
 	public void setDOB(String DOB) {
 		if (checker.completedObligatoryField(DOB)) {
 			this.DOB = DOB;
+		} else {
+		    Main.medDB.errorMessages("DOB missing");
 		}
 	}
 
@@ -97,6 +103,8 @@ public class Patient {
 	public void setAddress(String address) {
 		if (checker.completedObligatoryField(address)) {
 			this.address = address;
+		} else {
+		    Main.medDB.errorMessages("Address missing");
 		}
 	}
 
@@ -107,6 +115,8 @@ public class Patient {
 	public void setCondition(String condition) {
 		if (checker.completedObligatoryField(condition)) {
 			this.condition = condition;
+		} else {
+		    Main.medDB.errorMessages("Medical condition missing");
 		}
 	}
 
@@ -119,9 +129,6 @@ public class Patient {
 		 * there might not be a next appointment, so this is not an obligatory
 		 * field; it sets a default of "not booked"
 		 */
-		if (!checker.completedObligatoryField(nextAppointment)) {
-			this.nextAppointment = "not booked";
-		}
 		this.nextAppointment = nextAppointment;
 	}
 
@@ -139,7 +146,11 @@ public class Patient {
 	}
 
 	public void setURI(String uri) {
-		this.uri = uri;
+		if (checker.isValidURI(uri)) {
+		    this.uri = uri;
+                } else {
+                    Main.medDB.errorMessages("Invalid uri");
+                }
 	}
 
 	public String getURI() {

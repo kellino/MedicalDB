@@ -25,7 +25,7 @@ import org.ucl.medicaldb.Patient;
 public class MainScreen extends JPanel {
 	protected static String[] currentIds = Database.idNumbers.stream().toArray(String[]::new);
 	protected static final String[][] dateFormat = { Database.days, Database.months, Database.years };
-	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Mrs", "Ms", "Dr" },
+	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Miss", "Mrs", "Ms", "Dr" },
 			{ "-", "Male", "Female" } };
 	protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
 			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments" };
@@ -338,8 +338,12 @@ public class MainScreen extends JPanel {
 						JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
 					pa.textFieldsToPatient();
-					pa.appendPatient(chosenResult);
-					fillInputFields(chosenResult);
+					if (Main.medDB.errors.size() == 0) {
+					    pa.appendPatient(chosenResult);
+					    fillInputFields(chosenResult);
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Errors exist. Cannot save");
+                                        }
 				} else
 					System.out.println("Patient adding cancelled");
 			}

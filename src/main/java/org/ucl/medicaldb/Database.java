@@ -14,6 +14,7 @@ public class Database {
 	private static final Logger log = Logger.getLogger(Class.class.getName());
 	private static final String FILELOCATION = "/home/david/Programming/Java/medicaldb/db.txt";
 	protected static ArrayList<Patient> currentPatients = new ArrayList<Patient>();
+	public ArrayList<String> errors = new ArrayList<String>();
 	public static Set<String> idNumbers = new HashSet<String>();
 	private static CSVReader reader;
 	private static BufferedWriter writer;
@@ -220,11 +221,9 @@ public class Database {
 
 	/**
 	 * populates an ArrayList of error messages from the patient setter methods
-	 * which is feeds to a JOptionPane in the DatabaseEditor class
+	 * which is feeds to a JOptionPane in the MainScreen class
 	 */
-	public ArrayList<String> errorMessages(String error) {
-		ArrayList<String> errors = new ArrayList<String>();
-		errors.add(error);
-		return errors;
+	public void errorMessages(String error) {
+		errors.add(error + "\n");
 	}
 }
