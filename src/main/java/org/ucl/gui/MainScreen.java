@@ -477,7 +477,7 @@ public class MainScreen extends JPanel {
 		nextAppointment = new JLabel();
 		nextAppointment.setForeground(Color.WHITE);
 		nextAppointment.setText("<html><b>Next Appointment:</b></html>");
-		nextAppointment.setPreferredSize(new Dimension(250, boxHeight));
+		nextAppointment.setPreferredSize(new Dimension(300, boxHeight));
 		nextAppointment.setMinimumSize(new Dimension(200, boxHeight));
 		medicalHistory.add(nextAppointment, c);
 

@@ -30,6 +30,7 @@ public class DatabaseEditor extends JPanel {
 	private JComboBox<String> month;
 	private JComboBox<String> year;
 	private JTextArea commentArea;
+	private String nextAppointment = "";
 
 	/**
 	 * if this constructor is called by the MainScreen adder button, it loads
@@ -216,7 +217,7 @@ public class DatabaseEditor extends JPanel {
 		patient.setDOB(dob);
 		patient.setCondition(inputFields[9].getText());
 		patient.setAddress(inputFields[10].getText());
-		// case 11 needs to be the datepicker
+		patient.setNextAppointment(nextAppointment);
 		patient.setURI(inputFields[12].getText());
 		patient.setProfilePhoto(inputFields[13].getText());
 		patient.setComments(commentArea.getText());
@@ -283,6 +284,7 @@ public class DatabaseEditor extends JPanel {
 		public String valueToString(Object value) throws ParseException {
 			if (value != null) {
 				Calendar cal = (Calendar) value;
+				nextAppointment = dateFormatter.format(cal.getTime());
 				return dateFormatter.format(cal.getTime());
 			}
 			return "";
