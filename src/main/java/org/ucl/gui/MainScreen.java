@@ -352,8 +352,9 @@ public class MainScreen extends JPanel {
 		editor.setPreferredSize(new Dimension(200, boxHeight));
 		editor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (chosenResult == null) {
-					confirmationDialog("You must choose a patient first", "Editor error", JOptionPane.WARNING_MESSAGE);
+			    try {
+				if (chosenResult.getPatientID().equals("")) {
+					confirmationDialog("Choose a patient first", "Editor error", JOptionPane.WARNING_MESSAGE);
 				} else {
 					DatabaseEditor pa = new DatabaseEditor(chosenResult);
 					int result = confirmationDialog(pa, "Edit Patient", JOptionPane.PLAIN_MESSAGE);
@@ -364,7 +365,13 @@ public class MainScreen extends JPanel {
 					} else
 						System.out.println("Patient editing cancelled");
 				}
+                                /* if edit is pressed as the very first activity after logging in an exception is
+                                 * thrown, this catches it and prints out a useful error message */
+                            } catch (NullPointerException ne) {
+			        confirmationDialog("Please choose a patient", "Editor error", JOptionPane.WARNING_MESSAGE);
+                            }
 			}
+                        
 		});
 		databaseChanger.add(editor);
 
