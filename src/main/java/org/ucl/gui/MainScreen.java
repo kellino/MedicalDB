@@ -109,7 +109,12 @@ public class MainScreen extends JPanel {
 		/* import database from file */
 		menuItem = mnFile.add(new JMenuItem("Import", 'i'));
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, Event.CTRL_MASK));
-		// action listener needed
+		menuItem.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        String result = createPhotoChooser();
+		        System.out.println(result);
+		    }
+		});
 		/* exit the program */
 		menuItem = mnFile.add(new JMenuItem("Exit", 'x'));
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
@@ -559,9 +564,17 @@ public class MainScreen extends JPanel {
 				+ "</html>");
 		commentField.setText(p.getComments());
 		uriStr = p.getURI();
-		nextAppointment.setText(p.getNextAppointment());
+		nextAppointment.setText("<html><b>Next Appointment</b>" + p.getNextAppointment() + "</html>");
 		picture.setIcon(new ImageIcon(p.getProfilePhoto()));
 		System.out.println(p.getMedPhotos());
 		addPhotosToPhotoPane(p.getMedPhotos());
+	}
+
+	// ugly duplication of code here. TODO fix this
+	private String createPhotoChooser() {
+		JFileChooser imageChooser = new JFileChooser();
+		imageChooser.showOpenDialog(this);
+		File file = imageChooser.getSelectedFile();
+		return file.toString();
 	}
 }

@@ -113,6 +113,7 @@ public class DatabaseEditor extends JPanel {
 	}
 
 	/** draw editable text fields, JComboBoxes, JDatePicker, and JFileChooser */
+	// TODO this method is too long and confused. Refactor into two (?) smaller methods
 	private void createAndPopulateFields() {
 		int i;
 		inputFields = new JTextField[MainScreen.fields.length];
