@@ -533,6 +533,9 @@ public class MainScreen extends JPanel {
 		}
 	}
 
+	/** <i>populates</i> the data areas with empty strings, effectively clearing the current
+	 * patient for the GUI
+	 */
 	private void fillInputFields() {
 		inputFields[0].setText("");
 		inputFields[1].setText("");
@@ -545,10 +548,9 @@ public class MainScreen extends JPanel {
 		link.setText("<html>Click <b><font color=red>here</font></b> for more information on " + " " + "</html>");
 		commentField.setText("");
 		uriStr = "";
-		nextAppointment.setText("Next Appointment:");
+		nextAppointment.setText("Next Appointment");
+		images.removeAll();
 		picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/placeholder.png"));
-		addPhotosToPhotoPane("");
-
 	}
 
 	/** populates the patient data areas */
@@ -565,9 +567,9 @@ public class MainScreen extends JPanel {
 				+ "</html>");
 		commentField.setText(p.getComments());
 		uriStr = p.getURI();
-		nextAppointment.setText("<html><b>Next Appointment</b>" + p.getNextAppointment() + "</html>");
+		nextAppointment.setText("<html><b>Next Appointment</b>" + "  " + p.getNextAppointment() + "</html>");
 		picture.setIcon(new ImageIcon(p.getProfilePhoto()));
-		System.out.println(p.getMedPhotos());
+		images.removeAll();
 		addPhotosToPhotoPane(p.getMedPhotos());
 	}
 

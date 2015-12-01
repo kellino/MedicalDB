@@ -1,0 +1,208 @@
+@startuml
+
+package org.ucl.medicaldb <<Node>> {
+    class Database
+    class Main
+    class Patient
+    class PatientHandler
+}
+
+class Main {
+   +medDB
+   +main(String[] args)
+}
+
+class Database {
+    DELIM
+   -FILELOCATION
+   #currentPatients
+   +days
+   +idNumbers
+   -log
+   +months
+   -reader
+   -setterCount
+   -writer
+   +years
+   +Database()
+   +appendPatientToDB(Patient newPatient)
+    arrayToPatient(String[] array)
+   +dumpDBtoFile()
+   +errorMessages(String error)
+   -getPatientMethods()
+   -initializeDays()
+   -initializeMonths()
+   -initializeYears()
+   +loadDBfromFile(String fileLocation)
+   -populateIdSet(String id)
+   +removePatient(Patient toRemove)
+   +searchPatients(String searchTxt)
+}
+
+class Patient {
+   -DELIM
+   -DOB
+   -address
+    checker
+   -comments
+   -condition
+   -firstName
+   -lastName
+   -medPhotos
+   -nextAppointment
+   -patientID
+   -profilePhoto
+   -sex
+   -title
+   -uri
+   +getAddress()
+   +getComments()
+   +getCondition()
+   +getDOB()
+   +getFirstName()
+   +getLastName()
+   +getMedPhotos()
+   +getNextAppointment()
+   +getPatientID()
+   +getProfilePhoto()
+   +getSex()
+   +getTitle()
+   +getURI()
+   +setAddress(String address)
+   +setComments(String comments)
+   +setCondition(String condition)
+   +setDOB(String DOB)
+   +setFirstName(String firstName)
+   +setLastName(String lastName)
+   +setMedPhotos(String medPhotos)
+   +setNextAppointment(String nextAppointment)
+   +setPatientID(String patientID)
+   +setProfilePhoto(String profilePhoto)
+   +setSex(String sex)
+   +setTitle(String title)
+   +setURI(String uri)
+   +toString()
+}
+
+class PatientHandler {
+   -log
+    completedObligatoryField(String input)
+    isUniqueID(String id)
+    isValid(String input)
+    isValid(String input, String type)
+    isValidDate(String DOB)
+}
+
+package org.ucl.gui <<Node>> {
+    class GUI
+    class MainScreen
+    class DatabaseEditor
+    class DateLabelFormatter
+    class LoginScreen
+    class LoginHandler
+}
+
+
+
+GUI <|-- JFrame
+MainScreen <|-- JPanel
+DatabaseEditor <|-- JPanel
+
+class GUI {
+   #HEIGHT
+   #WIDTH
+    cardPanel
+    cards
+   +frame
+   -addComponentToPane(Container pane)
+   +createAndShowGUI()
+}
+
+class MainScreen {
+    - Color LIGHT_BLUE
+    - int boxHeight
+    # Patient chosenResult
+    - JTextField commentField
+    - String condition
+    # Hashset currentIds
+    # String dateFormat
+    - File[] images
+    - String[] inputFields
+    - String link
+    - String nextAppointment
+    # patientData
+    - String picture
+    - String uriStr
+    + MainScreen()
+   -addPhotosToPhotoPane(String medPhotos)
+   -confirmationDialog(String message, String title, int messageType)
+   -confirmationDialog(Object object, String title, int messageType)
+   -createDatabaseChanger()
+   -createMedicalHistoryPane()
+   -createMenu()
+   -createPatientDataArea()
+   -createPhotoChooser()
+   -createPhotoPane()
+   -fillInputFields()
+   -fillInputFields(Patient p)
+   -medicalHistoryPanel()
+   #paintComponent(Graphics g)
+   -tabbedMedicalDataPane()
+}
+
+class DatabaseEditor {
+   -boxHeight
+   -commentArea
+   -day
+   -genderMenu
+   -height
+   -inputFields
+   -month
+   -nextAppointment
+   -patient
+   -screen
+   -titleMenu
+   -unit
+   -width
+   -year
+   +DatabaseEditor(Patient patient)
+   #appendPatient(Patient p)
+   -createAndPopulateFields()
+   -createComboBox(String[] text, int x, int y, int width, int height)
+   -createFieldNames()
+   -createPhotoChooser()
+   #deletePatient(Patient patient)
+   -drawDatePicker()
+   #editPatient()
+   #textFieldsToPatient()
+}
+
+class DateLabelFormatter {
+     -dateFormatter
+     -datePattern
+     +stringToValue(String text)
+     +valueToString(Object value)
+}
+
+class LoginHandler {
+   -password
+   -passwordHex
+   -root
+   -username
+    checkLoginDetails()
+   -checkMD5(String inputPassword)
+   +setPassword(String password)
+   +setUsername(String username)
+}
+
+class LoginScreen {
+   #bgimage
+    lh
+   -log
+    passwordField
+    usernameField
+   +LoginScreen()
+   -newButton()
+   #paintComponent(Graphics g)
+}
+@enduml
