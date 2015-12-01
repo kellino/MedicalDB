@@ -63,6 +63,29 @@ public final class PatientHandler {
 	}
 
 	boolean isValidDate(String DOB) {
+		Pattern pattern = Pattern.compile("[1-9][0-9]?/[1-9][0-2]?/[1-9][0-9]{3}");
+		try {
+			if (pattern.matcher(DOB).matches()) {
+				throw new IllegalArgumentException();
+			}
+		} catch (IllegalArgumentException e) {
+			log.log(Level.INFO, "incorrect date format");
+			return false;
+		}
+
+		String[] tempDate = DOB.split("/");
+		if (tempDate[1].equals("4") || tempDate[1].equals("6") 
+		        || tempDate[1].equals("9") || tempDate[1].equals("11")) {
+		    if (Integer.parseInt(tempDate[0]) > 30) {
+		        return false;
+		    } else if (tempDate[1].equals("2")) {
+		        // this is not smart enough to test for a leap year, so let's set the limit
+		        // to 29
+		        if (Integer.parseInt(tempDate[0]) > 29) {
+		            return false;
+		        }
+		    }
+		}
 		return true;
 	}
 
