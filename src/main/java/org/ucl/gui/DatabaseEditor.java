@@ -262,6 +262,13 @@ public class DatabaseEditor extends JPanel {
         protected void editPatient() {
             Main.medDB.dumpDBtoFile();
         }
+
+            
+        protected void deletePatient(Patient patient) {
+            Main.medDB.removePatient(patient);
+            editPatient();
+        }
+
 	/**
 	 * the following code is from a stackoverflow <i>tutorial</i> on
 	 * JDatePicker. Thanks to theMadProgrammer

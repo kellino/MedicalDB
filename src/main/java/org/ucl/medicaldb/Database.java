@@ -181,8 +181,8 @@ public class Database {
 		}
 	}
 
-	void removePatient(int index) {
-		currentPatients.remove(index);
+	public void removePatient(Patient toRemove) {
+		currentPatients.remove(toRemove);
 	}
 
 	/** method to add a new patient to the ArrayList of current patients, and

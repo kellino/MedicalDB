@@ -39,6 +39,7 @@ public class MainScreen extends JPanel {
 	private String uriStr = "";
 	private JLabel picture;
 	private static JPanel images;
+	private static final int boxHeight = 30;
 
 	/** constructor for the main screen. */
 	public MainScreen() {
@@ -96,7 +97,7 @@ public class MainScreen extends JPanel {
 		JMenuBar mb = new JMenuBar();
 		JMenuItem menuItem;
 
-		mb.setBounds(0, 0, 1200, 30);
+		mb.setBounds(0, 0, 1200, boxHeight);
 		mb.setBorder(BorderFactory.createEtchedBorder(1));
 
 		JMenu mnFile = new JMenu("File");
@@ -115,7 +116,7 @@ public class MainScreen extends JPanel {
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				/* save function should be called here */
-				int reply = confirmationDialog("Are you sure you want to quit?", "Exit confirmation");
+				int reply = confirmationDialog("Are you sure you want to quit?", "Exit confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
 					System.out.println("Exiting program");
 					System.exit(0);
@@ -159,11 +160,21 @@ public class MainScreen extends JPanel {
 	}
 
 	/** popup confirmation dialog for user-driven decisions */
-	private int confirmationDialog(String message, String title) {
+	private int confirmationDialog(String message, String title, int messageType) {
 		int reply = JOptionPane.NO_OPTION;
-
 		try {
-			reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+			reply = JOptionPane.showConfirmDialog(null, message, title, messageType);
+		} catch (HeadlessException he) {
+			System.out.println(he.getMessage());
+		}
+		return reply;
+	}
+
+	/** overloading method */
+	private int confirmationDialog(Object object, String title, int messageType) {
+		int reply = JOptionPane.NO_OPTION;
+		try {
+			reply = JOptionPane.showConfirmDialog(null, object, title, JOptionPane.YES_NO_OPTION);
 		} catch (HeadlessException he) {
 			System.out.println(he.getMessage());
 		}
@@ -186,31 +197,31 @@ public class MainScreen extends JPanel {
 			titleContainers[i] = new JLabel();
 			switch (i) {
 			case 0: /* patient id */
-				titleContainers[i].setBounds(50, 40, 150, 30);
+				titleContainers[i].setBounds(50, 40, 150, boxHeight);
 				titleContainers[i].setText(fields[i]);
 				break;
 			case 1: /* title */
-				titleContainers[i].setBounds(240, 40, 100, 30);
+				titleContainers[i].setBounds(240, 40, 100, boxHeight);
 				titleContainers[i].setText(fields[i]);
 				break;
 			case 2: /* sex */
-				titleContainers[i].setBounds(340, 40, 100, 30);
+				titleContainers[i].setBounds(340, 40, 100, boxHeight);
 				titleContainers[i].setText(fields[i]);
 				break;
 			case 3: /* last name */
-				titleContainers[i].setBounds(50, 80, 100, 30);
+				titleContainers[i].setBounds(50, 80, 100, boxHeight);
 				titleContainers[i].setText(fields[i]);
 				break;
 			case 4: /* first name */
-				titleContainers[i].setBounds(50, 120, 100, 30);
+				titleContainers[i].setBounds(50, 120, 100, boxHeight);
 				titleContainers[i].setText(fields[i]);
 				break;
 			case 5: /* first name */
-				titleContainers[i].setBounds(50, 160, 100, 30);
+				titleContainers[i].setBounds(50, 160, 100, boxHeight);
 				titleContainers[i].setText(fields[i]);
 				break;
 			case 10: /* address */
-				titleContainers[i].setBounds(50, 200, 100, 30);
+				titleContainers[i].setBounds(50, 200, 100, boxHeight);
 				titleContainers[i].setText(fields[i]);
 				break;
 			default:
@@ -224,25 +235,25 @@ public class MainScreen extends JPanel {
 			inputFields[i].setEditable(false);
 			switch (i) {
 			case 0: /* patient id */
-				inputFields[i].setBounds(150, 40, 80, 30);
+				inputFields[i].setBounds(150, 40, 80, boxHeight);
 				break;
 			case 1: /* title */
-				inputFields[i].setBounds(280, 40, 50, 30);
+				inputFields[i].setBounds(280, 40, 50, boxHeight);
 				break;
 			case 2: /* sex */
-				inputFields[i].setBounds(370, 40, 80, 30);
+				inputFields[i].setBounds(370, 40, 80, boxHeight);
 				break;
 			case 3: /* last name */
-				inputFields[i].setBounds(150, 80, 150, 30);
+				inputFields[i].setBounds(150, 80, 150, boxHeight);
 				break;
 			case 4: /* first name */
-				inputFields[i].setBounds(150, 120, 250, 30);
+				inputFields[i].setBounds(150, 120, 250, boxHeight);
 				break;
 			case 5: /* date of birth */
-				inputFields[i].setBounds(150, 160, 150, 30);
+				inputFields[i].setBounds(150, 160, 150, boxHeight);
 				break;
 			case 10: /* address */
-				inputFields[i].setBounds(150, 200, 450, 30);
+				inputFields[i].setBounds(150, 200, 450, boxHeight);
 				break;
 			default:
 				break;
@@ -276,8 +287,8 @@ public class MainScreen extends JPanel {
 	}
 
 	/**
-	 * a JPanel with three buttons, one for editing a patient, one for adding a
-	 * patient, and one for launching the search function
+	 * a JPanel with the database manipulation buttons, for editing a patient, adding a
+	 * patient, for launching the search function and other elements.
 	 */
 	private JPanel createDatabaseChanger() {
 		JPanel databaseChanger = new JPanel(new FlowLayout());
@@ -286,10 +297,29 @@ public class MainScreen extends JPanel {
 		databaseChanger.setBackground(new Color(100, 100, 100, 100));
 		databaseChanger.setBorder(new EmptyBorder(100, 0, 0, 0));
 
+		JButton remover = new JButton();
+		remover.setText("<html><b><font color=red>Delete Patient</font></b></html>");
+		remover.setMinimumSize(new Dimension(150, boxHeight));
+		remover.setPreferredSize(new Dimension(200, boxHeight));
+		remover.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+			if (chosenResult != null) {
+			    DatabaseEditor pa = new DatabaseEditor(chosenResult);
+		            int reply = confirmationDialog("<html>Are you  <i><b>sure</b></i> you want to delete the patient? This cannot be undone!", "Remove patient", JOptionPane.OK_CANCEL_OPTION);
+		            if (reply == JOptionPane.YES_OPTION) {
+		                pa.deletePatient(chosenResult);
+		            }
+		        } else {
+		            confirmationDialog("Please choose a patient", "Error deleting", JOptionPane.OK_OPTION);
+		        }
+                    }
+		});
+		databaseChanger.add(remover);
+
 		JButton adder = new JButton();
 		adder.setText("<html><b>Add patient</b></html>");
-		adder.setMinimumSize(new Dimension(100, 30));
-		adder.setPreferredSize(new Dimension(200, 30));
+		adder.setMinimumSize(new Dimension(100, boxHeight));
+		adder.setPreferredSize(new Dimension(200, boxHeight));
 		adder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chosenResult = new Patient();
@@ -307,16 +337,16 @@ public class MainScreen extends JPanel {
 
 		JButton editor = new JButton();
 		editor.setText("<html><b>Edit patient</></html>");
-		editor.setMinimumSize(new Dimension(100, 30));
-		editor.setPreferredSize(new Dimension(200, 30));
+		editor.setMinimumSize(new Dimension(100, boxHeight));
+		editor.setPreferredSize(new Dimension(200, boxHeight));
 		editor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (chosenResult == null) {
-					JOptionPane.showMessageDialog(null, "You must choose a patient before editing");
+				        confirmationDialog("You must choose a patient first", "Editor error", JOptionPane.WARNING_MESSAGE);
+					//JOptionPane.showMessageDialog(null, "You must choose a patient before editing");
 				} else {
 					DatabaseEditor pa = new DatabaseEditor(chosenResult);
-					int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION,
-							JOptionPane.PLAIN_MESSAGE);
+					int result = confirmationDialog(pa, "Edit Patient", JOptionPane.PLAIN_MESSAGE);
 					if (result == JOptionPane.OK_OPTION) {
 					    pa.textFieldsToPatient();
 					    pa.editPatient();
@@ -331,16 +361,16 @@ public class MainScreen extends JPanel {
 		/* search text box */
 		JLabel searchBox = new JLabel("<html><b><font color=white>Enter search here</font></b></html>", SwingConstants.CENTER);
 		searchBox.setBackground(new Color(200, 100, 100, 200));
-		searchBox.setPreferredSize(new Dimension(200, 30));
+		searchBox.setPreferredSize(new Dimension(200, boxHeight));
 		JTextField searchTxtArea = new JTextField();
-		searchTxtArea.setPreferredSize(new Dimension(250, 30));
+		searchTxtArea.setPreferredSize(new Dimension(250, boxHeight));
 		databaseChanger.add(searchBox);
 		databaseChanger.add(searchTxtArea);
 
 		/* the search function launcher */
 		JButton search = new JButton();
-		search.setMinimumSize(new Dimension(100, 30));
-		search.setPreferredSize(new Dimension(200, 30));
+		search.setMinimumSize(new Dimension(100, boxHeight));
+		search.setPreferredSize(new Dimension(200, boxHeight));
 		search.setText("<html><b><font color=red>Search</font></b></html>");
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -399,8 +429,8 @@ public class MainScreen extends JPanel {
 		condition = new JLabel();
 		condition.setText("<html><b>Condition</b></html>");
 		condition.setForeground(Color.WHITE);
-		condition.setPreferredSize(new Dimension(300, 30));
-		condition.setMinimumSize(new Dimension(200, 30));
+		condition.setPreferredSize(new Dimension(300, boxHeight));
+		condition.setMinimumSize(new Dimension(200, boxHeight));
 		medicalHistory.add(condition, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -410,8 +440,8 @@ public class MainScreen extends JPanel {
 		link.setText(
 				"<html>Click <b><font color=red>here</font></b> for more information on " + "condition" + "</html>");
 		link.setForeground(Color.WHITE);
-		link.setPreferredSize(new Dimension(250, 30));
-		link.setMinimumSize(new Dimension(200, 30));
+		link.setPreferredSize(new Dimension(250, boxHeight));
+		link.setMinimumSize(new Dimension(200, boxHeight));
 		link.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		link.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -436,8 +466,8 @@ public class MainScreen extends JPanel {
 		nextAppointment = new JLabel();
 		nextAppointment.setForeground(Color.WHITE);
 		nextAppointment.setText("<html><b>Next Appointment:</b></html>");
-		nextAppointment.setPreferredSize(new Dimension(250, 30));
-		nextAppointment.setMinimumSize(new Dimension(200, 30));
+		nextAppointment.setPreferredSize(new Dimension(250, boxHeight));
+		nextAppointment.setMinimumSize(new Dimension(200, boxHeight));
 		medicalHistory.add(nextAppointment, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -446,8 +476,8 @@ public class MainScreen extends JPanel {
 		JLabel comments = new JLabel();
 		comments.setText("<html><b>Comments</b></html>");
 		comments.setForeground(Color.WHITE);
-		comments.setPreferredSize(new Dimension(100, 30));
-		comments.setMinimumSize(new Dimension(50, 30));
+		comments.setPreferredSize(new Dimension(100, boxHeight));
+		comments.setMinimumSize(new Dimension(50, boxHeight));
 		medicalHistory.add(comments, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -492,7 +522,7 @@ public class MainScreen extends JPanel {
                     }
         }
 
-	/** populates the patient data area */
+	/** populates the patient data areas */
 	private void fillInputFields(Patient p) {
 		inputFields[0].setText(p.getPatientID());
 		inputFields[1].setText(p.getTitle());
