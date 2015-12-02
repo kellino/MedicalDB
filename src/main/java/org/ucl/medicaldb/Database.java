@@ -10,6 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.ucl.medicaldb.Patient;
 
+/** the main database methods for the medical registry. It loads the patient data from a csv
+ * separated text file into an ArrayList of Patient objects
+ */
 public class Database {
 	private static final Logger log = Logger.getLogger(Class.class.getName());
 	private static final String FILELOCATION = "/home/david/Programming/Java/medicaldb/db.txt";
@@ -67,6 +70,9 @@ public class Database {
 		return years;
 	}
 
+	/** saves the ArrayList of current patients to the db.txt file, overwriting it in the
+	 * process.
+	 */
 	public void dumpDBtoFile() {
 		writer = null;
 		try {
@@ -90,9 +96,8 @@ public class Database {
 	}
 
 	/**
-	 * loads default database file into an ArrayList<Patient> of current patients.
-	 * @throws IOException, IndexOutOfBounds, Exception
-	 * @return ArrayList<Patient>
+	 * loads default database file into an ArrayList of current patients.
+	 * @param String fileLocation
 	 */
 	public void loadDBfromFile(String fileLocation) {
 		reader = null;
@@ -122,7 +127,8 @@ public class Database {
 	}
 
 	/**
-	 * Uses java reflection to count the number of Patient setter methods
+	 * Uses java reflection to count the number of Patient setter methods. Helper method for
+	 * arrayToPatient()
 	 * @return int
 	 */
 	private static int getPatientMethods() {
@@ -138,8 +144,9 @@ public class Database {
 	}
 
 	/**
-	 * converts the CSV string[] to a Patient object
-	 * @throws IndexOutOfBoundsException
+	 * converts the CSV string[] to a Patient object. If the number of setter methods is
+	 * different from the number of separations in the db.txt, it calls a System.exit(0) to
+	 * protect data, as something has gone very gone with either the class or the db.txt file.
 	 * @param String[]
 	 * @return Patient
 	 */
@@ -162,6 +169,7 @@ public class Database {
 
 		if (i != setterCount) {
 			log.log(Level.SEVERE, "mismatch between setter methods and arrayToPatient()");
+			System.exit(0);
 		}
 		return temp;
 	}
@@ -178,6 +186,10 @@ public class Database {
 		}
 	}
 
+	/**
+	 * 
+	 * @param Patient toRemove
+	 */
 	public void removePatient(Patient toRemove) {
 		currentPatients.remove(toRemove);
 	}
@@ -185,6 +197,7 @@ public class Database {
 	/**
 	 * method to add a new patient to the ArrayList of current patients, and
 	 * appends this to the db.txt
+	 * @param Patient newPatient
 	 */
 	public void appendPatientToDB(Patient newPatient) {
 		currentPatients.add(newPatient);
@@ -207,7 +220,8 @@ public class Database {
 
 	/** search method for the database. It searches the ArrayList, rather than the db.txt file
 	 * itself
-	 * @return ArrayList<Patient>
+	 * @param String searchTxt
+	 * @return ArrayList
 	 */
 	public ArrayList<Patient> searchPatients(String searchTxt) {
 		ArrayList<Patient> resultList = new ArrayList<Patient>();
@@ -219,6 +233,11 @@ public class Database {
 		return resultList;
 	}
 
+	/**
+	 * returns a patient object from a known id. Not to be called directly
+	 * @param String id
+	 * @return Patient
+	 */
 	public Patient returnPatientFromId(String id) {
 		for (int i = 0; i < currentPatients.size(); i++) {
 			if (currentPatients.get(i).toString().contains(id)) {
@@ -230,9 +249,11 @@ public class Database {
 		 */
 		return null;
 	}
+	
 	/**
 	 * populates an ArrayList of error messages from the patient setter methods
 	 * which is feeds to a JOptionPane in the MainScreen class
+	 * @param String error
 	 */
 	public void errorMessages(String error) {
 		errors.add(error + "\n");
