@@ -34,13 +34,13 @@ public class DatabaseEditor extends JPanel {
 
 	/**
 	 * if this constructor is called by the MainScreen adder button, it loads
-	 * the various text fields with emtpy strings. If it is loaded from the edit
+	 * the various text fields with empty strings. If it is loaded from the edit
 	 * button, it loads the current patient into the editable areas for
 	 * alterations
 	 */
 	public DatabaseEditor(Patient patient) {
 		/**
-		 * the DatabaseEditor window is not resizeable, so it's possible to
+		 * the DatabaseEditor window is not resizable, so it's possible to
 		 * safely use the null layout here
 		 */
 		this.patient = patient;
@@ -89,7 +89,7 @@ public class DatabaseEditor extends JPanel {
 			case 9: /* condition */
 				titleContainers[i].setBounds(unit, unit * 20, unit * 10, boxHeight);
 				break;
-			case unit: /* address */
+			case 10: /* address */
 				titleContainers[i].setBounds(unit, unit * 24, unit * 10, boxHeight);
 				break;
 			case 11: /* next appointment */
@@ -104,6 +104,9 @@ public class DatabaseEditor extends JPanel {
 			case 14: /* comments */
 				titleContainers[i].setBounds(unit, unit * 40, unit * 10, boxHeight);
 				break;
+			case 15: /* medical photos */
+				titleContainers[i].setBounds(unit, unit * 55, unit * 13, boxHeight);
+				break;
 			default:
 				/* we should not reach this point */
 				break;
@@ -114,7 +117,8 @@ public class DatabaseEditor extends JPanel {
 	}
 
 	/** draw editable text fields, JComboBoxes, JDatePicker, and JFileChooser */
-	// TODO this method is too long and confused. Refactor into two (?) smaller methods
+	// TODO this method is too long and confused. Refactor into two (?) smaller
+	// methods
 	private void createAndPopulateFields() {
 		int i;
 		inputFields = new JTextField[MainScreen.fields.length];
@@ -180,19 +184,42 @@ public class DatabaseEditor extends JPanel {
 				addPhoto.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						String fileString = createPhotoChooser();
-						inputFields[13].setText(fileString);
+						try {
+							String fileString = createPhotoChooser();
+							inputFields[13].setText(fileString);
+						} catch (NullPointerException npe) {
+						}
+						;
 					}
 				});
 				add(addPhoto);
 				break;
 			case 14: /* comments */
 				commentArea = new JTextArea();
-				commentArea.setBounds(unit * 11, unit * 40, unit * 35, boxHeight * 5);
+				commentArea.setBounds(unit * 11, unit * 40, unit * 35, boxHeight * 4);
 				commentArea.setLineWrap(true);
 				commentArea.setWrapStyleWord(true);
 				commentArea.setText(patient.getComments());
 				add(commentArea);
+				break;
+			case 15: /* medical photos */
+				inputFields[i].setBounds(unit * 23, unit * 55, unit * 31, boxHeight);
+				inputFields[i].setText(patient.getMedPhotos());
+				JButton medChooser = new JButton();
+				medChooser.setBounds(unit * 13, unit * 55, unit * 10, boxHeight);
+				medChooser.setText("<html><b>Choose</b></html>");
+				medChooser.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							String fileString = createPhotoChooser(1);
+							inputFields[15].setText(fileString);
+						} catch (NullPointerException npe) {
+						}
+						;
+					}
+				});
+				add(medChooser);
 				break;
 			default:
 				/* case 5: date of birth */
@@ -221,6 +248,7 @@ public class DatabaseEditor extends JPanel {
 		patient.setURI(inputFields[12].getText());
 		patient.setProfilePhoto(inputFields[13].getText());
 		patient.setComments(commentArea.getText());
+		patient.setMedPhotos(inputFields[15].getText());
 	}
 
 	/**
@@ -232,6 +260,17 @@ public class DatabaseEditor extends JPanel {
 		imageChooser.showOpenDialog(this);
 		File file = imageChooser.getSelectedFile();
 		return file.toString();
+	}
+
+	private String createPhotoChooser(int i) {
+		JFileChooser imageChooser = new JFileChooser();
+		imageChooser.showOpenDialog(this);
+		imageChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		imageChooser.setAcceptAllFileFilterUsed(false);
+		if (imageChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+			return String.format(imageChooser.getCurrentDirectory().toString() + "/" + patient.getPatientID());
+		}
+		return "";
 	}
 
 	/** helper method to set up JComboBoxes */

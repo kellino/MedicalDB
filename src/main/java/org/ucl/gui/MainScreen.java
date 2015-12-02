@@ -28,7 +28,7 @@ public class MainScreen extends ImagePanel {
 	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Miss", "Mrs", "Ms", "Dr" },
 			{ "-", "Male", "Female" } };
 	protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
-			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments" };
+			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments", "Medical Photos" };
 	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
 	private JTextField[] inputFields;
 	protected Patient chosenResult;
@@ -156,12 +156,16 @@ public class MainScreen extends ImagePanel {
 		JMenu mnAbout = new JMenu("About");
 
 		mnAbout.setMnemonic(KeyEvent.VK_A);
+		menuItem = mnAbout.add(new JMenuItem());
+		mnAbout.setText("About");
+		menuItem.setText("About");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Medical Database by David Kelly, 2015. Version 0.1");
+				}
+		});
+		
 		mb.add(mnAbout);
-
-		JMenu mnHelp = new JMenu("Help");
-
-		mnHelp.setMnemonic(KeyEvent.VK_H);
-		mb.add(mnHelp);
 
 		return mb;
 	}
@@ -335,6 +339,7 @@ public class MainScreen extends ImagePanel {
 			public void actionPerformed(ActionEvent e) {
 				Patient temp = new Patient();
 				DatabaseEditor pa = new DatabaseEditor(temp);
+				if (Main.medDB.errors.size() != 0) Main.medDB.errors.clear();
 				int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
@@ -363,6 +368,7 @@ public class MainScreen extends ImagePanel {
 					confirmationDialog("Choose a patient first", "Editor error", JOptionPane.WARNING_MESSAGE);
 				} else {
 					DatabaseEditor pa = new DatabaseEditor(chosenResult);
+					if (Main.medDB.errors.size() != 0) Main.medDB.errors.clear();
 					int result = confirmationDialog(pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION);
 					if (result == JOptionPane.OK_OPTION) {
 						pa.textFieldsToPatient();
@@ -562,8 +568,8 @@ public class MainScreen extends ImagePanel {
 		commentField.setText("");
 		uriStr = "";
 		nextAppointment.setText("Next Appointment");
-		images.removeAll();
 		picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/placeholder.png"));
+		images.removeAll();
 	}
 
 	/** populates the patient data areas */
