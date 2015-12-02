@@ -22,7 +22,7 @@ import org.ucl.medicaldb.Patient;
  * information
  */
 @SuppressWarnings("serial")
-public class MainScreen extends JPanel {
+public class MainScreen extends ImagePanel {
 	protected static String[] currentIds = Database.idNumbers.stream().toArray(String[]::new);
 	protected static final String[][] dateFormat = { Database.days, Database.months, Database.years };
 	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Miss", "Mrs", "Ms", "Dr" },
@@ -81,15 +81,6 @@ public class MainScreen extends JPanel {
 		JSplitPane medicalHistoryPanel = medicalHistoryPanel();
 
 		add(medicalHistoryPanel, c);
-	}
-
-	/**
-	 * overriding the paintComponent(Graphics g) method allows us to set an
-	 * image as the background for our JPanel
-	 */
-	@Override
-	protected void paintComponent(Graphics g) {
-		g.drawImage(LoginScreen.bgimage, 0, 0, null);
 	}
 
 	/** creates the main menu at the top of the screen */

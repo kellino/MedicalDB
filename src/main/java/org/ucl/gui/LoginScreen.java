@@ -2,7 +2,6 @@ package org.ucl.gui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,12 +15,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class LoginScreen extends JPanel {
+public class LoginScreen extends ImagePanel {
 	private static final Logger log = Logger.getLogger(Class.class.getName());
 	static JTextField usernameField;
 	static JPasswordField passwordField;
@@ -67,11 +65,6 @@ public class LoginScreen extends JPanel {
 
 		JButton enter = newButton();
 		add(enter);
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		g.drawImage(bgimage, 0, 0, null);
 	}
 
 	private JButton newButton() {
