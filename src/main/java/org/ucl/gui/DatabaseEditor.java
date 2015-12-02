@@ -181,7 +181,6 @@ public class DatabaseEditor extends JPanel {
 				addPhoto.setBounds(unit * 11, unit * 36, unit * 10, boxHeight);
 				addPhoto.setText("<html><b>Choose</b></html>");
 				addPhoto.addActionListener(new ActionListener() {
-					@Override
 					public void actionPerformed(ActionEvent e) {
 						try {
 							String fileString = createPhotoChooser();

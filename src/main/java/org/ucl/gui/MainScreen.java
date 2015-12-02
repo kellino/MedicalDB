@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
-
-import javax.print.attribute.standard.RequestingUserName;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultEditorKit;
@@ -282,7 +280,7 @@ public class MainScreen extends ImagePanel {
 		}
 
 		picture = new JLabel();
-		picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/placeholder.png"));
+		picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/src/main/resources/placeholder.png"));
 		picture.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.BLUE));
 		picture.setBounds(900, 40, 200, 200);
 		area.add(picture);
