@@ -298,7 +298,8 @@ public class MainScreen extends JPanel {
 	 * adding a patient, for launching the search function and other elements.
 	 */
 	private JPanel createDatabaseChanger() {
-		JPanel databaseChanger = new JPanel(new FlowLayout());
+		//JPanel databaseChanger = new JPanel(new FlowLayout());
+		JPanel databaseChanger = new JPanel();
 
 		databaseChanger.setPreferredSize(new Dimension(300, 400));
 		databaseChanger.setBackground(new Color(100, 100, 100, 100));
@@ -332,13 +333,14 @@ public class MainScreen extends JPanel {
 		adder.setPreferredSize(new Dimension(200, boxHeight));
 		adder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				chosenResult = new Patient();
-				DatabaseEditor pa = new DatabaseEditor(chosenResult);
+				Patient temp = new Patient();
+				DatabaseEditor pa = new DatabaseEditor(temp);
 				int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
 					pa.textFieldsToPatient();
 					if (Main.medDB.errors.size() == 0) {
+					    chosenResult = temp;
 					    pa.appendPatient(chosenResult);
 					    fillInputFields(chosenResult);
                                         } else {
@@ -361,7 +363,7 @@ public class MainScreen extends JPanel {
 					confirmationDialog("Choose a patient first", "Editor error", JOptionPane.WARNING_MESSAGE);
 				} else {
 					DatabaseEditor pa = new DatabaseEditor(chosenResult);
-					int result = confirmationDialog(pa, "Edit Patient", JOptionPane.PLAIN_MESSAGE);
+					int result = confirmationDialog(pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION);
 					if (result == JOptionPane.OK_OPTION) {
 						pa.textFieldsToPatient();
 						pa.editPatient();
