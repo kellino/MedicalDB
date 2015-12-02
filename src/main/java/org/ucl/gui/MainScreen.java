@@ -96,7 +96,16 @@ public class MainScreen extends ImagePanel {
 		mnFile.setMnemonic(KeyEvent.VK_F);
 		/* save */
 		menuItem = mnFile.add(new JMenuItem("Save", 's'));
-		// action listener needed
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/* save function should be called here */
+				int reply = confirmationDialog("Are you sure?", "Save confirmation",
+						JOptionPane.YES_NO_CANCEL_OPTION);
+				if (reply == JOptionPane.YES_OPTION) {
+				        Main.medDB.dumpDBtoFile();
+				}
+			}
+		});
 		/* import database from file */
 		menuItem = mnFile.add(new JMenuItem("Import", 'i'));
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, Event.CTRL_MASK));
