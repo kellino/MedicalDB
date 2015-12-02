@@ -23,21 +23,22 @@ import org.ucl.medicaldb.Patient;
  */
 @SuppressWarnings("serial")
 public class MainScreen extends ImagePanel {
-	protected static String[] currentIds = Database.idNumbers.stream().toArray(String[]::new);
+	protected static final String[] currentIds = Database.idNumbers.stream().toArray(String[]::new);
 	protected static final String[][] dateFormat = { Database.days, Database.months, Database.years };
 	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Miss", "Mrs", "Ms", "Dr" },
 			{ "-", "Male", "Female" } };
 	protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
 			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments", "Medical Photos" };
 	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
-	private JTextField[] inputFields;
+	private static JTextField[] inputFields;
 	protected Patient chosenResult;
-	private JLabel condition;
-	private JLabel link;
-	private JLabel nextAppointment;
-	private JTextArea commentField;
+	private static JPanel area;
+	private static JLabel condition;
+	private static JLabel link;
+	private static JLabel nextAppointment;
+	private static JTextArea commentField;
 	private String uriStr = "";
-	private JLabel picture;
+	private static JLabel picture;
 	private static JPanel images;
 	private static final int boxHeight = 30;
 
@@ -65,8 +66,10 @@ public class MainScreen extends ImagePanel {
 		c.gridy = 5;
 
 		JPanel patientData = createPatientDataArea();
+		JPanel textAreas = createTextAreas();
 
 		add(patientData, c);
+		add(textAreas, c);
 
 		/*
 		 * a split pane with a nested tabbed pane for displaying comments and
@@ -197,7 +200,7 @@ public class MainScreen extends ImagePanel {
 	 * containing a switch statement
 	 */
 	private JPanel createPatientDataArea() {
-		JPanel area = new JPanel(null);
+		area = new JPanel(null);
 
 		area.setPreferredSize(new Dimension(1200, 300));
 		area.setBackground(LIGHT_BLUE);
@@ -240,6 +243,10 @@ public class MainScreen extends ImagePanel {
 			}
 			area.add(titleContainers[i]);
 		}
+		return area;
+	}
+
+	private JPanel createTextAreas() {
 		inputFields = new JTextField[fields.length];
 		for (int i = 0; i < fields.length; i++) {
 			inputFields[i] = new JTextField();
@@ -273,7 +280,6 @@ public class MainScreen extends ImagePanel {
 		}
 
 		picture = new JLabel();
-
 		picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/placeholder.png"));
 		picture.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.BLUE));
 		picture.setBounds(900, 40, 200, 200);
@@ -302,8 +308,9 @@ public class MainScreen extends ImagePanel {
 	 * adding a patient, for launching the search function and other elements.
 	 */
 	private JPanel createDatabaseChanger() {
-		//JPanel databaseChanger = new JPanel(new FlowLayout());
 		JPanel databaseChanger = new JPanel();
+		BoxLayout boxLayout = new BoxLayout(databaseChanger, BoxLayout.Y_AXIS);
+		databaseChanger.setLayout(boxLayout);
 
 		databaseChanger.setPreferredSize(new Dimension(300, 400));
 		databaseChanger.setBackground(new Color(100, 100, 100, 100));
@@ -391,9 +398,10 @@ public class MainScreen extends ImagePanel {
 		JLabel searchBox = new JLabel("<html><b><font color=white>Enter search here</font></b></html>",
 				SwingConstants.CENTER);
 		searchBox.setBackground(new Color(200, 100, 100, 200));
-		searchBox.setPreferredSize(new Dimension(200, boxHeight));
+		searchBox.setPreferredSize(new Dimension(180, boxHeight));
 		JTextField searchTxtArea = new JTextField();
 		searchTxtArea.setPreferredSize(new Dimension(250, boxHeight));
+		searchTxtArea.setMaximumSize(new Dimension(Integer.MAX_VALUE, searchTxtArea.getPreferredSize().height));
 		databaseChanger.add(searchBox);
 		databaseChanger.add(searchTxtArea);
 
@@ -531,6 +539,7 @@ public class MainScreen extends ImagePanel {
 		images.setBackground(Color.LIGHT_GRAY);
 	}
 
+	/** populates the PhotoPane with clickable thumbnail images */
 	private void addPhotosToPhotoPane(String medPhotos) {
 		File photoDir = new File(medPhotos);
 		File[] directoryListing = photoDir.listFiles();
