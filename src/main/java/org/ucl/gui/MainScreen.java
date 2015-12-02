@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+
+import javax.print.attribute.standard.RequestingUserName;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultEditorKit;
@@ -28,7 +30,8 @@ public class MainScreen extends ImagePanel {
 	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Miss", "Mrs", "Ms", "Dr" },
 			{ "-", "Male", "Female" } };
 	protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
-			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments", "Medical Photos" };
+			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments",
+			"Medical Photos" };
 	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
 	private static JTextField[] inputFields;
 	protected Patient chosenResult;
@@ -102,10 +105,9 @@ public class MainScreen extends ImagePanel {
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				/* save function should be called here */
-				int reply = confirmationDialog("Are you sure?", "Save confirmation",
-						JOptionPane.YES_NO_CANCEL_OPTION);
+				int reply = confirmationDialog("Are you sure?", "Save confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
-				        Main.medDB.dumpDBtoFile();
+					Main.medDB.dumpDBtoFile();
 				}
 			}
 		});
@@ -113,11 +115,11 @@ public class MainScreen extends ImagePanel {
 		menuItem = mnFile.add(new JMenuItem("Import", 'i'));
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, Event.CTRL_MASK));
 		menuItem.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        String result = createPhotoChooser();
-		        Main.medDB.loadDBfromFile(result);
-		        System.out.println(result);
-		    }
+			public void actionPerformed(ActionEvent e) {
+				String result = createPhotoChooser();
+				Main.medDB.loadDBfromFile(result);
+				System.out.println(result);
+			}
 		});
 		/* exit the program */
 		menuItem = mnFile.add(new JMenuItem("Exit", 'x'));
@@ -165,9 +167,9 @@ public class MainScreen extends ImagePanel {
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Medical Database by David Kelly, 2015. Version 0.1");
-				}
+			}
 		});
-		
+
 		mb.add(mnAbout);
 
 		return mb;
@@ -346,18 +348,19 @@ public class MainScreen extends ImagePanel {
 			public void actionPerformed(ActionEvent e) {
 				Patient temp = new Patient();
 				DatabaseEditor pa = new DatabaseEditor(temp);
-				if (Main.medDB.errors.size() != 0) Main.medDB.errors.clear();
+				if (Main.medDB.errors.size() != 0)
+					Main.medDB.errors.clear();
 				int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
 					pa.textFieldsToPatient();
 					if (Main.medDB.errors.size() == 0) {
-					    chosenResult = temp;
-					    pa.appendPatient(chosenResult);
-					    fillInputFields(chosenResult);
-                                        } else {
-                                            JOptionPane.showMessageDialog(null, "Errors exist. Cannot save");
-                                        }
+						chosenResult = temp;
+						pa.appendPatient(chosenResult);
+						fillInputFields(chosenResult);
+					} else {
+						JOptionPane.showMessageDialog(null, "Errors exist. Cannot save");
+					}
 				} else
 					System.out.println("Patient adding cancelled");
 			}
@@ -370,27 +373,31 @@ public class MainScreen extends ImagePanel {
 		editor.setPreferredSize(new Dimension(200, boxHeight));
 		editor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    try {
-				if (chosenResult.getPatientID().equals("")) {
-					confirmationDialog("Choose a patient first", "Editor error", JOptionPane.WARNING_MESSAGE);
-				} else {
-					DatabaseEditor pa = new DatabaseEditor(chosenResult);
-					if (Main.medDB.errors.size() != 0) Main.medDB.errors.clear();
-					int result = confirmationDialog(pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION);
-					if (result == JOptionPane.OK_OPTION) {
-						pa.textFieldsToPatient();
-						pa.editPatient();
-						fillInputFields(chosenResult);
-					} else
-						System.out.println("Patient editing cancelled");
+				try {
+					if (chosenResult.getPatientID().equals("")) {
+						confirmationDialog("Choose a patient first", "Editor error", JOptionPane.WARNING_MESSAGE);
+					} else {
+						DatabaseEditor pa = new DatabaseEditor(chosenResult);
+						if (Main.medDB.errors.size() != 0)
+							Main.medDB.errors.clear();
+						int result = confirmationDialog(pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION);
+						if (result == JOptionPane.OK_OPTION) {
+							pa.textFieldsToPatient();
+							pa.editPatient();
+							fillInputFields(chosenResult);
+						} else
+							System.out.println("Patient editing cancelled");
+					}
+					/*
+					 * if edit is pressed as the very first activity after
+					 * logging in an exception is thrown, this catches it and
+					 * prints out a useful error message
+					 */
+				} catch (NullPointerException ne) {
+					confirmationDialog("Please choose a patient", "Editor error", JOptionPane.WARNING_MESSAGE);
 				}
-                                /* if edit is pressed as the very first activity after logging in an exception is
-                                 * thrown, this catches it and prints out a useful error message */
-                            } catch (NullPointerException ne) {
-			        confirmationDialog("Please choose a patient", "Editor error", JOptionPane.WARNING_MESSAGE);
-                            }
 			}
-                        
+
 		});
 		databaseChanger.add(editor);
 
@@ -416,8 +423,18 @@ public class MainScreen extends ImagePanel {
 				String title = "Search Results";
 				if (results.size() != 0) {
 					try {
-						chosenResult = (Patient) JOptionPane.showInputDialog(null, "Search Results", title,
-								JOptionPane.QUESTION_MESSAGE, null, results.toArray(), results.get(0));
+						String[] names = new String[results.size()];
+						for (int i = 0; i < names.length; i++) {
+							names[i] = results.get(i).getPatientID() + " " + results.get(i).getLastName() + ", "
+									+ results.get(i).getTitle() + " " + results.get(i).getFirstName();
+						}
+
+						String chosen = (String) JOptionPane.showInputDialog(null, "Search Results", title,
+								JOptionPane.QUESTION_MESSAGE, null, names, results.get(0));
+						String idNumber = chosen.split(" ")[0];
+						chosenResult = Main.medDB.returnPatientFromId(idNumber);
+						System.out.println(idNumber);
+
 						fillInputFields(chosenResult);
 					} catch (Exception ex) {
 						System.out.println("Results cancelled");
@@ -503,7 +520,7 @@ public class MainScreen extends ImagePanel {
 		c.gridy = 2;
 		nextAppointment = new JLabel();
 		nextAppointment.setForeground(Color.WHITE);
-		nextAppointment.setText("<html><b>Next Appointment:</b></html>");
+		nextAppointment.setText("<html><b>Next Appointment:</b></html> ");
 		nextAppointment.setPreferredSize(new Dimension(300, boxHeight));
 		nextAppointment.setMinimumSize(new Dimension(200, boxHeight));
 		medicalHistory.add(nextAppointment, c);
@@ -561,8 +578,9 @@ public class MainScreen extends ImagePanel {
 		}
 	}
 
-	/** <i>populates</i> the data areas with empty strings, effectively clearing the current
-	 * patient for the GUI
+	/**
+	 * <i>populates</i> the data areas with empty strings, effectively clearing
+	 * the current patient for the GUI
 	 */
 	private void fillInputFields() {
 		inputFields[0].setText("");
@@ -595,7 +613,7 @@ public class MainScreen extends ImagePanel {
 				+ "</html>");
 		commentField.setText(p.getComments());
 		uriStr = p.getURI();
-		nextAppointment.setText("<html><b>Next Appointment</b>" + "  " + p.getNextAppointment() + "</html>");
+		nextAppointment.setText("<html><b>Next Appointment</b> " + p.getNextAppointment() + "</html>");
 		picture.setIcon(new ImageIcon(p.getProfilePhoto()));
 		images.removeAll();
 		addPhotosToPhotoPane(p.getMedPhotos());

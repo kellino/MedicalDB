@@ -11,8 +11,8 @@ public class GUI extends JFrame {
 	public static JFrame frame;
 	static JPanel cardPanel;
 	static CardLayout cards = new CardLayout();
-	protected static final int WIDTH = 1200;
-	protected static final int HEIGHT = 800;
+	private static final int WIDTH = 1200;
+	private static final int HEIGHT = 800;
 
 	public void createAndShowGUI() {
 		JFrame frame = new JFrame("UCL Medical Database @author David Kelly");

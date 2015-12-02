@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+
 @SuppressWarnings("serial")
 public class LoginScreen extends ImagePanel {
 	private static final Logger log = Logger.getLogger(Class.class.getName());

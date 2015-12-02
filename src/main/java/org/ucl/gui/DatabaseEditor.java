@@ -20,8 +20,9 @@ import org.ucl.medicaldb.Main;
 public class DatabaseEditor extends JPanel {
 	private static final int width = 600, height = 600;
 	private static final Dimension screen = new Dimension(width, height);
-	private static final int boxHeight = height / 20;
+	/* this shadows the unit variable in GUI class */
 	private static final int unit = width / 60;
+	private static final int boxHeight = unit * 3;
 	private Patient patient;
 	private JTextField[] inputFields;
 	private JComboBox<String> titleMenu;
@@ -117,8 +118,6 @@ public class DatabaseEditor extends JPanel {
 	}
 
 	/** draw editable text fields, JComboBoxes, JDatePicker, and JFileChooser */
-	// TODO this method is too long and confused. Refactor into two (?) smaller
-	// methods
 	private void createAndPopulateFields() {
 		int i;
 		inputFields = new JTextField[MainScreen.fields.length];
@@ -189,7 +188,6 @@ public class DatabaseEditor extends JPanel {
 							inputFields[13].setText(fileString);
 						} catch (NullPointerException npe) {
 						}
-						;
 					}
 				});
 				add(addPhoto);

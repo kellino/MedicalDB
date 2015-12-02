@@ -219,6 +219,17 @@ public class Database {
 		return resultList;
 	}
 
+	public Patient returnPatientFromId(String id) {
+		for (int i = 0; i < currentPatients.size(); i++) {
+			if (currentPatients.get(i).toString().contains(id)) {
+				return currentPatients.get(i);
+			}
+		}
+		/* this method is only called if the previous search function has proved
+		 * the existence of the search string in question
+		 */
+		return null;
+	}
 	/**
 	 * populates an ArrayList of error messages from the patient setter methods
 	 * which is feeds to a JOptionPane in the MainScreen class
