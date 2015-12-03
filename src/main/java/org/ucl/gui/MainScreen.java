@@ -184,17 +184,6 @@ public class MainScreen extends ImagePanel {
 		return reply;
 	}
 
-	/** overloading method */
-	private int confirmationDialog(Object object, String title, int messageType) {
-		int reply = JOptionPane.NO_OPTION;
-		try {
-			reply = JOptionPane.showConfirmDialog(null, object, title, JOptionPane.YES_NO_OPTION);
-		} catch (HeadlessException he) {
-			System.out.println(he.getMessage());
-		}
-		return reply;
-	}
-
 	/**
 	 * the upper half of the MainScreen gui. Initialized with a for loop
 	 * containing a switch statement
@@ -378,7 +367,7 @@ public class MainScreen extends ImagePanel {
 						DatabaseEditor pa = new DatabaseEditor(chosenResult);
 						if (Main.medDB.errors.size() != 0)
 							Main.medDB.errors.clear();
-						int result = confirmationDialog(pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION);
+						int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION);
 						if (result == JOptionPane.OK_OPTION) {
 							pa.textFieldsToPatient();
 							pa.editPatient();
