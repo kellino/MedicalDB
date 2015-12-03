@@ -367,7 +367,8 @@ public class MainScreen extends ImagePanel {
 						DatabaseEditor pa = new DatabaseEditor(chosenResult);
 						if (Main.medDB.errors.size() != 0)
 							Main.medDB.errors.clear();
-						int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient", JOptionPane.OK_CANCEL_OPTION);
+						int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient",
+								JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 						if (result == JOptionPane.OK_OPTION) {
 							pa.textFieldsToPatient();
 							pa.editPatient();
