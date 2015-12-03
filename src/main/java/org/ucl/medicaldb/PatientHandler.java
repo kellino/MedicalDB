@@ -20,6 +20,7 @@ public final class PatientHandler {
 
 	boolean completedObligatoryField(String input) {
 		if (StringUtils.isBlank(input)) {
+			errors.add("Empty obligatory field");
 			return false;
 		}
 		return true;
@@ -37,6 +38,7 @@ public final class PatientHandler {
 		if (pattern.matcher(input).matches()) {
 			return true;
 		}
+		errors.add("Problem with name");
 		return false;
 	}
 
@@ -60,6 +62,7 @@ public final class PatientHandler {
 			}
 		} catch (IllegalArgumentException e) {
 			log.log(Level.INFO, "incorrect name string entered by user");
+			errors.add("Incorrect name format");
 			return false;
 		}
 		return true;
@@ -73,6 +76,7 @@ public final class PatientHandler {
 			}
 		} catch (IllegalArgumentException e) {
 			log.log(Level.INFO, "incorrect date format");
+			errors.add("Incorrect date format");
 			return false;
 		}
 
@@ -80,11 +84,13 @@ public final class PatientHandler {
 		if (tempDate[1].equals("4") || tempDate[1].equals("6") 
 		        || tempDate[1].equals("9") || tempDate[1].equals("11")) {
 		    if (Integer.parseInt(tempDate[0]) > 30) {
+		    	errors.add("Date problem");
 		        return false;
 		    } else if (tempDate[1].equals("2")) {
 		        // this is not smart enough to test for a leap year, so let's set the limit
 		        // to 29
 		        if (Integer.parseInt(tempDate[0]) > 29) {
+		        	errors.add("Date problem");
 		            return false;
 		        }
 		    }
@@ -96,6 +102,8 @@ public final class PatientHandler {
 		if (Database.idNumbers.add(id)) {
 			return true;
 		}
+		log.log(Level.INFO, "user entered used id number");
+		errors.add("Id number duplicated");
 		return false;
 	}
 
@@ -107,6 +115,7 @@ public final class PatientHandler {
 			}
 		} catch (IllegalArgumentException e) {
 			log.log(Level.INFO, "incorrect uri string entered by user");
+			errors.add("uri incorrect");
 			return false;
 		}
 		return true;
@@ -125,6 +134,7 @@ public final class PatientHandler {
 			return true;
 		} else {
 			log.log(Level.INFO, "incorrect postcode format");
+			errors.add("incorrect postcode");
 			return false;
 		}
 	}
@@ -139,23 +149,28 @@ public final class PatientHandler {
 	    String[] d = date.split("/");
 	    /* is the year in the past? */
 	    if (Integer.parseInt(now[0]) < Integer.parseInt(d[2])) {
+	    	errors.add("Date problem");
+	    	log.log(Level.INFO, "incorrect date entered");
 	        return false;
 	    /* is the month past in the present year? */
 	    } else if (Integer.parseInt(now[1]) < Integer.parseInt(d[1]) && Integer.parseInt(now[0]) == Integer.parseInt(d[2])) {
+	      	log.log(Level.INFO, "incorrect date entered");
+	      	errors.add("Date problem");
 	        return false;           
 	    /* is the day in the past? */
 	    } else if (Integer.parseInt(now[2]) < Integer.parseInt(d[0])) {
+	      	log.log(Level.INFO, "incorrect date entered");
+	      	errors.add("Date problem");
 	        return false;
 	    } else 
 	        return true;
 	}
 	
-	/**
-	 * populates an ArrayList of error messages from the patient setter methods
-	 * which is feeds to a JOptionPane in the MainScreen class
-	 * @param String error
-	 */
-	public void errorMessages(String error) {
-		errors.add(error + "\n");
+	public void setErrors(String err) {
+		errors.add(err);
+	}
+	
+	public ArrayList<String> getErrors() {
+		return errors;
 	}
 }

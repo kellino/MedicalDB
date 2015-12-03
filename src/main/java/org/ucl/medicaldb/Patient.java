@@ -31,9 +31,7 @@ public class Patient {
 	public void setFirstName(String firstName) {
 		if (checker.completedObligatoryField(firstName) && checker.isValid(firstName, "name")) {
 			this.firstName = firstName.trim();
-		} else {
-			checker.errorMessages("Incorrect name format");
-		}
+		} 
 	}
 
 	public String getFirstName() {
@@ -43,8 +41,6 @@ public class Patient {
 	public void setLastName(String lastName) {
 		if (checker.completedObligatoryField(lastName) && checker.isValid(lastName.trim(), "name")) {
 			this.lastName = lastName;
-		} else {
-			checker.errorMessages("Incorrect last name form");
 		}
 	}
 
@@ -54,9 +50,8 @@ public class Patient {
 
 	public void setTitle(String title) {
 		if (title.equals("-")) {
-			checker.errorMessages("Please choose title");
-		} else
-			this.title = title;
+			checker.setErrors("Please choose title");
+		} 
 	}
 
 	public String getTitle() {
@@ -65,7 +60,7 @@ public class Patient {
 
 	public void setSex(String sex) {
 	    if (sex.equals("-")) {
-	        checker.errorMessages("Please choose title");
+	        checker.setErrors("Sex missing");
 	    } else {
 		this.sex = sex;
             }
@@ -87,7 +82,7 @@ public class Patient {
 	}
 
 	public void setDOB(String DOB) {
-		if (checker.completedObligatoryField(DOB) && (!checker.isDateinFuture(DOB))) {
+		if (checker.completedObligatoryField(DOB) /* && (!checker.isDateinFuture(DOB))*/) {
 			this.DOB = DOB;
 		}
 	}
@@ -144,9 +139,7 @@ public class Patient {
 	public void setURI(String uri) {
 		if (checker.isValidURI(uri)) {
 		    this.uri = uri;
-                } else {
-                    checker.errorMessages("Invalid uri");
-                }
+        } 
 	}
 
 	public String getURI() {
