@@ -69,5 +69,17 @@ public class PatientHandlerTest {
 		assertFalse("htpps://www.google.com", false);
 		assertFalse("https:/www.google.com", false);
 	}
+	
+	@Test
+	public void testHasValidPostCode() {
+		assertTrue("NW10 7NX", true);
+		assertTrue("NW107NX", true);
+		assertTrue("n55aa", true); // ugly typing, but acceptable format
+		assertTrue("EC5 2PX", true);
+		assertTrue("fake address here, W12 2PP", true);
+		assertFalse("nw10a 2pp", false);
+		assertFalse("n0 0pp", false);
+		assertFalse("NW10 7NX at the beginning is wrong", false);
+	}
 
 }

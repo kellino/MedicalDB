@@ -101,7 +101,7 @@ public class Patient {
 	}
 
 	public void setAddress(String address) {
-		if (checker.completedObligatoryField(address)) {
+		if (checker.completedObligatoryField(address) && checker.hasValidPostCode(address)) {
 			this.address = address;
 		} else {
 		    Main.medDB.errorMessages("Address missing");

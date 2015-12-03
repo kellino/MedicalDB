@@ -20,7 +20,6 @@ import org.ucl.medicaldb.Main;
 public class DatabaseEditor extends JPanel {
 	private static final int width = 600, height = 600;
 	private static final Dimension screen = new Dimension(width, height);
-	/* this shadows the unit variable in GUI class */
 	private static final int unit = width / 60;
 	private static final int boxHeight = unit * 3;
 	private Patient patient;
@@ -251,6 +250,7 @@ public class DatabaseEditor extends JPanel {
 	/**
 	 * launches a JFileChooser component for loading an image file to the
 	 * database
+	 * @return String
 	 */
 	private String createPhotoChooser() {
 		JFileChooser imageChooser = new JFileChooser();
@@ -259,6 +259,10 @@ public class DatabaseEditor extends JPanel {
 		return file.toString();
 	}
 
+	/** overloaded method for choosing directories only
+	 * @param int
+	 * @return String
+	 */
 	private String createPhotoChooser(int i) {
 		JFileChooser imageChooser = new JFileChooser();
 		imageChooser.showOpenDialog(this);
@@ -298,13 +302,13 @@ public class DatabaseEditor extends JPanel {
 		Main.medDB.dumpDBtoFile();
 	}
 
-	protected void deletePatient(Patient patient) {
-		Main.medDB.removePatient(patient);
+	protected void deletePatient(Patient p) {
+		Main.medDB.removePatient(p);
 		editPatient();
 	}
 
 	/**
-	 * the following code is from a stackoverflow <i>tutorial</i> on
+	 * the following code was suggested by a stackoverflow tutorial on
 	 * JDatePicker. Thanks to theMadProgrammer
 	 */
 	public class DateLabelFormatter extends AbstractFormatter {
