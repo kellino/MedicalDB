@@ -509,7 +509,7 @@ public class MainScreen extends ImagePanel {
 		nextAppointment = new JLabel();
 		nextAppointment.setForeground(Color.WHITE);
 		nextAppointment.setText("<html><b>Next Appointment:</b></html> ");
-		nextAppointment.setPreferredSize(new Dimension(300, boxHeight));
+		nextAppointment.setPreferredSize(new Dimension(350, boxHeight));
 		nextAppointment.setMinimumSize(new Dimension(200, boxHeight));
 		medicalHistory.add(nextAppointment, c);
 
@@ -582,7 +582,7 @@ public class MainScreen extends ImagePanel {
 		link.setText("<html>Click <b><font color=red>here</font></b> for more information on " + " " + "</html>");
 		commentField.setText("");
 		uriStr = "";
-		nextAppointment.setText("Next Appointment");
+		nextAppointment.setText("Next Appointment ");
 		picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/placeholder.png"));
 		images.removeAll();
 	}
@@ -601,7 +601,7 @@ public class MainScreen extends ImagePanel {
 				+ "</html>");
 		commentField.setText(p.getComments());
 		uriStr = p.getURI();
-		nextAppointment.setText("<html><b>Next Appointment</b> " + p.getNextAppointment() + "</html>");
+		nextAppointment.setText("Next Appointment " + p.getNextAppointment());
 		picture.setIcon(new ImageIcon(p.getProfilePhoto()));
 		images.removeAll();
 		addPhotosToPhotoPane(p.getMedPhotos());
