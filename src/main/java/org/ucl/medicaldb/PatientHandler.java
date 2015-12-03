@@ -1,5 +1,7 @@
 package org.ucl.medicaldb;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -8,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 public final class PatientHandler {
 	/* logger */
 	private static final Logger log = Logger.getLogger(Class.class.getName());
+	public static ArrayList<String> errors = new ArrayList<String>();
 
 	/**
 	 * checks that a compulsory field contains some text, not just whitespace
@@ -114,7 +117,7 @@ public final class PatientHandler {
 	 * The description of a valid postcode was taken from https://www.mrs.org.uk/pdf/postcodeformat.pdf
 	 * The regex can test if the form is correct, but not whether the postcode actually exists.
 	 * @param address
-	 * @return
+	 * @return boolean
 	 */
 	boolean hasValidPostCode(String address) {
 	    Pattern pattern = Pattern.compile(".*[A-Z&&[^QVX]][A-Z&&[^IJZ]]?[1-9][0-9]? ?[1-9][A-Z&&[^CIKMOV]]{2}");
@@ -124,5 +127,35 @@ public final class PatientHandler {
 			log.log(Level.INFO, "incorrect postcode format");
 			return false;
 		}
+	}
+
+        /** if the date is before the present day, then this cannot be the next appointment. We will
+         * accept next appointment as today, as it could be an emergency
+         * @param date
+         * @return boolean
+         */
+	boolean isDateinFuture(String date) {
+	    String[] now = LocalDate.now().toString().split("-");
+	    String[] d = date.split("/");
+	    /* is the year in the past? */
+	    if (Integer.parseInt(now[0]) < Integer.parseInt(d[2])) {
+	        return false;
+	    /* is the month past in the present year? */
+	    } else if (Integer.parseInt(now[1]) < Integer.parseInt(d[1]) && Integer.parseInt(now[0]) == Integer.parseInt(d[2])) {
+	        return false;           
+	    /* is the day in the past? */
+	    } else if (Integer.parseInt(now[2]) < Integer.parseInt(d[0])) {
+	        return false;
+	    } else 
+	        return true;
+	}
+	
+	/**
+	 * populates an ArrayList of error messages from the patient setter methods
+	 * which is feeds to a JOptionPane in the MainScreen class
+	 * @param String error
+	 */
+	public void errorMessages(String error) {
+		errors.add(error + "\n");
 	}
 }
