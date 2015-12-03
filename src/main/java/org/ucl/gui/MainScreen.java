@@ -12,6 +12,7 @@ import javax.swing.text.DefaultEditorKit;
 import org.ucl.medicaldb.Database;
 import org.ucl.medicaldb.Main;
 import org.ucl.medicaldb.Patient;
+import org.ucl.medicaldb.PatientHandler;
 
 /**
  * Creates the main screen GUI, initializing the various members, such as the
@@ -335,13 +336,13 @@ public class MainScreen extends ImagePanel {
 			public void actionPerformed(ActionEvent e) {
 				Patient temp = new Patient();
 				DatabaseEditor pa = new DatabaseEditor(temp);
-				if (Main.medDB.errors.size() != 0)
-					Main.medDB.errors.clear();
+				if (PatientHandler.errors.size() != 0)
+					PatientHandler.errors.clear();
 				int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
 					pa.textFieldsToPatient();
-					if (Main.medDB.errors.size() == 0) {
+					if (PatientHandler.errors.size() == 0) {
 						chosenResult = temp;
 						pa.appendPatient(chosenResult);
 						fillInputFields(chosenResult);
@@ -365,8 +366,8 @@ public class MainScreen extends ImagePanel {
 						confirmationDialog("Choose a patient first", "Editor error", JOptionPane.WARNING_MESSAGE);
 					} else {
 						DatabaseEditor pa = new DatabaseEditor(chosenResult);
-						if (Main.medDB.errors.size() != 0)
-							Main.medDB.errors.clear();
+						if (PatientHandler.errors.size() != 0)
+							PatientHandler.errors.clear();
 						int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient",
 								JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 						if (result == JOptionPane.OK_OPTION) {
