@@ -347,7 +347,7 @@ public class MainScreen extends ImagePanel {
 						pa.appendPatient(chosenResult);
 						fillInputFields(chosenResult);
 					} else {
-						JOptionPane.showMessageDialog(null, "Errors exist. Cannot save");
+						JOptionPane.showMessageDialog(null, PatientHandler.errors.toString());
 					}
 				} else
 					System.out.println("Patient adding cancelled");
