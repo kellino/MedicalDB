@@ -111,15 +111,12 @@ public final class PatientHandler {
 	
 	boolean hasValidPostCode(String address) {
 	    Pattern pattern = Pattern.compile("^[A-Z&&[^QVX]][A-Z&&[^IJZ]]?[1-9][0-9]? ?[1-9][A-Z&&[^CIKMOV]]{2}");
-	    try {
-			if (pattern.matcher(address.toLowerCase()).matches()) {
-				throw new IllegalArgumentException();
-			}
-		} catch (IllegalArgumentException e) {
-			log.log(Level.INFO, "incorrect uri string entered by user");
-			return false;
+		if (pattern.matcher(address.toUpperCase()).matches()) {
+			return true;
 		}
-		return true;
-	
+		
+		log.log(Level.INFO, "incorrect postcode format");
+		return false;
+
 	}
 }
