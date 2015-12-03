@@ -82,4 +82,12 @@ public class PatientHandlerTest {
 		assertFalse("NW10 7NX at the beginning is wrong", false);
 	}
 
+	@Test
+	public void testIsDateInFuture() {
+		assertTrue("21/10/2020", true);
+		assertFalse("21/11/2015", false);
+		assertTrue("1/1/2017", true);
+		assertFalse("25/12/2014", false);
+		assertFalse("2/12/2015", false);
+	}
 }
