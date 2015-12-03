@@ -32,7 +32,7 @@ public class Patient {
 		if (checker.completedObligatoryField(firstName) && checker.isValid(firstName, "name")) {
 			this.firstName = firstName.trim();
 		} else {
-			Main.medDB.errorMessages("Incorrect name format");
+			checker.errorMessages("Incorrect name format");
 		}
 	}
 
@@ -44,7 +44,7 @@ public class Patient {
 		if (checker.completedObligatoryField(lastName) && checker.isValid(lastName.trim(), "name")) {
 			this.lastName = lastName;
 		} else {
-			Main.medDB.errorMessages("Incorrect last name form");
+			checker.errorMessages("Incorrect last name form");
 		}
 	}
 
@@ -54,7 +54,7 @@ public class Patient {
 
 	public void setTitle(String title) {
 		if (title.equals("-")) {
-			Main.medDB.errorMessages("Please choose title");
+			checker.errorMessages("Please choose title");
 		} else
 			this.title = title;
 	}
@@ -65,7 +65,7 @@ public class Patient {
 
 	public void setSex(String sex) {
 	    if (sex.equals("-")) {
-	        Main.medDB.errorMessages("Please choose title");
+	        checker.errorMessages("Please choose title");
 	    } else {
 		this.sex = sex;
             }
@@ -79,9 +79,7 @@ public class Patient {
 		if (checker.completedObligatoryField(patientID) && checker.isValid(patientID)
 				&& checker.isUniqueID(patientID)) {
 			this.patientID = patientID;
-		} else {
-		    Main.medDB.errorMessages("Incorrect Patient ID");
-		}
+		} 
 	}
 
 	public String getPatientID() {
@@ -89,10 +87,8 @@ public class Patient {
 	}
 
 	public void setDOB(String DOB) {
-		if (checker.completedObligatoryField(DOB)) {
+		if (checker.completedObligatoryField(DOB) && (!checker.isDateinFuture(DOB))) {
 			this.DOB = DOB;
-		} else {
-		    Main.medDB.errorMessages("DOB missing");
 		}
 	}
 
@@ -103,9 +99,7 @@ public class Patient {
 	public void setAddress(String address) {
 		if (checker.completedObligatoryField(address) && checker.hasValidPostCode(address)) {
 			this.address = address;
-		} else {
-		    Main.medDB.errorMessages("Address missing");
-		}
+		} 
 	}
 
 	public String getAddress() {
@@ -115,9 +109,7 @@ public class Patient {
 	public void setCondition(String condition) {
 		if (checker.completedObligatoryField(condition)) {
 			this.condition = condition;
-		} else {
-		    Main.medDB.errorMessages("Medical condition missing");
-		}
+		} 
 	}
 
 	public String getCondition() {
@@ -127,9 +119,13 @@ public class Patient {
 	public void setNextAppointment(String nextAppointment) {
 		/*
 		 * there might not be a next appointment, so this is not an obligatory
-		 * field; it sets a default of "not booked"
+		 * field
 		 */
-		this.nextAppointment = nextAppointment;
+		if (nextAppointment.equals("")) {
+			this.nextAppointment = nextAppointment;
+		} else if (checker.isDateinFuture(nextAppointment)) {
+			this.nextAppointment = nextAppointment;
+		} 
 	}
 
 	public String getNextAppointment() {
@@ -149,7 +145,7 @@ public class Patient {
 		if (checker.isValidURI(uri)) {
 		    this.uri = uri;
                 } else {
-                    Main.medDB.errorMessages("Invalid uri");
+                    checker.errorMessages("Invalid uri");
                 }
 	}
 

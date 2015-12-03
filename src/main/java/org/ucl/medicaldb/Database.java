@@ -17,7 +17,6 @@ public class Database {
 	private static final Logger log = Logger.getLogger(Class.class.getName());
 	private static final String FILELOCATION = "/home/david/Programming/Java/medicaldb/db.txt";
 	protected static ArrayList<Patient> currentPatients = new ArrayList<Patient>();
-	public ArrayList<String> errors = new ArrayList<String>();
 	public static Set<String> idNumbers = new HashSet<String>();
 	private static CSVReader reader;
 	private static BufferedWriter writer;
@@ -248,14 +247,5 @@ public class Database {
 		 * the existence of the search string in question
 		 */
 		return null;
-	}
-	
-	/**
-	 * populates an ArrayList of error messages from the patient setter methods
-	 * which is feeds to a JOptionPane in the MainScreen class
-	 * @param String error
-	 */
-	public void errorMessages(String error) {
-		errors.add(error + "\n");
 	}
 }
