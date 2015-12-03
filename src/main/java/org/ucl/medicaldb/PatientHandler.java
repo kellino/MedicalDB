@@ -109,14 +109,20 @@ public final class PatientHandler {
 		return true;
 	    }
 	
+	/**
+	 * a valid UK Postcode has a complex formula. The regex here checks the end of the address string for a legitimate postcode formation.
+	 * The description of a valid postcode was taken from https://www.mrs.org.uk/pdf/postcodeformat.pdf
+	 * The regex can test if the form is correct, but not whether the postcode actually exists.
+	 * @param address
+	 * @return
+	 */
 	boolean hasValidPostCode(String address) {
-	    Pattern pattern = Pattern.compile("^[A-Z&&[^QVX]][A-Z&&[^IJZ]]?[1-9][0-9]? ?[1-9][A-Z&&[^CIKMOV]]{2}");
+	    Pattern pattern = Pattern.compile(".*[A-Z&&[^QVX]][A-Z&&[^IJZ]]?[1-9][0-9]? ?[1-9][A-Z&&[^CIKMOV]]{2}");
 		if (pattern.matcher(address.toUpperCase()).matches()) {
 			return true;
+		} else {
+			log.log(Level.INFO, "incorrect postcode format");
+			return false;
 		}
-		
-		log.log(Level.INFO, "incorrect postcode format");
-		return false;
-
 	}
 }
