@@ -49,8 +49,8 @@ public class Patient {
 	}
 
 	public void setLastName(String lastName) {
-		if (checker.completedObligatoryField(firstName)) {
-			if (checker.isValid(firstName, "name")) {
+		if (checker.completedObligatoryField(lastName)) {
+			if (checker.isValid(lastName, "name")) {
 				this.lastName = lastName.trim();
 			} else {
 				checker.setErrors("<html>Invalid <font color=red>last name</font></html>");
