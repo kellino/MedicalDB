@@ -25,7 +25,8 @@ public class Patient {
 	private String comments = "";
 	private String patientID = "";
 	private String uri = "";
-	private String profilePhoto = "";
+	/* set the placeholder image as a default */
+	private String profilePhoto = "/home/david/Programming/Java/medicaldb/src/main/resources/placeholder.png";
 	private String medPhotos = "";
 
 	/* can't cast from char to String, so this is a workaround */
@@ -144,8 +145,8 @@ public class Patient {
 		 * there might not be a next appointment, so this is not an obligatory
 		 * field
 		 */
-		if (nextAppointment.equals("")) {
-			this.nextAppointment = nextAppointment;
+		if (nextAppointment.equals("") && this.nextAppointment.equals("")) {
+			this.nextAppointment = "";
 		} else if (checker.isDateinFuture(nextAppointment)) {
 			this.nextAppointment = nextAppointment;
 		} else {
@@ -177,9 +178,6 @@ public class Patient {
 	}
 
 	public void setProfilePhoto(String profilePhoto) {
-		if (profilePhoto.equals("")) {
-			this.profilePhoto = "/home/david/Programming/Java/medicaldb/src/main/resources/placeholder.png";
-		}
 		this.profilePhoto = profilePhoto;
 	}
 
