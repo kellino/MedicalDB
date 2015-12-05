@@ -35,10 +35,9 @@ public class MainScreen extends ImagePanel {
 	protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
 			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments",
 			"Medical Photos" };
-	private static final Color LIGHT_BLUE = new Color(102, 178, 255, 225);
 	private static JTextField[] inputFields;
 	protected Patient chosenResult;
-	private static JPanel area;
+	private static GradientPanel area;
 	private static JLabel condition;
 	private static JLabel link;
 	private static JLabel nextAppointment;
@@ -71,7 +70,7 @@ public class MainScreen extends ImagePanel {
 		c.gridx = 0;
 		c.gridy = 5;
 
-		JPanel patientData = createPatientDataArea();
+		GradientPanel patientData = createPatientDataArea();
 		JPanel textAreas = createTextAreas();
 
 		add(patientData, c);
@@ -193,12 +192,13 @@ public class MainScreen extends ImagePanel {
 	 * the upper half of the MainScreen gui. Initialized with a for loop
 	 * containing a switch statement
 	 */
-	private JPanel createPatientDataArea() {
-		area = new JPanel(null);
+	private GradientPanel createPatientDataArea() {
+		area = new GradientPanel();
 
+		area.setLayout(null);
 		area.setPreferredSize(new Dimension(1200, 300));
-		area.setBackground(LIGHT_BLUE);
 		area.setBorder(BorderFactory.createEtchedBorder(1));
+		area.setOpaque(false);
 
 		JLabel[] titleContainers = new JLabel[fields.length];
 		for (int i = 0; i < fields.length; i++) {
