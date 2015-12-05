@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultEditorKit;
@@ -24,6 +27,7 @@ import org.ucl.medicaldb.PatientHandler;
  */
 @SuppressWarnings("serial")
 public class MainScreen extends ImagePanel {
+	private static final Logger log = Logger.getLogger(Class.class.getName());
 	protected static final String[] currentIds = Database.idNumbers.stream().toArray(String[]::new);
 	protected static final String[][] dateFormat = { Database.days, Database.months, Database.years };
 	protected static final String[][] patientData = { currentIds, { "-", "Mr", "Miss", "Mrs", "Ms", "Dr" },
@@ -306,6 +310,34 @@ public class MainScreen extends ImagePanel {
 		databaseChanger.setBackground(new Color(100, 100, 100, 100));
 		databaseChanger.setBorder(new EmptyBorder(100, 0, 0, 0));
 
+		JButton remover = createRemover();
+		databaseChanger.add(remover);
+
+		JButton adder = createAdder();
+		databaseChanger.add(adder);
+
+		JButton editor = createEditor();
+		databaseChanger.add(editor);
+
+		/* search text box */
+		JLabel searchBox = new JLabel("<html><b><font color=white>Enter search here</font></b></html>",
+				SwingConstants.CENTER);
+		searchBox.setBackground(new Color(200, 100, 100, 200));
+		searchBox.setPreferredSize(new Dimension(180, boxHeight));
+		JTextField searchTxtArea = new JTextField();
+		searchTxtArea.setPreferredSize(new Dimension(250, boxHeight));
+		searchTxtArea.setMaximumSize(new Dimension(Integer.MAX_VALUE, searchTxtArea.getPreferredSize().height));
+		databaseChanger.add(searchBox);
+		databaseChanger.add(searchTxtArea);
+
+		/* the search function launcher */
+		JButton search = createSearcher(searchTxtArea);
+		databaseChanger.add(search);
+
+		return databaseChanger;
+	}
+
+	private JButton createRemover() {
 		JButton remover = new JButton();
 		remover.setText("<html><b><font color=red>Delete Patient</font></b></html>");
 		remover.setMinimumSize(new Dimension(150, boxHeight));
@@ -326,35 +358,10 @@ public class MainScreen extends ImagePanel {
 				}
 			}
 		});
-		databaseChanger.add(remover);
+		return remover;
+	}
 
-		JButton adder = new JButton();
-		adder.setText("<html><b>Add patient</b></html>");
-		adder.setMinimumSize(new Dimension(100, boxHeight));
-		adder.setPreferredSize(new Dimension(200, boxHeight));
-		adder.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Patient temp = new Patient();
-				DatabaseEditor pa = new DatabaseEditor(temp);
-				if (PatientHandler.errors.size() != 0)
-					PatientHandler.errors.clear();
-				int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.PLAIN_MESSAGE);
-				if (result == JOptionPane.OK_OPTION) {
-					pa.textFieldsToPatient();
-					if (PatientHandler.errors.size() == 0) {
-						chosenResult = temp;
-						pa.appendPatient(chosenResult);
-						fillInputFields(chosenResult);
-					} else {
-						JOptionPane.showMessageDialog(null, PatientHandler.errors.toString());
-					}
-				} else
-					System.out.println("Patient adding cancelled");
-			}
-		});
-		databaseChanger.add(adder);
-
+        private JButton createEditor() {
 		JButton editor = new JButton();
 		editor.setText("<html><b>Edit patient</></html>");
 		editor.setMinimumSize(new Dimension(100, boxHeight));
@@ -366,17 +373,23 @@ public class MainScreen extends ImagePanel {
 						confirmationDialog("Choose a patient first", "Editor error", JOptionPane.WARNING_MESSAGE);
 					} else {
 						DatabaseEditor pa = new DatabaseEditor(chosenResult);
-						if (PatientHandler.errors.size() != 0)
+						do {
+						    if (PatientHandler.errors.size() != 0)
 							PatientHandler.errors.clear();
-						int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient",
+						    int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient",
 								JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-						if (result == JOptionPane.OK_OPTION) {
-							pa.textFieldsToPatient();
-							pa.editPatient();
-							fillInputFields(chosenResult);
-						} else
+						        if (result == JOptionPane.OK_OPTION) {
+							    pa.textFieldsToPatient();
+							    pa.editPatient();
+							    if (PatientHandler.errors.size() != 0) {
+							        JOptionPane.showMessageDialog(null, PatientHandler.prettyPrintErrors());
+							    } else {
+							    fillInputFields(chosenResult);
+                                                            }
+						        } else 
 							System.out.println("Patient editing cancelled");
-					}
+					    } while (PatientHandler.errors.size() != 0);
+                                        }
 					/*
 					 * if edit is pressed as the very first activity after
 					 * logging in an exception is thrown, this catches it and
@@ -388,20 +401,10 @@ public class MainScreen extends ImagePanel {
 			}
 
 		});
-		databaseChanger.add(editor);
+		return editor;
+        }
 
-		/* search text box */
-		JLabel searchBox = new JLabel("<html><b><font color=white>Enter search here</font></b></html>",
-				SwingConstants.CENTER);
-		searchBox.setBackground(new Color(200, 100, 100, 200));
-		searchBox.setPreferredSize(new Dimension(180, boxHeight));
-		JTextField searchTxtArea = new JTextField();
-		searchTxtArea.setPreferredSize(new Dimension(250, boxHeight));
-		searchTxtArea.setMaximumSize(new Dimension(Integer.MAX_VALUE, searchTxtArea.getPreferredSize().height));
-		databaseChanger.add(searchBox);
-		databaseChanger.add(searchTxtArea);
-
-		/* the search function launcher */
+        private JButton createSearcher(JTextField searchTxtArea) {
 		JButton search = new JButton();
 		search.setMinimumSize(new Dimension(100, boxHeight));
 		search.setPreferredSize(new Dimension(200, boxHeight));
@@ -412,12 +415,7 @@ public class MainScreen extends ImagePanel {
 				String title = "Search Results";
 				if (results.size() != 0) {
 					try {
-						String[] names = new String[results.size()];
-						for (int i = 0; i < names.length; i++) {
-							names[i] = results.get(i).getPatientID() + " " + results.get(i).getLastName() + ", "
-									+ results.get(i).getTitle() + " " + results.get(i).getFirstName();
-						}
-
+					        String[] names = formatSearchResults(results);
 						String chosen = (String) JOptionPane.showInputDialog(null, "Search Results", title,
 								JOptionPane.QUESTION_MESSAGE, null, names, results.get(0));
 						String idNumber = chosen.split(" ")[0];
@@ -434,11 +432,39 @@ public class MainScreen extends ImagePanel {
 				searchTxtArea.setText("");
 			}
 		});
+                return search;
+        }
 
-		databaseChanger.add(search);
-
-		return databaseChanger;
-	}
+        private JButton createAdder() {
+		JButton adder = new JButton();
+		adder.setText("<html><b>Add patient</b></html>");
+		adder.setMinimumSize(new Dimension(100, boxHeight));
+		adder.setPreferredSize(new Dimension(200, boxHeight));
+		adder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Patient temp = new Patient();
+				DatabaseEditor pa = new DatabaseEditor(temp);
+				do {
+				    if (PatientHandler.errors.size() != 0)
+					    PatientHandler.errors.clear();
+				    int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
+						    JOptionPane.PLAIN_MESSAGE);
+				    if (result == JOptionPane.OK_OPTION) {
+					    pa.textFieldsToPatient();
+					    if (PatientHandler.errors.size() == 0) {
+						    chosenResult = temp;
+						    pa.appendPatient(chosenResult);
+						    fillInputFields(chosenResult);
+					    } else {
+							JOptionPane.showMessageDialog(null, PatientHandler.prettyPrintErrors());
+					    }
+				    } else
+					System.out.println("Patient adding cancelled");
+			        } while (PatientHandler.errors.size() != 0);
+                            }
+		});
+		return adder;
+        }
 
 	/**
 	 * a JTabbedPane which houses the medical history pane (GridBagLayout) and
@@ -496,9 +522,10 @@ public class MainScreen extends ImagePanel {
 							URI uri = new URI(uriStr);
 							desktop.browse(uri);
 						} catch (IOException ioe) {
-							ioe.printStackTrace();
+						        JOptionPane.showMessageDialog(null, "Please select a patient first", "No URI", JOptionPane.WARNING_MESSAGE);
+						        log.log(Level.INFO, "user tried to follow empty link");
 						} catch (URISyntaxException ue) {
-							ue.printStackTrace();
+						        log.log(Level.SEVERE, "uri syntax error", ue.getMessage());
 						}
 					}
 				}
@@ -615,4 +642,13 @@ public class MainScreen extends ImagePanel {
 		File file = imageChooser.getSelectedFile();
 		return file.toString();
 	}
+
+	private String[] formatSearchResults(ArrayList<Patient> results) {
+	    String[] names = new String[results.size()];
+	        for (int i = 0; i < names.length; i++) {
+		    names[i] = results.get(i).getPatientID() + " " + results.get(i).getLastName() + ", "
+			       + results.get(i).getTitle() + " " + results.get(i).getFirstName();
+		}
+	    return names;
+        }
 }

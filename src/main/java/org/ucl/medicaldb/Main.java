@@ -6,7 +6,10 @@ import javax.swing.UIManager;
 import org.ucl.gui.GUI;
 
 /**
- * the main class for the entire program.
+ * contains the main method for the medical register. Instantiates the database and the gui.
+ * @author David Kelly
+ * @version 1.0
+ *
  */
 public class Main {
 	public static Database medDB;

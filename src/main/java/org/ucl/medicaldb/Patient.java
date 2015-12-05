@@ -7,14 +7,17 @@ package org.ucl.medicaldb;
 
 public class Patient {
 	final static PatientHandler checker = new PatientHandler();
+	/*
+	 * set everything to empty so we can load a blank patient into the
+	 * DatabaseEditor
+	 */
 	private String firstName = "";
 	private String lastName = "";
 	private String title = "";
 	private String sex = "";
-	/*
-	 * this seems strange, but it's the easiest way to load a blank patient in
-	 * DatabaseEditor as it is expecting to split() a DOB[] on the symbol "/"
-	 */
+	// this seems strange, but it's the easiest way to load a blank patient in
+	// the DatabaseEditor, as it is expecting to split() a DOB[] on the symbol
+	// "/"
 	private String DOB = " / / ";
 	private String address = "";
 	private String condition = "";
@@ -29,9 +32,15 @@ public class Patient {
 	private static final String DELIM = Database.DELIM + "";
 
 	public void setFirstName(String firstName) {
-		if (checker.completedObligatoryField(firstName) && checker.isValid(firstName, "name")) {
-			this.firstName = firstName.trim();
-		} 
+		if (checker.completedObligatoryField(firstName)) {
+			if (checker.isValid(firstName, "name")) {
+				this.firstName = firstName.trim();
+			} else {
+				checker.setErrors("<html>Invalid <font color=red>first name</font></html>");
+			}
+		} else {
+			checker.setErrors("<html>Missing <font color=red>first name</font></html>");
+		}
 	}
 
 	public String getFirstName() {
@@ -39,8 +48,14 @@ public class Patient {
 	}
 
 	public void setLastName(String lastName) {
-		if (checker.completedObligatoryField(lastName) && checker.isValid(lastName.trim(), "name")) {
-			this.lastName = lastName;
+		if (checker.completedObligatoryField(firstName)) {
+			if (checker.isValid(firstName, "name")) {
+				this.lastName = lastName.trim();
+			} else {
+				checker.setErrors("<html>Invalid <font color=red>last name</font></html>");
+			}
+		} else {
+			checker.setErrors("<html>Missing <font color=red>last name</font></html>");
 		}
 	}
 
@@ -50,8 +65,8 @@ public class Patient {
 
 	public void setTitle(String title) {
 		if (title.equals("-")) {
-			checker.setErrors("Please choose title");
-		} 
+			checker.setErrors("<html>Please choose <font color=red>title</font></html>");
+		} else this.title = title;
 	}
 
 	public String getTitle() {
@@ -59,11 +74,13 @@ public class Patient {
 	}
 
 	public void setSex(String sex) {
-	    if (sex.equals("-")) {
-	        checker.setErrors("Sex missing");
-	    } else {
-		this.sex = sex;
-            }
+		if (sex.equals("-")) {
+			checker.setErrors("<html><font color=red>Sex</font> missing</html>");
+		} else if (sex.equals("Female") && this.title.equals("Mr")) {
+			checker.setErrors(
+					"<html>Gender mismatch on<font color=red> title</font> and <font color=red>sex</font></html>");
+		} else
+			this.sex = sex;
 	}
 
 	public String getSex() {
@@ -71,10 +88,15 @@ public class Patient {
 	}
 
 	public void setPatientID(String patientID) {
-		if (checker.completedObligatoryField(patientID) && checker.isValid(patientID)
-				&& checker.isUniqueID(patientID)) {
-			this.patientID = patientID;
-		} 
+		if (checker.completedObligatoryField(patientID)) {
+			if (checker.isValid(patientID)) {
+				this.patientID = patientID;
+			} else {
+				checker.setErrors("<html>Invalid <font color=red>patient id</font></html>");
+			}
+		} else {
+			checker.setErrors("<html>Missing <font color=red>patient id</font></html>");
+		}
 	}
 
 	public String getPatientID() {
@@ -82,8 +104,14 @@ public class Patient {
 	}
 
 	public void setDOB(String DOB) {
-		if (checker.completedObligatoryField(DOB) /* && (!checker.isDateinFuture(DOB))*/) {
-			this.DOB = DOB;
+		if (checker.completedObligatoryField(DOB)) {
+			if (checker.isDateinFuture(DOB)) {
+			    checker.setErrors("<html>Patient <b>cannot</b> be born in the future</html>");
+			} else {
+			    this.DOB = DOB;
+			}
+		} else {
+			checker.setErrors("<html>Missing <font color=red>date of birth</font></html>");
 		}
 	}
 
@@ -94,7 +122,7 @@ public class Patient {
 	public void setAddress(String address) {
 		if (checker.completedObligatoryField(address) && checker.hasValidPostCode(address)) {
 			this.address = address;
-		} 
+		}
 	}
 
 	public String getAddress() {
@@ -104,7 +132,7 @@ public class Patient {
 	public void setCondition(String condition) {
 		if (checker.completedObligatoryField(condition)) {
 			this.condition = condition;
-		} 
+		}
 	}
 
 	public String getCondition() {
@@ -120,7 +148,9 @@ public class Patient {
 			this.nextAppointment = nextAppointment;
 		} else if (checker.isDateinFuture(nextAppointment)) {
 			this.nextAppointment = nextAppointment;
-		} 
+		} else {
+			checker.setErrors("The next appointment cannot be in the past");
+		}
 	}
 
 	public String getNextAppointment() {
@@ -138,8 +168,8 @@ public class Patient {
 
 	public void setURI(String uri) {
 		if (checker.isValidURI(uri)) {
-		    this.uri = uri;
-        } 
+			this.uri = uri;
+		}
 	}
 
 	public String getURI() {
@@ -147,6 +177,9 @@ public class Patient {
 	}
 
 	public void setProfilePhoto(String profilePhoto) {
+		if (profilePhoto.equals("")) {
+			this.profilePhoto = "/home/david/Programming/Java/medicaldb/src/main/resources/placeholder.png";
+		}
 		this.profilePhoto = profilePhoto;
 	}
 

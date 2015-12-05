@@ -1,7 +1,6 @@
 package org.ucl.gui;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.*; import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.*;
@@ -30,7 +29,7 @@ public class DatabaseEditor extends JPanel {
 	private JComboBox<String> month;
 	private JComboBox<String> year;
 	private JTextArea commentArea;
-	private String nextAppointment = "";
+	private String nextAppointment = "bum";
 
 	/**
 	 * if this constructor is called by the MainScreen adder button, it loads
@@ -241,6 +240,7 @@ public class DatabaseEditor extends JPanel {
 		patient.setCondition(inputFields[9].getText());
 		patient.setAddress(inputFields[10].getText());
 		patient.setNextAppointment(nextAppointment);
+		System.out.println(nextAppointment);
 		patient.setURI(inputFields[12].getText());
 		patient.setProfilePhoto(inputFields[13].getText());
 		patient.setComments(commentArea.getText());
@@ -250,6 +250,7 @@ public class DatabaseEditor extends JPanel {
 	/**
 	 * launches a JFileChooser component for loading an image file to the
 	 * database
+	 * 
 	 * @return String
 	 */
 	private String createPhotoChooser() {
@@ -259,7 +260,9 @@ public class DatabaseEditor extends JPanel {
 		return file.toString();
 	}
 
-	/** overloaded method for choosing directories only
+	/**
+	 * overloaded method for choosing directories only
+	 * 
 	 * @param int
 	 * @return String
 	 */
