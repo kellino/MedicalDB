@@ -120,7 +120,6 @@ public class MainScreen extends ImagePanel {
 			public void actionPerformed(ActionEvent e) {
 				String result = createPhotoChooser();
 				Main.medDB.loadDBfromFile(result);
-				System.out.println(result);
 			}
 		});
 		/* exit the program */
@@ -132,7 +131,7 @@ public class MainScreen extends ImagePanel {
 				int reply = confirmationDialog("Are you sure you want to quit?", "Exit confirmation",
 						JOptionPane.YES_NO_CANCEL_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
-					System.out.println("Exiting program");
+					log.log(Level.INFO, "exiting program");
 					System.exit(0);
 				}
 			}
@@ -183,7 +182,7 @@ public class MainScreen extends ImagePanel {
 		try {
 			reply = JOptionPane.showConfirmDialog(null, message, title, messageType);
 		} catch (HeadlessException he) {
-			System.out.println(he.getMessage());
+			log.log(Level.SEVERE, he.getMessage());
 		}
 		return reply;
 	}
@@ -361,7 +360,7 @@ public class MainScreen extends ImagePanel {
 		return remover;
 	}
 
-        private JButton createEditor() {
+	private JButton createEditor() {
 		JButton editor = new JButton();
 		editor.setText("<html><b>Edit patient</></html>");
 		editor.setMinimumSize(new Dimension(100, boxHeight));
@@ -374,22 +373,22 @@ public class MainScreen extends ImagePanel {
 					} else {
 						DatabaseEditor pa = new DatabaseEditor(chosenResult);
 						do {
-						    if (PatientHandler.errors.size() != 0)
-							PatientHandler.errors.clear();
-						    int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient",
-								JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-						        if (result == JOptionPane.OK_OPTION) {
-							    pa.textFieldsToPatient();
-							    pa.editPatient();
-							    if (PatientHandler.errors.size() != 0) {
-							        JOptionPane.showMessageDialog(null, PatientHandler.prettyPrintErrors());
-							    } else {
-							    fillInputFields(chosenResult);
-                                                            }
-						        } else 
-							System.out.println("Patient editing cancelled");
-					    } while (PatientHandler.errors.size() != 0);
-                                        }
+							if (PatientHandler.errors.size() != 0)
+								PatientHandler.errors.clear();
+							int result = JOptionPane.showConfirmDialog(null, pa, "Edit Patient",
+									JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+							if (result == JOptionPane.OK_OPTION) {
+								pa.textFieldsToPatient();
+								pa.editPatient();
+								if (PatientHandler.errors.size() != 0) {
+									JOptionPane.showMessageDialog(null, PatientHandler.prettyPrintErrors());
+								} else {
+									fillInputFields(chosenResult);
+								}
+							} else
+								log.log(Level.INFO, "Patient editing cancelled");
+						} while (PatientHandler.errors.size() != 0);
+					}
 					/*
 					 * if edit is pressed as the very first activity after
 					 * logging in an exception is thrown, this catches it and
@@ -402,9 +401,9 @@ public class MainScreen extends ImagePanel {
 
 		});
 		return editor;
-        }
+	}
 
-        private JButton createSearcher(JTextField searchTxtArea) {
+	private JButton createSearcher(JTextField searchTxtArea) {
 		JButton search = new JButton();
 		search.setMinimumSize(new Dimension(100, boxHeight));
 		search.setPreferredSize(new Dimension(200, boxHeight));
@@ -415,12 +414,12 @@ public class MainScreen extends ImagePanel {
 				String title = "Search Results";
 				if (results.size() != 0) {
 					try {
-					        String[] names = formatSearchResults(results);
+						String[] names = formatSearchResults(results);
 						String chosen = (String) JOptionPane.showInputDialog(null, "Search Results", title,
 								JOptionPane.QUESTION_MESSAGE, null, names, results.get(0));
 						String idNumber = chosen.split(" ")[0];
 						chosenResult = Main.medDB.returnPatientFromId(idNumber);
-						System.out.println(idNumber);
+						log.log(Level.INFO, idNumber + " loaded");
 
 						fillInputFields(chosenResult);
 					} catch (Exception ex) {
@@ -432,10 +431,10 @@ public class MainScreen extends ImagePanel {
 				searchTxtArea.setText("");
 			}
 		});
-                return search;
-        }
+		return search;
+	}
 
-        private JButton createAdder() {
+	private JButton createAdder() {
 		JButton adder = new JButton();
 		adder.setText("<html><b>Add patient</b></html>");
 		adder.setMinimumSize(new Dimension(100, boxHeight));
@@ -445,26 +444,26 @@ public class MainScreen extends ImagePanel {
 				Patient temp = new Patient();
 				DatabaseEditor pa = new DatabaseEditor(temp);
 				do {
-				    if (PatientHandler.errors.size() != 0)
-					    PatientHandler.errors.clear();
-				    int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
-						    JOptionPane.PLAIN_MESSAGE);
-				    if (result == JOptionPane.OK_OPTION) {
-					    pa.textFieldsToPatient();
-					    if (PatientHandler.errors.size() == 0) {
-						    chosenResult = temp;
-						    pa.appendPatient(chosenResult);
-						    fillInputFields(chosenResult);
-					    } else {
+					if (PatientHandler.errors.size() != 0)
+						PatientHandler.errors.clear();
+					int result = JOptionPane.showConfirmDialog(null, pa, "Add Patient", JOptionPane.OK_CANCEL_OPTION,
+							JOptionPane.PLAIN_MESSAGE);
+					if (result == JOptionPane.OK_OPTION) {
+						pa.textFieldsToPatient();
+						if (PatientHandler.errors.size() == 0) {
+							chosenResult = temp;
+							pa.appendPatient(chosenResult);
+							fillInputFields(chosenResult);
+						} else {
 							JOptionPane.showMessageDialog(null, PatientHandler.prettyPrintErrors());
-					    }
-				    } else
-					System.out.println("Patient adding cancelled");
-			        } while (PatientHandler.errors.size() != 0);
-                            }
+						}
+					} else
+						log.log(Level.INFO, "Patient adding cancelled");
+				} while (PatientHandler.errors.size() != 0);
+			}
 		});
 		return adder;
-        }
+	}
 
 	/**
 	 * a JTabbedPane which houses the medical history pane (GridBagLayout) and
@@ -522,10 +521,11 @@ public class MainScreen extends ImagePanel {
 							URI uri = new URI(uriStr);
 							desktop.browse(uri);
 						} catch (IOException ioe) {
-						        JOptionPane.showMessageDialog(null, "Please select a patient first", "No URI", JOptionPane.WARNING_MESSAGE);
-						        log.log(Level.INFO, "user tried to follow empty link");
+							JOptionPane.showMessageDialog(null, "Please select a patient first", "No URI",
+									JOptionPane.WARNING_MESSAGE);
+							log.log(Level.INFO, "user tried to follow empty link");
 						} catch (URISyntaxException ue) {
-						        log.log(Level.SEVERE, "uri syntax error", ue.getMessage());
+							log.log(Level.SEVERE, "uri syntax error", ue.getMessage());
 						}
 					}
 				}
@@ -644,11 +644,11 @@ public class MainScreen extends ImagePanel {
 	}
 
 	private String[] formatSearchResults(ArrayList<Patient> results) {
-	    String[] names = new String[results.size()];
-	        for (int i = 0; i < names.length; i++) {
-		    names[i] = results.get(i).getPatientID() + " " + results.get(i).getLastName() + ", "
-			       + results.get(i).getTitle() + " " + results.get(i).getFirstName();
+		String[] names = new String[results.size()];
+		for (int i = 0; i < names.length; i++) {
+			names[i] = results.get(i).getPatientID() + " " + results.get(i).getLastName() + ", "
+					+ results.get(i).getTitle() + " " + results.get(i).getFirstName();
 		}
-	    return names;
-        }
+		return names;
+	}
 }

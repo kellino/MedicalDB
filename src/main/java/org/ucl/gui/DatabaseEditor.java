@@ -240,7 +240,6 @@ public class DatabaseEditor extends JPanel {
 		patient.setCondition(inputFields[9].getText());
 		patient.setAddress(inputFields[10].getText());
 		patient.setNextAppointment(nextAppointment);
-		System.out.println(nextAppointment);
 		patient.setURI(inputFields[12].getText());
 		patient.setProfilePhoto(inputFields[13].getText());
 		patient.setComments(commentArea.getText());

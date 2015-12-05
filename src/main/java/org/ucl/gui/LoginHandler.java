@@ -2,8 +2,11 @@ package org.ucl.gui;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginHandler {
+	private static final Logger log = Logger.getLogger(Class.class.getName());
 	private final String root = "root";
 	private final String passwordHex = "7cbdd4e997c3b8e759f8d579bb30f6f1";
 	private String username;
@@ -19,8 +22,10 @@ public class LoginHandler {
 
 	boolean checkLoginDetails() {
 		if (username.equals(root) && checkMD5(password).equals(passwordHex)) {
+			log.log(Level.INFO, "successful login");
 			return true;
 		}
+		log.log(Level.WARNING, "incorrect login attempt");
 		return false;
 	}
 
