@@ -55,6 +55,9 @@
 * Exceptions
     + try / catch statements are used throughout. Java.logger writes exceptions to the console.
 
+* Links
+    + allows any valid uri to be copy/pasted into the database, rather than relying only on the api of one particular webpage.
+
 ### Advanced Features
 
 * Advanced Reading
