@@ -79,5 +79,9 @@
 * Optional Features
     + all optional features have also been implemented
 
+The video for the project can be found at : (https://www.youtube.com/watch?v=NrAoyT4GJkQ)
+The github source can be found at: (https://github.com/kellino/medicaldb)
+The jar can be found in the **target** folder in the zip.
+
 
 This document was prepared using *pandoc-flavoured markdown* and *pdflatex*
