@@ -8,7 +8,6 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultEditorKit;
@@ -35,6 +34,10 @@ public class MainScreen extends ImagePanel {
 	protected static final String[] fields = new String[] { "Patient ID", "Title", "Sex", "Last Name", "First Name(s)",
 			"Date of Birth", "dd", "mm", "YY", "Condition(s)", "Address", "Next Appt.", "url", "Photo", "Comments",
 			"Medical Photos" };
+
+	/* GUI elements */
+	private static final int boxHeight = 30;
+        private static final int WIDTH = 1200;
 	private static JTextField[] inputFields;
 	protected Patient chosenResult;
 	private static GradientPanel area;
@@ -45,7 +48,6 @@ public class MainScreen extends ImagePanel {
 	private String uriStr = "";
 	private static JLabel picture;
 	private static JPanel images;
-	private static final int boxHeight = 30;
 
 	/** constructor for the main screen. */
 	public MainScreen() {
@@ -96,7 +98,7 @@ public class MainScreen extends ImagePanel {
 		JMenuBar mb = new JMenuBar();
 		JMenuItem menuItem;
 
-		mb.setBounds(0, 0, 1200, boxHeight);
+		mb.setBounds(0, 0, WIDTH, boxHeight);
 		mb.setBorder(BorderFactory.createEtchedBorder(1));
 
 		JMenu mnFile = new JMenu("File");
@@ -189,13 +191,16 @@ public class MainScreen extends ImagePanel {
 
 	/**
 	 * the upper half of the MainScreen gui. Initialized with a for loop
-	 * containing a switch statement
+	 * containing a switch statement. A slightly wasteful way of doing things, 
+	 * as it leaves some parts of the titleContainers array set to null, however
+	 * it also means that it is much easier to extend / alter the fields in
+	 * the GUI. 
 	 */
 	private GradientPanel createPatientDataArea() {
 		area = new GradientPanel();
 
 		area.setLayout(null);
-		area.setPreferredSize(new Dimension(1200, 300));
+		area.setPreferredSize(new Dimension(WIDTH, 300));
 		area.setBorder(BorderFactory.createEtchedBorder(1));
 		area.setOpaque(false);
 

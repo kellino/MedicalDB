@@ -28,6 +28,7 @@ public class Patient {
 	/* set the placeholder image as a default */
 	private String profilePhoto = "/home/david/Programming/Java/medicaldb/src/main/resources/placeholder.png";
 	private String medPhotos = "";
+	private static final int MAX_LEN = 400;
 
 	/* can't cast from char to String, so this is a workaround */
 	private static final String DELIM = Database.DELIM + "";
@@ -79,7 +80,7 @@ public class Patient {
 			checker.setErrors("<html><font color=red>Sex</font> missing</html>");
 		} else if (sex.equals("Female") && this.title.equals("Mr")) {
 			checker.setErrors(
-					"<html>Gender mismatch on<font color=red> title</font> and <font color=red>sex</font></html>");
+					"<html><font color=red>Gender mismatch<font></html>");
 		} else
 			this.sex = sex;
 	}
@@ -158,8 +159,15 @@ public class Patient {
 		return nextAppointment;
 	}
 
+	/**
+	 * sets a limit of 400 characters for comment length
+	 * @param comments
+	 */
 	public void setComments(String comments) {
 		/* not an obligatory field. */
+		if (comments.length() > MAX_LEN) {
+			this.comments = comments.substring(0, MAX_LEN);
+		}
 		this.comments = comments;
 	}
 

@@ -29,7 +29,7 @@ public class DatabaseEditor extends JPanel {
 	private JComboBox<String> month;
 	private JComboBox<String> year;
 	private JTextArea commentArea;
-	private String nextAppointment = "bum";
+	private String nextAppointment = "not booked"; // not a compulsory field, so let's set this as default
 
 	/**
 	 * if this constructor is called by the MainScreen adder button, it loads
@@ -271,7 +271,7 @@ public class DatabaseEditor extends JPanel {
 		imageChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		imageChooser.setAcceptAllFileFilterUsed(false);
 		if (imageChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-			return String.format(imageChooser.getCurrentDirectory().toString() + "/" + patient.getPatientID());
+			return String.format(imageChooser.getCurrentDirectory().toString() + "/" + inputFields[0].getText());//patient.getPatientID());
 		}
 		return "";
 	}

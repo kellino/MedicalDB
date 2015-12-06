@@ -172,7 +172,11 @@ public final class PatientHandler {
 		} catch (NumberFormatException nfe) {
 			log.log(Level.WARNING, "no date to parse");
 		} catch (ArrayIndexOutOfBoundsException ofb) {
-			log.log(Level.WARNING, "date is incomplete");
+			log.log(Level.INFO, "date string is empty");
+			/* seems strange to return true, but if we are here, it means the string was empty, signifying that
+			 * there is no next appointment.
+			 */
+			return true;
 		} catch (Exception e) {
 			log.log(Level.WARNING, e.getMessage());
 		};
