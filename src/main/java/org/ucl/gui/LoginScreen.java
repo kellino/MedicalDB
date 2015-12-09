@@ -31,7 +31,7 @@ public class LoginScreen extends ImagePanel {
 		/* initializes the login checker */
 		bgimage = null;
 		try {
-			bgimage = ImageIO.read(new File("/home/david/Programming/Java/medicaldb/src/main/resources/med_background.png"));
+			bgimage = ImageIO.read(new File("src/main/resources/med_background.png"));
 		} catch (IOException ioe) {
 		}
 

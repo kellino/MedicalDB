@@ -15,7 +15,7 @@ import org.ucl.medicaldb.Patient;
  */
 public class Database {
 	private static final Logger log = Logger.getLogger(Class.class.getName());
-	private static final String FILELOCATION = "/home/david/Programming/Java/medicaldb/db.txt";
+	private static final String FILELOCATION = "db.txt";
 	protected static ArrayList<Patient> currentPatients = new ArrayList<Patient>();
 	public static Set<String> idNumbers = new HashSet<String>();
 	private static CSVReader reader;

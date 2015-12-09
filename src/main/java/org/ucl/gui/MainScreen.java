@@ -278,7 +278,7 @@ public class MainScreen extends ImagePanel {
 		}
 
 		picture = new JLabel();
-		picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/src/main/resources/placeholder.png"));
+		picture.setIcon(new ImageIcon("src/main/resources/placeholder.png"));
 		picture.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.BLUE));
 		picture.setBounds(900, 40, 200, 200);
 		area.add(picture);
@@ -616,7 +616,7 @@ public class MainScreen extends ImagePanel {
 		commentField.setText("");
 		uriStr = "";
 		nextAppointment.setText("Next Appointment ");
-		picture.setIcon(new ImageIcon("/home/david/Programming/Java/medicaldb/res/placeholder.png"));
+		picture.setIcon(new ImageIcon("src/main/resources/placeholder.png"));
 		images.removeAll();
 	}
 

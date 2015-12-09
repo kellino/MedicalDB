@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 
+/** hello */
 public class ImagePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
